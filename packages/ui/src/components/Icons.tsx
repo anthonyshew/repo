@@ -1,6 +1,6 @@
-import type { LucideProps } from "lucide-react";
+import type { SVGProps } from "react";
 
-export function GitHub(props: LucideProps) {
+export function GitHub(props: SVGProps<SVGSVGElement>) {
 	return (
 		// biome-ignore lint/a11y/noSvgWithoutTitle: Ignored when migrating
 		<svg viewBox="0 0 438.549 438.549" {...props}>
@@ -12,7 +12,7 @@ export function GitHub(props: LucideProps) {
 	);
 }
 
-export function ThreadsApp(props: LucideProps) {
+export function ThreadsApp(props: SVGProps<SVGSVGElement>) {
 	return (
 		// biome-ignore lint/a11y/noSvgWithoutTitle: Ignored when migrating
 		<svg viewBox="0 0 192 192" {...props}>

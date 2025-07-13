@@ -6,9 +6,6 @@
 			"path": "./apps/portfolio"
 		},
 		{
-			"path": "./packages/analytics"
-		},
-		{
 			"path": "./packages/ui"
 		}
 	]

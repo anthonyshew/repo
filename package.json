@@ -10,11 +10,15 @@
 		"dev:ts": "tsc -b -w --preserveWatchOutput",
 		"lint": "biome check .",
 		"lint:fix": "biome check . --write",
-		"check-types": "turbo run check-types --continue"
+		"check-types": "turbo run check-types --continue",
+		"knip": "knip"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.0.6",
-		"turbo": "^2.5.4"
+		"@types/node": "^24.0.10",
+		"knip": "^5.61.3",
+		"turbo": "^2.5.4",
+		"typescript": "^5.8.3"
 	},
 	"packageManager": "pnpm@10.12.4",
 	"engines": {

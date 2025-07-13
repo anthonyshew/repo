@@ -1,6 +1,6 @@
-import type { LucideProps } from "lucide-react";
+import type { SVGProps } from "react";
 
-export function Discord(props: LucideProps) {
+export function Discord(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			role="img"

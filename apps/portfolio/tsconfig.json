@@ -5,7 +5,12 @@
 		"paths": {
 			"content-collections": ["./.content-collections/generated"],
 			"#/*": ["./*"]
-		}
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
 	},
 	"include": [
 		"next-env.d.ts",
@@ -19,9 +24,6 @@
 	],
 	"exclude": ["node_modules", ".next", ".content-collections", "dist"],
 	"references": [
-		{
-			"path": "../../packages/analytics"
-		},
 		{
 			"path": "../../packages/ui"
 		}
