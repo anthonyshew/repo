@@ -26,15 +26,15 @@ importers:
 
   apps/portfolio:
     dependencies:
-      '@repo/analytics':
-        specifier: workspace:*
-        version: link:../../packages/analytics
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@tailwindcss/postcss':
         specifier: ^4.1.11
         version: 4.1.11
+      '@vercel/analytics':
+        specifier: ^1.5.0
+        version: 1.5.0(next@15.3.5(@opentelemetry/api@1.6.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       bright:
         specifier: ^1.0.0
         version: 1.0.0(react@19.1.0)
@@ -99,22 +99,6 @@ importers:
       tailwindcss:
         specifier: ^4.1.11
         version: 4.1.11
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-
-  packages/analytics:
-    dependencies:
-      '@vercel/analytics':
-        specifier: ^1.5.0
-        version: 1.5.0(next@15.3.5(@opentelemetry/api@1.6.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
-      react:
-        specifier: ^19.1.0
-        version: 19.1.0
-    devDependencies:
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript-config
       typescript:
         specifier: ^5.8.3
         version: 5.8.3

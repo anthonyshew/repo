@@ -9,9 +9,9 @@
 		"check-types": "fumadocs-mdx && tsc -b"
 	},
 	"dependencies": {
-		"@repo/analytics": "workspace:*",
 		"@repo/ui": "workspace:*",
 		"@tailwindcss/postcss": "^4.1.11",
+		"@vercel/analytics": "^1.5.0",
 		"bright": "^1.0.0",
 		"date-fns": "^4.1.0",
 		"fumadocs-core": "^15.6.1",
