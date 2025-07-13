@@ -2,7 +2,6 @@ import { compareDesc } from "date-fns";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Balancer from "react-wrap-balancer";
 import { blogs as allBlogs } from "#/.source";
 import { metadataBaseURI } from "#/app/metadata";
 import { mdxComponents } from "#/components/mdxComponents";
@@ -83,9 +82,7 @@ async function PostLayout(props: { params: Promise<{ slug: string }> }) {
 		<div className="flex flex-col w-full mx-auto prose md:pr-8 lg:prose-lg dark:prose-invert">
 			<header className="w-full pb-4">
 				<div className="text-center">
-					<h1 className="mb-4">
-						<Balancer>{post.title}</Balancer>
-					</h1>
+					<h1 className="mb-4 text-pretty">{post.title}</h1>
 					<div className="flex flex-row gap-4 align-center">
 						<time
 							className="text-xs text-gray-600 dark:text-gray-400"
