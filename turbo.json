@@ -15,7 +15,7 @@
 		},
 		"check-types": {
 			"dependsOn": ["^check-types"],
-			"outputs": ["dist/tsbuildinfo.json"]
+			"outputs": ["dist"]
 		},
 		"//#dev:ts": {
 			"cache": false,
