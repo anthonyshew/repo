@@ -8,6 +8,7 @@
 			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
+		"//#knip": {},
 		"//#lint": {},
 		"//#lint:fix": {
 			"cache": false

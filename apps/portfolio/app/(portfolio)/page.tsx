@@ -1,12 +1,7 @@
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-	Discord,
-	ThreadsApp,
-	Xitter,
-	// Button,
-} from "@repo/ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui/Avatar";
+import { Discord } from "@repo/ui/Discord";
+import { ThreadsApp } from "@repo/ui/Icons";
+import { Xitter } from "@repo/ui/Xitter";
 import { Github, Youtube } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";

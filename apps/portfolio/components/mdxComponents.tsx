@@ -1,4 +1,4 @@
-import { LinkHeading } from "@repo/ui";
+import { LinkHeading } from "@repo/ui/LinkHeading";
 import { Code } from "bright";
 import type { ImageProps } from "next/image";
 import NextImage from "next/image";
