@@ -5,6 +5,7 @@ import Link from "next/link";
 import { inter } from "#/app/fonts";
 import { buildMeta } from "#/app/metadata";
 import "#/app/globals.css";
+import "@repo/ui/styles.css";
 import { ThemeWrapper } from "#/app/providers";
 import { ThemeController } from "#/components/ThemeController";
 

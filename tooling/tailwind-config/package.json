@@ -1,0 +1,13 @@
+{
+	"name": "@repo/tailwind-config",
+	"version": "0.0.1",
+	"type": "module",
+	"private": true,
+	"exports": {
+		"./postcss": "./postcss.config.ts"
+	},
+	"devDependencies": {
+		"postcss": "^8.5.3",
+		"tailwindcss": "^4.1.5"
+	}
+}

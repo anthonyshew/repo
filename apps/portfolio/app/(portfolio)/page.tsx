@@ -5,7 +5,6 @@ import { Xitter } from "@repo/ui/Xitter";
 import { Github, Youtube } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Balancer from "react-wrap-balancer";
 import { tagline } from "#/app/constants";
 import { firaCode } from "#/app/fonts";
 import { buildMeta } from "#/app/metadata";
@@ -32,9 +31,9 @@ export default function Home() {
 						Anthony Shew
 					</h1>
 					<p
-						className={`m-0 mt-1 ${firaCode.className} text-xs sm:text-lg dark:text-slate-400`}
+						className={`m-0 mt-1 ${firaCode.className} text-xs text-pretty sm:text-lg dark:text-slate-400`}
 					>
-						<Balancer>{tagline}</Balancer>
+						{tagline}
 					</p>
 				</div>
 			</div>
