@@ -4,7 +4,6 @@
 	"scripts": {
 		"build": "next build --turbopack",
 		"dev": "next dev",
-		"spellcheck": "spellchecker --files '**/*.mdx' --dictionaries 'dictionary.txt' --no-suggestions --quiet",
 		"start": "next start",
 		"check-types": "fumadocs-mdx && tsc -b"
 	},
@@ -22,7 +21,6 @@
 		"react": "latest",
 		"react-dom": "latest",
 		"react-wrap-balancer": "^1.1.1",
-		"spellchecker-cli": "^7.0.0",
 		"tailwindcss-animate": "^1.0.7",
 		"zod": "^3.25.74"
 	},
