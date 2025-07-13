@@ -2,6 +2,7 @@
 
 import webpush from "web-push";
 
+console.log(Boolean(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY));
 console.log(Boolean(process.env.VAPID_PRIVATE_KEY));
 webpush.setVapidDetails(
 	"mailto:your-email@example.com",
