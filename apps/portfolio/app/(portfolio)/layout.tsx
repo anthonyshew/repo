@@ -1,8 +1,8 @@
 import { Navbar } from "@repo/ui/Navbar";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import { buildMeta } from "#/app/metadata";
 import "#/app/globals.css";
 import "@repo/ui/styles.css";

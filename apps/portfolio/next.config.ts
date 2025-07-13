@@ -1,5 +1,5 @@
-import { createMDX } from "fumadocs-mdx/next";
 import { config } from "@repo/next-config";
+import { createMDX } from "fumadocs-mdx/next";
 
 const withMDX = createMDX();
 
