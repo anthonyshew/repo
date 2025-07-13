@@ -25,9 +25,6 @@
 	"exclude": ["node_modules", ".next", ".content-collections", "dist"],
 	"references": [
 		{
-			"path": "../../packages/analytics"
-		},
-		{
 			"path": "../../packages/ui"
 		}
 	]
