@@ -15,7 +15,7 @@
 		}
 	},
 	"scripts": {
-		"typecheck": "tsc --noEmit"
+		"check-types": "tsc -b"
 	},
 	"dependencies": {
 		"@vercel/analytics": "^1.5.0",

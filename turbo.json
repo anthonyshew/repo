@@ -5,14 +5,11 @@
 			"cache": false
 		},
 		"build": {
-			"dependsOn": ["^build", "^generate"],
+			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
-		"generate": {
-			"outputs": [".contentlayer/**"]
-		},
 		"topo": {
-			"dependsOn": ["^generate", "^topo"]
+			"dependsOn": ["^topo"]
 		},
 		"//#format": {},
 		"//#format:fix": {
@@ -20,18 +17,22 @@
 		},
 		"//#lint": {},
 		"lint": {
-			"dependsOn": ["^topo", "^generate", "generate"]
+			"dependsOn": ["^topo"]
 		},
 		"//#lint:fix": {
 			"dependsOn": ["^topo"],
 			"cache": false
 		},
 		"lint:fix": {
-			"dependsOn": ["^topo", "^generate", "generate"],
+			"dependsOn": ["^topo"],
 			"cache": false
 		},
-		"typecheck": {
-			"dependsOn": ["^topo", "^generate", "generate"]
+		"check-types": {
+			"dependsOn": ["^check-types"],
+			"outputs": ["dist/tsbuildinfo.json"]
+		},
+		"//#dev:ts": {
+			"cache": false
 		},
 		"spellcheck": {
 			"inputs": ["**/*.mdx"],
