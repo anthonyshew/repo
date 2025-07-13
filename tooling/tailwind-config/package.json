@@ -4,7 +4,7 @@
 	"type": "module",
 	"private": true,
 	"exports": {
-		"./postcss": "./postcss.config.js"
+		"./postcss": "./postcss.config.ts"
 	},
 	"devDependencies": {
 		"postcss": "^8.5.3",

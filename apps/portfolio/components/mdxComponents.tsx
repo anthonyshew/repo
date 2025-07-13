@@ -1,21 +1,13 @@
 import { LinkHeading } from "@repo/ui/LinkHeading";
-import { Code } from "bright";
 import type { ImageProps } from "next/image";
 import NextImage from "next/image";
-import type { JSX, ReactNode } from "react";
-import Balancer from "react-wrap-balancer";
-import { focus } from "./bright/focus";
+import type { ReactNode } from "react";
 
 interface CustomImageProps extends ImageProps {
 	containerClassName: string;
 	srcDark?: string;
 	srcLight?: string;
 }
-
-Code.theme = {
-	dark: "github-dark",
-	light: "github-light",
-};
 
 export const mdxComponents = {
 	Img: (props: CustomImageProps) => {
@@ -43,11 +35,7 @@ export const mdxComponents = {
 		);
 	},
 	h1: ({ children }: { children: ReactNode }) => {
-		return (
-			<h1>
-				<Balancer>{children}</Balancer>
-			</h1>
-		);
+		return <h1 className="text-pretty">{children}</h1>;
 	},
 	h2: ({ children }: { children: ReactNode }) => {
 		return <LinkHeading component="h2">{children}</LinkHeading>;
@@ -63,46 +51,5 @@ export const mdxComponents = {
 	},
 	h6: ({ children }: { children: ReactNode }) => {
 		return <LinkHeading component="h6">{children}</LinkHeading>;
-	},
-	pre: (props: {
-		children: ReactNode;
-		filename?: string;
-		lang: "js" | "json" | "ts";
-		note?: string;
-		// Meh, it works.
-	}): JSX.Element => {
-		return (
-			<>
-				<div className="hidden dark:block" data-theme="dark">
-					<Code
-						className="m-0! border border-gray-800"
-						extensions={[focus]}
-						lang={props.lang}
-						title={props.filename}
-						code={String(props.children)}
-					/>{" "}
-					{props.note ? (
-						<p className="my-0! p-2 px-4 border border-gray-800 text-sm border-t-0">
-							Note: {props.note}
-						</p>
-					) : null}
-				</div>
-
-				<div className="block dark:hidden" data-theme="light">
-					<Code
-						className="m-0! border border-gray-300"
-						extensions={[focus]}
-						lang={props.lang}
-						title={props.filename}
-						code={String(props.children)}
-					/>{" "}
-					{props.note ? (
-						<p className="my-0! p-2 px-4 border border-gray-300 text-sm border-t-0">
-							Note: {props.note}
-						</p>
-					) : null}
-				</div>
-			</>
-		);
 	},
 };
