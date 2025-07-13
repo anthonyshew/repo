@@ -9,6 +9,7 @@
 		"check-types": "tsc -b"
 	},
 	"dependencies": {
+		"@repo/utils": "workspace:*",
 		"ai": "5.0.0-beta.16",
 		"next": "15.3.5",
 		"react": "^19.0.0",

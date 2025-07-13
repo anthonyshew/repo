@@ -26,6 +26,9 @@ importers:
 
   apps/family-app:
     dependencies:
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       ai:
         specifier: 5.0.0-beta.16
         version: 5.0.0-beta.16(zod@3.25.74)
@@ -194,6 +197,12 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
+
+  packages/utils:
+    devDependencies:
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript-config
 
   tooling/next-config:
     dependencies:

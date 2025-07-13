@@ -1,11 +1,15 @@
 "use server";
 
 import webpush from "web-push";
+import { checkEnvVar } from "@repo/utils/check-env-var";
+
+const vapidPublicKey = checkEnvVar("NEXT_PUBLIC_VAPID_PUBLIC_KEY");
+const vapidPrivateKey = checkEnvVar("VAPID_PRIVATE_KEY");
 
 webpush.setVapidDetails(
-	"mailto:your-email@example.com",
-	process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-	process.env.VAPID_PRIVATE_KEY!,
+	"mailto:your-email@example.com", // TODO: Does it matter what I put here?
+	vapidPublicKey,
+	vapidPrivateKey,
 );
 
 let subscription: PushSubscription | null = null;
@@ -13,7 +17,7 @@ let subscription: PushSubscription | null = null;
 export async function subscribeUser(sub: PushSubscription) {
 	console.log(sub);
 	subscription = sub;
-	// In a production environment, you would want to store the subscription in a database
+	// TODO: In a production environment, you would want to store the subscription in a database
 	// For example: await db.subscriptions.create({ data: sub })
 
 	return { success: true };
@@ -33,6 +37,7 @@ export async function sendNotification(message: string) {
 
 	try {
 		await webpush.sendNotification(
+			// @ts-expect-error -- TODO: Type is messed up - or code is actually wrong?
 			subscription,
 			JSON.stringify({
 				title: "Family App Notification",

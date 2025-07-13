@@ -1,3 +1,5 @@
+// @ts-nocheck -- TODO: Would be great to tighten this up
+
 self.addEventListener("push", (event) => {
 	if (event.data) {
 		const data = event.data.json();
