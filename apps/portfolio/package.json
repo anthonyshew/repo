@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"build": "next build --turbopack",
-		"dev": "next dev",
+		"dev": "next dev --turbopack --port=3000",
 		"start": "next start",
 		"check-types": "fumadocs-mdx && tsc -b"
 	},
