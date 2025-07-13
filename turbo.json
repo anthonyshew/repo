@@ -17,14 +17,14 @@
 		},
 		"//#lint": {},
 		"lint": {
-			"dependsOn": ["^topo", "^generate", "generate"]
+			"dependsOn": ["^topo"]
 		},
 		"//#lint:fix": {
 			"dependsOn": ["^topo"],
 			"cache": false
 		},
 		"lint:fix": {
-			"dependsOn": ["^topo", "^generate", "generate"],
+			"dependsOn": ["^topo"],
 			"cache": false
 		},
 		"check-types": {
