@@ -1,12 +1,12 @@
-import Link from "next/link";
-import type { Metadata } from "next";
 import { compareDesc } from "date-fns";
-import { blogs as allBlogs } from "#/.source";
-import Balancer from "react-wrap-balancer";
+import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPost, getSlug } from "./getPost";
-import { mdxComponents } from "#/components/mdxComponents";
+import Balancer from "react-wrap-balancer";
+import { blogs as allBlogs } from "#/.source";
 import { metadataBaseURI } from "#/app/metadata";
+import { mdxComponents } from "#/components/mdxComponents";
+import { getPost, getSlug } from "./getPost";
 
 export const dynamic = "force-dynamic";
 

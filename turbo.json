@@ -11,10 +11,6 @@
 		"topo": {
 			"dependsOn": ["^topo"]
 		},
-		"//#format": {},
-		"//#format:fix": {
-			"cache": false
-		},
 		"//#lint": {},
 		"lint": {
 			"dependsOn": ["^topo"]

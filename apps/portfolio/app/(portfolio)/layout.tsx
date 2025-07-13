@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
-import { Navbar } from "@repo/ui";
 import { Analytics } from "@repo/analytics";
+import { Navbar } from "@repo/ui";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { inter } from "#/app/fonts";
 import { buildMeta } from "#/app/metadata";

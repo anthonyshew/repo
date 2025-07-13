@@ -1,4 +1,4 @@
-import { defineDocs, defineConfig } from "fumadocs-mdx/config";
+import { defineConfig, defineDocs } from "fumadocs-mdx/config";
 import { z } from "zod";
 
 export const { docs: blogs } = defineDocs({

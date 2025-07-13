@@ -1,5 +1,5 @@
-import { twMerge } from "tailwind-merge";
 import type { ReactElement, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface FolderProps {
 	name: string;
