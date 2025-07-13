@@ -2,8 +2,6 @@
 
 import webpush from "web-push";
 
-console.log(Boolean(process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY));
-console.log(process.env);
 webpush.setVapidDetails(
 	"mailto:your-email@example.com",
 	process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,

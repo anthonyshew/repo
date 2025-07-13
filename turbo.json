@@ -8,6 +8,7 @@
 		},
 		"build": {
 			"dependsOn": ["^build"],
+			"env": ["VAPID_PRIVATE_KEY"],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
 		"//#knip": {},
