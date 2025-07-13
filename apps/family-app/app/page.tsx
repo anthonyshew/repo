@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { sendNotification, subscribeUser, unsubscribeUser } from "./actions";
 import { checkEnvVar } from "@repo/utils/check-env-var";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { sendNotification, subscribeUser, unsubscribeUser } from "./actions";
 
 function urlBase64ToUint8Array(base64String: string) {
 	const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -25,22 +25,21 @@ function PushNotificationManager() {
 	);
 	const [message, setMessage] = useState("");
 
-	useEffect(() => {
-		if ("serviceWorker" in navigator && "PushManager" in window) {
-			setIsSupported(true);
-			registerServiceWorker();
-		}
-	}, []);
-
-	async function registerServiceWorker() {
+	const registerServiceWorker = useCallback(async () => {
 		const registration = await navigator.serviceWorker.register("/sw.js", {
 			scope: "/",
 			updateViaCache: "none",
 		});
 		const sub = await registration.pushManager.getSubscription();
 		setSubscription(sub);
-	}
+	}, []);
 
+	useEffect(() => {
+		if ("serviceWorker" in navigator && "PushManager" in window) {
+			setIsSupported(true);
+			void registerServiceWorker();
+		}
+	}, [registerServiceWorker]);
 	async function subscribeToPush() {
 		const registration = await navigator.serviceWorker.ready;
 
@@ -93,16 +92,20 @@ function PushNotificationManager() {
 							className="flex-1 px-3 py-2 border rounded"
 						/>
 						<button
+							type="button"
 							onClick={sendTestNotification}
 							className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
 						>
+							{" "}
 							Send Test
 						</button>
 					</div>
 					<button
+						type="button"
 						onClick={unsubscribeFromPush}
 						className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
 					>
+						{" "}
 						Unsubscribe
 					</button>
 				</>
@@ -112,9 +115,11 @@ function PushNotificationManager() {
 						You are not subscribed to push notifications.
 					</p>
 					<button
+						type="button"
 						onClick={subscribeToPush}
 						className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
 					>
+						{" "}
 						Subscribe
 					</button>
 				</>
@@ -129,7 +134,8 @@ function InstallPrompt() {
 
 	useEffect(() => {
 		setIsIOS(
-			/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream,
+			/iPad|iPhone|iPod/.test(navigator.userAgent) &&
+				!(window as unknown as { MSStream?: unknown }).MSStream,
 		);
 
 		setIsStandalone(window.matchMedia("(display-mode: standalone)").matches);
@@ -142,7 +148,10 @@ function InstallPrompt() {
 	return (
 		<div className="mb-8 p-4 border rounded-lg bg-blue-50">
 			<h3 className="text-lg font-semibold mb-2">Install App</h3>
-			<button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-2">
+			<button
+				type="button"
+				className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-2"
+			>
 				Add to Home Screen
 			</button>
 			{isIOS && (

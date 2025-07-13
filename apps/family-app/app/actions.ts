@@ -1,7 +1,7 @@
 "use server";
 
-import webpush from "web-push";
 import { checkEnvVar } from "@repo/utils/check-env-var";
+import webpush from "web-push";
 
 const vapidPublicKey = checkEnvVar("NEXT_PUBLIC_VAPID_PUBLIC_KEY");
 const vapidPrivateKey = checkEnvVar("VAPID_PRIVATE_KEY");
