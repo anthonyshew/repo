@@ -20,6 +20,7 @@
 	},
 	"scripts": {
 		"dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
+		"build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
 		"check-types": "tsc -b"
 	},
 	"dependencies": {
