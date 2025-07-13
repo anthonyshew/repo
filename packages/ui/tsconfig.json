@@ -1,6 +1,7 @@
 {
 	"extends": "@repo/tsconfig/react-library.json",
 	"compilerOptions": {
+		"rootDir": "src",
 		"composite": true,
 		"incremental": true
 	},
