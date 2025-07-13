@@ -6,45 +6,31 @@
 		"#components/*": "./src/components/*"
 	},
 	"exports": {
-		".": {
-			"types": "./src/index.ts",
-			"default": "./src/index.ts"
+		"./*": {
+			"types": "./dist/components/*.d.ts",
+			"default": "./src/components/*.tsx"
 		},
 		"./server": {
-			"types": "./src/server.ts",
+			"types": "./dist/server.ts",
 			"default": "./src/server.ts"
-		}
-	},
-	"typesVersions": {
-		"*": {
-			"*": [
-				"./src/index.ts"
-			],
-			"./server": [
-				"./src/server.ts"
-			]
 		}
 	},
 	"scripts": {
 		"check-types": "tsc -b"
 	},
 	"dependencies": {
-		"@radix-ui/react-accordion": "^1.2.11",
 		"@radix-ui/react-avatar": "^1.1.10",
 		"@radix-ui/react-dialog": "^1.1.14",
-		"@radix-ui/react-select": "^2.2.5",
 		"@radix-ui/react-slot": "^1.2.3",
 		"bright": "^1.0.0",
 		"class-variance-authority": "^0.7.1",
 		"lucide-icons-react": "^1.0.2",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
-		"react-wrap-balancer": "^1.1.1",
 		"tailwind-merge": "^3.3.1"
 	},
 	"devDependencies": {
 		"@repo/tsconfig": "workspace:*",
-		"@turbo/gen": "^2.5.4",
 		"@types/react": "^19.1.8",
 		"typescript": "^5.8.3"
 	}

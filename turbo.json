@@ -6,15 +6,16 @@
 		},
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
+			"outputs": [".next/**", "!.next/cache/**"]
 		},
+		"//#knip": {},
 		"//#lint": {},
 		"//#lint:fix": {
 			"cache": false
 		},
 		"check-types": {
 			"dependsOn": ["^check-types"],
-			"outputs": ["dist/tsbuildinfo.json"]
+			"outputs": ["dist"]
 		},
 		"//#dev:ts": {
 			"cache": false,

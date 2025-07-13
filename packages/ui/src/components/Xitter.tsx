@@ -1,6 +1,6 @@
-import type { LucideProps } from "lucide-react";
+import type { SVGProps } from "react";
 
-export function Xitter(props: LucideProps) {
+export function Xitter(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			role="img"
