@@ -1,0 +1,5 @@
+{
+	"extends": "@repo/tsconfig/base.json",
+	"include": ["postcss.config.ts"],
+	"exclude": ["node_modules", "dist"]
+}

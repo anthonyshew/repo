@@ -21,6 +21,12 @@
 	"exclude": ["node_modules", ".next", "dist"],
 	"references": [
 		{
+			"path": "../../tooling/next-config"
+		},
+		{
+			"path": "../../tooling/tailwind-config"
+		},
+		{
 			"path": "../../packages/ui"
 		}
 	]

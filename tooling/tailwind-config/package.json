@@ -4,9 +4,13 @@
 	"type": "module",
 	"private": true,
 	"exports": {
-		"./postcss": "./postcss.config.ts"
+		"./postcss": {
+			"types": "./dist/postcss.config.d.ts",
+			"default": "./postcss.config.ts"
+		}
 	},
 	"devDependencies": {
+		"@repo/tsconfig": "workspace:*",
 		"postcss": "^8.5.3",
 		"tailwindcss": "^4.1.5"
 	}
