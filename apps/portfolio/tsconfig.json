@@ -1,11 +1,7 @@
 {
 	"extends": "@repo/tsconfig/nextjs.json",
 	"compilerOptions": {
-		"tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-		"plugins": [{ "name": "next" }],
 		"baseUrl": ".",
-		"declarationMap": false,
-		"declaration": false,
 		"paths": {
 			"content-collections": ["./.content-collections/generated"],
 			"#/*": ["./*"]
@@ -18,7 +14,16 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"next.config.cjs",
-		"postcss.config.cjs"
+		"postcss.config.cjs",
+		".source/index.ts"
 	],
-	"exclude": ["node_modules", ".next", ".content-collections"]
+	"exclude": ["node_modules", ".next", ".content-collections", "dist"],
+	"references": [
+		{
+			"path": "../../packages/analytics"
+		},
+		{
+			"path": "../../packages/ui"
+		}
+	]
 }

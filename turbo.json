@@ -5,14 +5,11 @@
 			"cache": false
 		},
 		"build": {
-			"dependsOn": ["^build", "^generate"],
+			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
-		"generate": {
-			"outputs": [".contentlayer/**"]
-		},
 		"topo": {
-			"dependsOn": ["^generate", "^topo"]
+			"dependsOn": ["^topo"]
 		},
 		"//#format": {},
 		"//#format:fix": {
@@ -30,8 +27,11 @@
 			"dependsOn": ["^topo", "^generate", "generate"],
 			"cache": false
 		},
-		"typecheck": {
-			"dependsOn": ["^topo", "^generate", "generate"]
+		"check-types": {
+			"dependsOn": ["^check-types"]
+		},
+		"//#dev:ts": {
+			"cache": false
 		},
 		"spellcheck": {
 			"inputs": ["**/*.mdx"],

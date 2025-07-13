@@ -1,0 +1,16 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"files": [],
+	"references": [
+		{
+			"path": "./apps/portfolio"
+		},
+		{
+			"path": "./packages/analytics"
+		},
+		{
+			"path": "./packages/ui"
+		}
+	]
+}
+
