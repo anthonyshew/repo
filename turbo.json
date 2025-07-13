@@ -8,19 +8,8 @@
 			"dependsOn": ["^build"],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
-		"topo": {
-			"dependsOn": ["^topo"]
-		},
 		"//#lint": {},
-		"lint": {
-			"dependsOn": ["^topo"]
-		},
 		"//#lint:fix": {
-			"dependsOn": ["^topo"],
-			"cache": false
-		},
-		"lint:fix": {
-			"dependsOn": ["^topo"],
 			"cache": false
 		},
 		"check-types": {
@@ -28,7 +17,8 @@
 			"outputs": ["dist/tsbuildinfo.json"]
 		},
 		"//#dev:ts": {
-			"cache": false
+			"cache": false,
+			"persistent": true
 		},
 		"spellcheck": {
 			"inputs": ["**/*.mdx"],
