@@ -24,7 +24,7 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  apps/my-gateway-app:
+  apps/family-app:
     dependencies:
       ai:
         specifier: 5.0.0-beta.16
