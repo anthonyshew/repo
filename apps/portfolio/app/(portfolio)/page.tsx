@@ -6,7 +6,6 @@ import { Github, Youtube } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { tagline } from "#/app/constants";
-import { firaCode } from "#/app/fonts";
 import { buildMeta } from "#/app/metadata";
 
 export const revalidate = 3600; // hourly
@@ -30,9 +29,7 @@ export default function Home() {
 					<h1 className="m-0 text-xl font-bold text-black dark:text-white sm:text-4xl">
 						Anthony Shew
 					</h1>
-					<p
-						className={`m-0 mt-1 ${firaCode.className} text-xs text-pretty sm:text-lg dark:text-slate-400`}
-					>
+					<p className="m-0 mt-1 font-mono text-xs text-pretty sm:text-lg dark:text-slate-400">
 						{tagline}
 					</p>
 				</div>

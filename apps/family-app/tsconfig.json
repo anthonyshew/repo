@@ -16,8 +16,7 @@
 		"**/*.js",
 		"**/*.ts",
 		"**/*.tsx",
-		".next/types/**/*.ts",
-		".source/index.ts"
+		".next/types/**/*.ts"
 	],
 	"exclude": ["node_modules", ".next", "dist"],
 	"references": [

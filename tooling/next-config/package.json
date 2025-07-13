@@ -1,0 +1,9 @@
+{
+	"name": "@repo/next-config",
+	"exports": {
+		".": "./next.config.ts"
+	},
+	"peerDependencies": {
+		"next": "*"
+	}
+}
