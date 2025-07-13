@@ -15,13 +15,14 @@
 		"fumadocs-core": "^15.6.1",
 		"fumadocs-mdx": "^11.6.10",
 		"lucide-react": "^0.525.0",
-		"next": "^15.3.5",
+		"next": "15.3.5",
 		"next-themes": "^0.4.6",
 		"react": "latest",
 		"react-dom": "latest",
 		"zod": "^3.25.74"
 	},
 	"devDependencies": {
+		"@repo/next-config": "workspace:*",
 		"@repo/tsconfig": "workspace:*",
 		"@repo/tailwind-config": "workspace:*",
 		"@tailwindcss/typography": "^0.5.16",
