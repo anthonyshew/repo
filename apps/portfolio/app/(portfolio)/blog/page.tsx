@@ -1,6 +1,6 @@
-import Link from "next/link";
-import type { Metadata } from "next";
 import { compareDesc, format } from "date-fns";
+import type { Metadata } from "next";
+import Link from "next/link";
 import { blogs as allBlogs } from "#/.source";
 import { buildMeta } from "#/app/metadata";
 

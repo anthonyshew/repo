@@ -9,11 +9,11 @@ import {
 } from "@repo/ui";
 import { Github, Youtube } from "lucide-react";
 import type { Metadata } from "next";
-import Balancer from "react-wrap-balancer";
 import Link from "next/link";
-import { buildMeta } from "#/app/metadata";
+import Balancer from "react-wrap-balancer";
 import { tagline } from "#/app/constants";
 import { firaCode } from "#/app/fonts";
+import { buildMeta } from "#/app/metadata";
 
 export const revalidate = 3600; // hourly
 

@@ -1,9 +1,9 @@
-import NextImage from "next/image";
-import { Code } from "bright";
-import Balancer from "react-wrap-balancer";
 import { LinkHeading } from "@repo/ui";
+import { Code } from "bright";
 import type { ImageProps } from "next/image";
-import type { ReactNode, JSX } from "react";
+import NextImage from "next/image";
+import type { JSX, ReactNode } from "react";
+import Balancer from "react-wrap-balancer";
 import { focus } from "./bright/focus";
 
 interface CustomImageProps extends ImageProps {
