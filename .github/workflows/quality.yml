@@ -13,8 +13,8 @@ env:
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
-  quality-checks:
-    name: Quality checks
+  quality:
+    name: Quality
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
