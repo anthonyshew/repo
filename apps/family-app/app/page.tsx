@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { subscribeUser, unsubscribeUser, sendNotification } from "./actions";
+import { sendNotification, subscribeUser, unsubscribeUser } from "./actions";
 
 function urlBase64ToUint8Array(base64String: string) {
 	const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

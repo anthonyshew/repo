@@ -1,4 +1,4 @@
-self.addEventListener("push", function (event) {
+self.addEventListener("push", (event) => {
 	if (event.data) {
 		const data = event.data.json();
 		const options = {
@@ -15,11 +15,10 @@ self.addEventListener("push", function (event) {
 	}
 });
 
-self.addEventListener("notificationclick", function (event) {
+self.addEventListener("notificationclick", (event) => {
 	console.log("Notification click received.");
 	event.notification.close();
 	event.waitUntil(
 		clients.openWindow(process.env.VERCEL_URL ?? "http://localhost:3001"),
 	);
 });
-
