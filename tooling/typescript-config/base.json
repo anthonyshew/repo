@@ -7,6 +7,7 @@
 		"declarationMap": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
+		"emitDeclarationOnly": true,
 		"incremental": true,
 		"inlineSources": false,
 		"isolatedModules": true,

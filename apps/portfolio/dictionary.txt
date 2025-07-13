@@ -12,7 +12,6 @@ DX
 DevRel
 APIs
 Entrypoint
-ESLint
 transpilePackages
 acyclic
 overcommunicate
@@ -28,7 +27,6 @@ yolorepo
 granularity
 parallelize
 granularly
-ts-eslint
 pathing
 Gitmoji
 repository
@@ -114,7 +112,6 @@ entrypoints
 repo's
 namespace
 lockfile
-typescript-eslint
 formatter
 CLI
 linter

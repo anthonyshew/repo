@@ -4,14 +4,8 @@
 	"private": true,
 	"exports": {
 		".": {
+			"types": "./dist/index.d.ts",
 			"default": "./src/index.tsx"
-		}
-	},
-	"typesVersions": {
-		"*": {
-			"*": [
-				"./src/index.tsx"
-			]
 		}
 	},
 	"scripts": {
