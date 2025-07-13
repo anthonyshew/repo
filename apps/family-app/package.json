@@ -6,7 +6,7 @@
 		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"check-types": "tsc -b"
 	},
 	"dependencies": {
 		"ai": "5.0.0-beta.16",
