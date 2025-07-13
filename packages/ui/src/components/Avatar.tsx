@@ -10,7 +10,7 @@ const Avatar = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<AvatarPrimitive.Root
 		className={twMerge(
-			"relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+			"ui:relative ui:flex ui:h-10 ui:w-10 ui:shrink-0 ui:overflow-hidden ui:rounded-full",
 			className,
 		)}
 		ref={ref}
@@ -24,7 +24,10 @@ const AvatarImage = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
 >(({ className, ...props }, ref) => (
 	<AvatarPrimitive.Image
-		className={twMerge("aspect-square h-full w-full animate-reveal", className)}
+		className={twMerge(
+			"ui:aspect-square ui:h-full ui:w-full ui:animate-reveal",
+			className,
+		)}
 		ref={ref}
 		{...props}
 	/>
@@ -37,7 +40,7 @@ const AvatarFallback = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<AvatarPrimitive.Fallback
 		className={twMerge(
-			"flex h-full w-full items-center justify-center rounded-full",
+			"ui:flex ui:h-full ui:w-full ui:items-center ui:justify-center ui:rounded-full",
 			className,
 		)}
 		ref={ref}

@@ -37,12 +37,12 @@ export function LinkHeading({
 
 	return (
 		<Comp
-			className="mt-0!"
+			className="ui:mt-0!"
 			id={replaceNonAlphanumericsWithDash(childrenString)}
 		>
-			<span className="block pt-8" />
+			<span className="ui:block ui:pt-8" />
 			<a
-				className="font-bold no-underline hover:underline"
+				className="ui:font-bold ui:no-underline hover:ui:underline"
 				href={`#${replaceNonAlphanumericsWithDash(childrenString)}`}
 				{...props}
 			>
