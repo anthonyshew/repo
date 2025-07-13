@@ -2,7 +2,8 @@
 	"tasks": {
 		"dev": {
 			"persistent": true,
-			"cache": false
+			"cache": false,
+			"with": ["//#dev:ts"]
 		},
 		"build": {
 			"dependsOn": ["^build"],
@@ -20,10 +21,6 @@
 		"//#dev:ts": {
 			"cache": false,
 			"persistent": true
-		},
-		"spellcheck": {
-			"inputs": ["**/*.mdx"],
-			"cache": false
 		}
 	}
 }

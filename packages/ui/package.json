@@ -9,10 +9,6 @@
 		"./*": {
 			"types": "./dist/components/*.d.ts",
 			"default": "./src/components/*.tsx"
-		},
-		"./server": {
-			"types": "./dist/server.ts",
-			"default": "./src/server.ts"
 		}
 	},
 	"scripts": {
