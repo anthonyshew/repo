@@ -2,23 +2,33 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "Family App",
-		short_name: "FamilyApp",
-		description: "A family application built with Next.js",
+		name: "Shew Family App",
+		short_name: "Shew Family App",
+		description: "We are the best.",
 		start_url: "/",
 		display: "standalone",
-		background_color: "#ffffff",
-		theme_color: "#000000",
+		background_color: "#000000",
+		theme_color: "#432dd7",
 		icons: [
 			{
-				src: "/next.svg",
-				sizes: "192x192",
-				type: "image/svg+xml",
+				src: "/favicon/favicon-96x96.png",
+				sizes: "96x96",
+				type: "image/png",
 			},
 			{
-				src: "/next.svg",
+				src: "/favicon/web-app-manifest-192x192.png",
+				sizes: "192x192",
+				type: "image/png",
+			},
+			{
+				src: "/favicon/web-app-manifest-512x512.png",
 				sizes: "512x512",
-				type: "image/svg+xml",
+				type: "image/png",
+			},
+			{
+				src: "/favicon/apple-touch-icon.png",
+				sizes: "180x180",
+				type: "image/png",
 			},
 		],
 	};
