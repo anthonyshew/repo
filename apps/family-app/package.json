@@ -3,25 +3,28 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbopack --port=3001",
+		"dev": "next dev --turbopack --port=3001 --experimental-https",
 		"build": "next build --turbopack",
 		"start": "next start",
 		"check-types": "tsc -b"
 	},
 	"dependencies": {
+		"@repo/utils": "workspace:*",
 		"ai": "5.0.0-beta.16",
 		"next": "15.3.5",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"react-dom": "^19.0.0",
+		"web-push": "^3.6.7"
 	},
 	"devDependencies": {
 		"@repo/next-config": "workspace:*",
-		"@repo/tsconfig": "workspace:*",
 		"@repo/tailwind-config": "workspace:*",
+		"@repo/tsconfig": "workspace:*",
 		"@tailwindcss/postcss": "^4",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"@types/web-push": "^3.6.4",
 		"tailwindcss": "^4",
 		"typescript": "^5"
 	}

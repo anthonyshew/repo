@@ -12,6 +12,9 @@
 			"path": "./packages/ui"
 		},
 		{
+			"path": "./packages/utils"
+		},
+		{
 			"path": "./tooling/next-config"
 		},
 		{
