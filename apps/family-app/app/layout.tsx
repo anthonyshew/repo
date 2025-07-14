@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Shew Family App",
+	title: "Team Shew",
 	description: "We are the best.",
 	icons: {
 		icon: [
