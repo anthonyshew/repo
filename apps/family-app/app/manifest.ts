@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "Shew Family App",
-		short_name: "Shew Family App",
+		name: "Team Shew",
+		short_name: "Team Shew",
 		description: "We are the best.",
 		start_url: "/",
 		display: "standalone",
