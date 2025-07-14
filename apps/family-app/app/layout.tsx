@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: "Team Shew",
 	description: "We are the best.",
+	appleWebApp: {
+		capable: true,
+		statusBarStyle: "black-translucent",
+		title: "Team Shew",
+	},
 };
 
 export default function RootLayout({
