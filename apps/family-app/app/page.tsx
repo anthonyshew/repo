@@ -180,125 +180,78 @@ function InstallPrompt() {
 
 function MealPlanner() {
 	const [meals, setMeals] = useState<Meal[]>([]);
-	const [isGenerating, setIsGenerating] = useState(false);
+	const { messages, sendMessage, status } = useChat();
 
 	const generateAIMeals = async () => {
-		setIsGenerating(true);
-		try {
-			const response = await fetch("/api/chat", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					messages: [
-						{
-							role: "user",
-							content:
-								'Generate a weekly meal plan for 7 days (Monday through Sunday). For each day, provide just the meal name. Format your response as a simple list with the day and meal separated by a colon, like "Monday: Spaghetti Bolognese". Focus on variety, nutrition, and family-friendly meals for 3 people.',
-						},
-					],
-				}),
-			});
+		sendMessage({
+			text: 'Generate a weekly meal plan for 7 days (Monday through Sunday). For each day, provide just the meal name. Format your response as a simple list with the day and meal separated by a colon, like "Monday: Spaghetti Bolognese". Focus on variety, nutrition, and family-friendly meals for 3 people.',
+		});
+	};
 
-			if (response.ok) {
-				const data = await response.json();
-				console.log("AI Response data:", data);
+	// Parse meals from the latest assistant message
+	const parseMealsFromMessages = () => {
+		const lastAssistantMessage = messages
+			.filter((m) => m.role === "assistant")
+			.pop();
 
-				// Extract the content from the AI SDK response
-				const content =
-					data.messages?.[data.messages.length - 1]?.content ||
-					data.content ||
-					"";
-				console.log("AI Content:", content);
+		if (!lastAssistantMessage) return;
 
-				const lines = content.split("\n").filter((line: string) => line.trim());
-				const aiMeals: Meal[] = [];
-				const days = [
-					"Monday",
-					"Tuesday",
-					"Wednesday",
-					"Thursday",
-					"Friday",
-					"Saturday",
-					"Sunday",
-				];
+		console.log("Last assistant message:", lastAssistantMessage);
 
-				for (const line of lines) {
-					if (line.includes(":")) {
-						const [day, meal] = line.split(":").map((s: string) => s.trim());
-						if (days.includes(day) && meal) {
-							aiMeals.push({ day, meal });
-						}
-					}
+		const content =
+			lastAssistantMessage.parts
+				?.map((part) => (part.type === "text" ? part.text : ""))
+				.join("") || "";
+
+		console.log("Extracted content:", content);
+
+		const lines = content.split("\n").filter((line: string) => line.trim());
+		console.log("Filtered lines:", lines);
+		
+		const aiMeals: Meal[] = [];
+		const days = [
+			"Monday",
+			"Tuesday",
+			"Wednesday",
+			"Thursday",
+			"Friday",
+			"Saturday",
+			"Sunday",
+		];
+
+		for (const line of lines) {
+			if (line.includes(":")) {
+				const [day, meal] = line.split(":").map((s: string) => s.trim());
+				console.log(`Found day: "${day}", meal: "${meal}"`);
+				if (days.includes(day) && meal) {
+					aiMeals.push({ day, meal });
 				}
-
-				if (aiMeals.length === 7) {
-					setMeals(aiMeals);
-				} else {
-					console.warn(
-						"AI response format was unexpected, found meals:",
-						aiMeals,
-					);
-				}
-			} else {
-				console.error(
-					"Failed to get AI meal recommendations",
-					response.status,
-					response.statusText,
-				);
-				const errorText = await response.text();
-				console.error("Error response:", errorText);
 			}
-		} catch (error) {
-			console.error("Error generating AI meals:", error);
-		} finally {
-			setIsGenerating(false);
+		}
+
+		console.log("Parsed meals:", aiMeals);
+		if (aiMeals.length === 7) {
+			setMeals(aiMeals);
+		} else {
+			console.warn(`Expected 7 meals, found ${aiMeals.length}`);
 		}
 	};
 
+	// Update meals when messages change
+	useEffect(() => {
+		parseMealsFromMessages();
+	}, [messages]);
+
 	const regenerateSingleMeal = async (dayToRegenerate: string) => {
-		try {
-			const response = await fetch("/api/chat", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					messages: [
-						{
-							role: "user",
-							content: `Generate a single meal recommendation for ${dayToRegenerate}. Provide just the meal name without the day. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from common meals like spaghetti, pizza, or tacos.`,
-						},
-					],
-				}),
-			});
-
-			if (response.ok) {
-				const reader = response.body?.getReader();
-				const decoder = new TextDecoder();
-				let aiResponse = "";
-
-				if (reader) {
-					while (true) {
-						const { done, value } = await reader.read();
-						if (done) break;
-						aiResponse += decoder.decode(value);
-					}
-				}
-
-				const newMeal = aiResponse.trim();
-				if (newMeal) {
-					setMeals((prev) =>
-						prev.map((meal) =>
-							meal.day === dayToRegenerate ? { ...meal, meal: newMeal } : meal,
-						),
-					);
-				}
-			}
-		} catch (error) {
-			console.error("Error regenerating single meal:", error);
-		}
+		sendMessage({
+			text: `Generate a single meal recommendation for ${dayToRegenerate}. Provide just the meal name without the day. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from common meals like spaghetti, pizza, or tacos.`,
+		});
 	};
 
 	useEffect(() => {
-		generateAIMeals();
+		if (meals.length === 0) {
+			generateAIMeals();
+		}
 	}, []);
 
 	return (
@@ -308,10 +261,10 @@ function MealPlanner() {
 			<div className="mb-4">
 				<button
 					onClick={generateAIMeals}
-					disabled={isGenerating}
+					disabled={status === 'streaming' || status === 'submitted'}
 					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
 				>
-					{isGenerating ? "Generating Meal Plan..." : "Generate New Meal Plan"}
+					{status === 'streaming' || status === 'submitted' ? "Generating Meal Plan..." : "Generate New Meal Plan"}
 				</button>
 			</div>
 
@@ -371,12 +324,14 @@ function Chat() {
 								{message.role === "user" ? "You" : "Assistant"}
 							</div>
 							<div className="whitespace-pre-wrap">
-								{message.parts.map((part, i) => {
+								{message.parts?.map((part, i) => {
 									switch (part.type) {
 										case "text":
 											return (
 												<span key={`${message.id}-${i}`}>{part.text}</span>
 											);
+										default:
+											return null;
 									}
 								})}
 							</div>
