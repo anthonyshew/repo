@@ -20,27 +20,8 @@ export async function POST(req: Request) {
 			return new Response("Messages must be an array", { status: 400 });
 		}
 
-		// Convert old format messages to new format
-		const formattedMessages: UIMessage[] = messages.map((msg) => {
-			if (msg.content && typeof msg.content === "string") {
-				// Old format with content string
-				return {
-					id: msg.id || Math.random().toString(),
-					role: msg.role,
-					parts: [{ type: "text", text: msg.content }],
-				};
-			}
-			if (msg.parts) {
-				// Already in new format
-				return msg;
-			}
-			// Fallback
-			return {
-				id: msg.id || Math.random().toString(),
-				role: msg.role,
-				parts: [{ type: "text", text: "" }],
-			};
-		});
+		// Messages are already in the correct UIMessage format
+		const formattedMessages: UIMessage[] = messages;
 
 		const result = streamText({
 			model: "xai/grok-3",
