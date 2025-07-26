@@ -222,9 +222,11 @@ function MealPlanner() {
 		for (const line of lines) {
 			if (line.includes(":")) {
 				const [day, meal] = line.split(":").map((s: string) => s.trim());
-				console.log(`Found day: "${day}", meal: "${meal}"`);
-				if (days.includes(day) && meal) {
-					aiMeals.push({ day, meal });
+				// Remove leading dash and any extra whitespace
+				const cleanDay = day.replace(/^-\s*/, "");
+				console.log(`Found day: "${day}", clean day: "${cleanDay}", meal: "${meal}"`);
+				if (days.includes(cleanDay) && meal) {
+					aiMeals.push({ day: cleanDay, meal });
 				}
 			}
 		}
