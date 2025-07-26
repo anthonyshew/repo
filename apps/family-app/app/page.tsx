@@ -180,18 +180,20 @@ function InstallPrompt() {
 
 function MealPlanner() {
 	const [meals, setMeals] = useState<Meal[]>([]);
-	const [isRegeneratingFor, setIsRegeneratingFor] = useState<string | null>(null);
+	const [isRegeneratingFor, setIsRegeneratingFor] = useState<string | null>(
+		null,
+	);
 	const { messages, sendMessage, status } = useChat();
 
-	const generateAIMeals = async () => {
+	const generateAIMeals = useCallback(async () => {
 		setIsRegeneratingFor(null);
 		sendMessage({
 			text: 'Generate a weekly meal plan for 7 days (Monday through Sunday). For each day, provide just the meal name. Format your response as a simple list with the day and meal separated by a colon, like "Monday: Spaghetti Bolognese". Focus on variety, nutrition, and family-friendly meals for 3 people.',
 		});
-	};
+	}, [sendMessage]);
 
 	// Parse meals from the latest assistant message
-	const parseMealsFromMessages = () => {
+	const parseMealsFromMessages = useCallback(() => {
 		const lastAssistantMessage = messages
 			.filter((m) => m.role === "assistant")
 			.pop();
@@ -212,12 +214,10 @@ function MealPlanner() {
 			// For single meal regeneration, the content should just be the meal name
 			const mealName = content.trim();
 			if (mealName) {
-				setMeals(prevMeals => 
-					prevMeals.map(meal => 
-						meal.day === isRegeneratingFor 
-							? { ...meal, meal: mealName }
-							: meal
-					)
+				setMeals((prevMeals) =>
+					prevMeals.map((meal) =>
+						meal.day === isRegeneratingFor ? { ...meal, meal: mealName } : meal,
+					),
 				);
 				setIsRegeneratingFor(null);
 				return;
@@ -227,7 +227,7 @@ function MealPlanner() {
 		// Original logic for full meal plan parsing
 		const lines = content.split("\n").filter((line: string) => line.trim());
 		console.log("Filtered lines:", lines);
-		
+
 		const aiMeals: Meal[] = [];
 		const days = [
 			"Monday",
@@ -244,7 +244,9 @@ function MealPlanner() {
 				const [day, meal] = line.split(":").map((s: string) => s.trim());
 				// Remove leading dash and any extra whitespace
 				const cleanDay = day.replace(/^-\s*/, "");
-				console.log(`Found day: "${day}", clean day: "${cleanDay}", meal: "${meal}"`);
+				console.log(
+					`Found day: "${day}", clean day: "${cleanDay}", meal: "${meal}"`,
+				);
 				if (days.includes(cleanDay) && meal) {
 					aiMeals.push({ day: cleanDay, meal });
 				}
@@ -257,12 +259,12 @@ function MealPlanner() {
 		} else {
 			console.warn(`Expected 7 meals, found ${aiMeals.length}`);
 		}
-	};
+	}, [messages, isRegeneratingFor]);
 
 	// Update meals when messages change
 	useEffect(() => {
 		parseMealsFromMessages();
-	}, [messages]);
+	}, [parseMealsFromMessages]);
 
 	const regenerateSingleMeal = async (dayToRegenerate: string) => {
 		setIsRegeneratingFor(dayToRegenerate);
@@ -273,9 +275,9 @@ function MealPlanner() {
 
 	useEffect(() => {
 		if (meals.length === 0) {
-			generateAIMeals();
+			void generateAIMeals();
 		}
-	}, []);
+	}, [generateAIMeals, meals.length]);
 
 	return (
 		<div className="w-full max-w-2xl mx-auto mb-8 p-4 border rounded-lg bg-white dark:bg-gray-900">
@@ -283,18 +285,21 @@ function MealPlanner() {
 
 			<div className="mb-4">
 				<button
+					type="button"
 					onClick={generateAIMeals}
-					disabled={status === 'streaming' || status === 'submitted'}
+					disabled={status === "streaming" || status === "submitted"}
 					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
 				>
-					{status === 'streaming' || status === 'submitted' ? "Generating Meal Plan..." : "Generate New Meal Plan"}
+					{status === "streaming" || status === "submitted"
+						? "Generating Meal Plan..."
+						: "Generate New Meal Plan"}
 				</button>
 			</div>
 
 			<ul className="space-y-2">
-				{meals.map((meal, index) => (
+				{meals.map((meal) => (
 					<li
-						key={index}
+						key={meal.day}
 						className="p-3 bg-gray-50 dark:bg-gray-800 rounded border-l-4 border-blue-500"
 					>
 						<div className="flex justify-between items-start">
@@ -307,8 +312,13 @@ function MealPlanner() {
 								</div>
 							</div>
 							<button
+								type="button"
 								onClick={() => regenerateSingleMeal(meal.day)}
-								disabled={isRegeneratingFor === meal.day || status === 'streaming' || status === 'submitted'}
+								disabled={
+									isRegeneratingFor === meal.day ||
+									status === "streaming" ||
+									status === "submitted"
+								}
 								className="ml-2 px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
 								title="Regenerate this meal"
 							>
