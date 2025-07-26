@@ -180,9 +180,11 @@ function InstallPrompt() {
 
 function MealPlanner() {
 	const [meals, setMeals] = useState<Meal[]>([]);
+	const [isRegeneratingFor, setIsRegeneratingFor] = useState<string | null>(null);
 	const { messages, sendMessage, status } = useChat();
 
 	const generateAIMeals = async () => {
+		setIsRegeneratingFor(null);
 		sendMessage({
 			text: 'Generate a weekly meal plan for 7 days (Monday through Sunday). For each day, provide just the meal name. Format your response as a simple list with the day and meal separated by a colon, like "Monday: Spaghetti Bolognese". Focus on variety, nutrition, and family-friendly meals for 3 people.',
 		});
@@ -205,6 +207,24 @@ function MealPlanner() {
 
 		console.log("Extracted content:", content);
 
+		// Check if this is a single meal regeneration
+		if (isRegeneratingFor) {
+			// For single meal regeneration, the content should just be the meal name
+			const mealName = content.trim();
+			if (mealName) {
+				setMeals(prevMeals => 
+					prevMeals.map(meal => 
+						meal.day === isRegeneratingFor 
+							? { ...meal, meal: mealName }
+							: meal
+					)
+				);
+				setIsRegeneratingFor(null);
+				return;
+			}
+		}
+
+		// Original logic for full meal plan parsing
 		const lines = content.split("\n").filter((line: string) => line.trim());
 		console.log("Filtered lines:", lines);
 		
@@ -245,6 +265,7 @@ function MealPlanner() {
 	}, [messages]);
 
 	const regenerateSingleMeal = async (dayToRegenerate: string) => {
+		setIsRegeneratingFor(dayToRegenerate);
 		sendMessage({
 			text: `Generate a single meal recommendation for ${dayToRegenerate}. Provide just the meal name without the day. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from common meals like spaghetti, pizza, or tacos.`,
 		});
@@ -287,10 +308,11 @@ function MealPlanner() {
 							</div>
 							<button
 								onClick={() => regenerateSingleMeal(meal.day)}
-								className="ml-2 px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded"
+								disabled={isRegeneratingFor === meal.day || status === 'streaming' || status === 'submitted'}
+								className="ml-2 px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
 								title="Regenerate this meal"
 							>
-								🔄
+								{isRegeneratingFor === meal.day ? "⏳" : "🔄"}
 							</button>
 						</div>
 					</li>
