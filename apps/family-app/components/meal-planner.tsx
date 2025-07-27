@@ -64,7 +64,6 @@ export function MealPlanner() {
 			`Generate a single meal recommendation for ${dayToRegenerate}. Provide the day as "${dayToRegenerate}" and a new meal name. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
 		);
 	};
-
 	return (
 		<div className="w-full max-w-2xl mx-auto mb-8 p-4 border rounded-lg bg-white dark:bg-gray-900">
 			<h3 className="text-lg font-semibold mb-4">Weekly Meal Plan</h3>
