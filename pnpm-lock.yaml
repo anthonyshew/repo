@@ -11,9 +11,6 @@ importers:
       '@biomejs/biome':
         specifier: 2.0.6
         version: 2.0.6
-      '@types/node':
-        specifier: ^24.0.10
-        version: 24.0.10
       knip:
         specifier: ^5.61.3
         version: 5.61.3(@types/node@24.0.10)(typescript@5.8.3)
@@ -155,8 +152,8 @@ importers:
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@4.1.11)
       '@types/node':
-        specifier: ^24.0.10
-        version: 24.0.10
+        specifier: ^22
+        version: 22.16.5
       '@types/react':
         specifier: ^19.1.8
         version: 19.1.8

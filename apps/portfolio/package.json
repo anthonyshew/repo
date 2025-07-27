@@ -26,7 +26,7 @@
 		"@repo/tailwind-config": "workspace:*",
 		"@repo/tsconfig": "workspace:*",
 		"@tailwindcss/typography": "^0.5.16",
-		"@types/node": "^24.0.10",
+		"@types/node": "^22",
 		"@types/react": "^19.1.8",
 		"autoprefixer": "^10.4.21",
 		"tailwindcss": "^4.1.11",
