@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1753637975250,
+      "tag": "0000_soft_veda",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1753638145849,
+      "tag": "0001_lean_gabe_jones",
+      "breakpoints": true
+    }
+  ]
+}
