@@ -190,15 +190,15 @@ function MealPlanner() {
 		setIsRegeneratingFor(null);
 		setIsGenerating(true);
 		try {
-			const response = await fetch('/api/meals', {
-				method: 'POST',
+			const response = await fetch("/api/meals", {
+				method: "POST",
 			});
 			if (response.ok) {
 				const data = await response.json();
 				setMeals(data.meals);
 			}
 		} catch (error) {
-			// Handle error silently or show user-friendly message
+			console.error(error);
 		} finally {
 			setIsGenerating(false);
 		}
@@ -302,9 +302,7 @@ function MealPlanner() {
 					disabled={isGenerating}
 					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
 				>
-					{isGenerating
-						? "Generating Meal Plan..."
-						: "Generate New Meal Plan"}
+					{isGenerating ? "Generating Meal Plan..." : "Generate New Meal Plan"}
 				</button>
 			</div>
 
