@@ -3,7 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbopack --port=3001 --experimental-https",
+		"dev": "drizzle-kit push && next dev --turbopack --port=3001 --experimental-https",
+		"studio": "drizzle-kit studio",
 		"build": "next build --turbopack",
 		"start": "next start",
 		"check-types": "tsc -b"

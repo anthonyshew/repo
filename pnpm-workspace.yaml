@@ -4,7 +4,10 @@ packages:
   - tooling/*
 
 onlyBuiltDependencies:
+  - '@parcel/watcher'
   - '@tailwindcss/oxide'
+  - better-sqlite3
   - core-js-pure
   - esbuild
+  - oxc-resolver
   - sharp
