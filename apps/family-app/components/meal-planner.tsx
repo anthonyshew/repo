@@ -7,11 +7,13 @@ import { Calendar } from "@repo/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import { CalendarDays, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import type { Meal } from "#/lib/db";
 import { mealPlanSchema, mealSchema } from "#/lib/schemas";
 
 export function MealPlanner() {
 	const [isRegeneratingFor, setIsRegeneratingFor] = useState<Date | null>(null);
 	const [localMeals, setLocalMeals] = useState<Map<string, string>>(new Map());
+	const [dbMeals, setDbMeals] = useState<Meal[]>([]);
 	const [selectedDate, setSelectedDate] = useState<Date | undefined>(
 		new Date(),
 	);
@@ -29,6 +31,24 @@ export function MealPlanner() {
 		schema: mealSchema,
 	});
 
+	// Fetch meals from database
+	const fetchDbMeals = useCallback(async () => {
+		try {
+			const response = await fetch("/api/meals");
+			if (response.ok) {
+				const meals: Meal[] = await response.json();
+				setDbMeals(meals);
+			}
+		} catch (error) {
+			console.error("Failed to fetch meals:", error);
+		}
+	}, []);
+
+	// Load meals from database on component mount
+	useEffect(() => {
+		void fetchDbMeals();
+	}, [fetchDbMeals]);
+
 	const generateAIMeals = () => {
 		setIsRegeneratingFor(null);
 		submit(
@@ -39,7 +59,7 @@ export function MealPlanner() {
 	// Convert date to a consistent string format for storage
 	const dateToKey = useCallback((date: Date) => date.toDateString(), []);
 
-	// Update local meals when main object changes
+	// Update local meals when main object changes and refresh database
 	useEffect(() => {
 		if (object?.meals) {
 			const mealMap = new Map<string, string>();
@@ -54,10 +74,12 @@ export function MealPlanner() {
 				}
 			});
 			setLocalMeals(mealMap);
+			// Refresh database meals after AI generation
+			void fetchDbMeals();
 		}
-	}, [object?.meals, dateToKey]);
+	}, [object?.meals, dateToKey, fetchDbMeals]);
 
-	// Update the meal plan when a single meal is regenerated
+	// Update the meal plan when a single meal is regenerated and refresh database
 	useEffect(() => {
 		if (singleMealObject?.meal && isRegeneratingFor) {
 			const newMeal = singleMealObject.meal;
@@ -67,12 +89,14 @@ export function MealPlanner() {
 				return newMeals;
 			});
 			setIsRegeneratingFor(null);
+			// Refresh database meals after single meal generation
+			void fetchDbMeals();
 		}
-	}, [singleMealObject, isRegeneratingFor, dateToKey]);
+	}, [singleMealObject, isRegeneratingFor, dateToKey, fetchDbMeals]);
 
 	const regenerateSingleMeal = (date: Date) => {
 		setIsRegeneratingFor(date);
-		const currentMeal = localMeals.get(dateToKey(date));
+		const currentMeal = allMeals.get(dateToKey(date));
 		const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
 		submitSingleMeal(
 			`Generate a single meal recommendation for ${dayName}. Provide the day as "${dayName}" and a new meal name. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
@@ -87,8 +111,41 @@ export function MealPlanner() {
 		);
 	};
 
+	// Create a combined meals map that prioritizes database meals
+	const combinedMeals = useCallback(() => {
+		const combined = new Map(localMeals);
+
+		// Add database meals, which take priority over local AI-generated ones
+		dbMeals.forEach((meal) => {
+			// For now, we'll use the day name as the key - this could be improved
+			// by storing actual dates in the database
+			const dayNames = [
+				"Sunday",
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday",
+			];
+			const dayIndex = dayNames.indexOf(meal.day);
+			if (dayIndex !== -1) {
+				const today = new Date();
+				const mealDate = new Date(today);
+				// Find the next occurrence of this day
+				const daysUntilTarget = (dayIndex - today.getDay() + 7) % 7;
+				mealDate.setDate(today.getDate() + daysUntilTarget);
+				combined.set(dateToKey(mealDate), meal.name);
+			}
+		});
+
+		return combined;
+	}, [localMeals, dbMeals, dateToKey]);
+
+	const allMeals = combinedMeals();
+
 	const selectedMeal = selectedDate
-		? localMeals.get(dateToKey(selectedDate))
+		? allMeals.get(dateToKey(selectedDate))
 		: null;
 
 	return (
@@ -117,7 +174,7 @@ export function MealPlanner() {
 								onSelect={setSelectedDate}
 								modifiers={{
 									noMeal: (date) =>
-										!localMeals.has(dateToKey(date)) &&
+										!allMeals.has(dateToKey(date)) &&
 										date > new Date(new Date().setHours(23, 59, 59, 999)),
 									isGenerating: (date) =>
 										!!isRegeneratingFor &&
@@ -205,14 +262,14 @@ export function MealPlanner() {
 								</Card>
 							)}
 
-							{localMeals.size > 0 && (
+							{allMeals.size > 0 && (
 								<Card>
 									<CardHeader>
 										<CardTitle className="text-base">Upcoming Meals</CardTitle>
 									</CardHeader>
 									<CardContent>
 										<div className="space-y-2 max-h-64 overflow-y-auto">
-											{Array.from(localMeals.entries())
+											{Array.from(allMeals.entries())
 												.sort(
 													([a], [b]) =>
 														new Date(a).getTime() - new Date(b).getTime(),

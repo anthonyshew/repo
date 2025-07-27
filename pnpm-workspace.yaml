@@ -2,9 +2,3 @@ packages:
   - apps/*
   - packages/*
   - tooling/*
-
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - core-js-pure
-  - esbuild
-  - sharp
