@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "turbo run check-types lint --output-logs=errors-only"
+          }
+        ]
+      }
+    ]
+  }
+}
