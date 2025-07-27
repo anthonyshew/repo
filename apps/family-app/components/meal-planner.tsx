@@ -2,8 +2,8 @@
 
 import { experimental_useObject as useObject } from "@ai-sdk/react";
 import { useEffect, useState } from "react";
-import { mealPlanSchema, mealSchema } from "../lib/schemas";
-import type { Meal } from "../lib/types";
+import { mealPlanSchema, mealSchema } from "#/lib/schemas";
+import type { Meal } from "#/lib/types";
 
 export function MealPlanner() {
 	const [isRegeneratingFor, setIsRegeneratingFor] = useState<string | null>(
