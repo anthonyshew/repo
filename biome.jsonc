@@ -1,6 +1,7 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	// TODO: Need to figure out how to get nvim to use these on save...
+	// "assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"files": {
 		"includes": [
 			"**",
