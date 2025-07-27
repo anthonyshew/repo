@@ -66,11 +66,11 @@ export function MealPlanner() {
 			const today = new Date();
 
 			object.meals.forEach((meal, index) => {
-				if (meal?.day && meal?.meal) {
+				if (meal?.day && meal?.name) {
 					// Calculate date based on today + index
 					const mealDate = new Date(today);
 					mealDate.setDate(today.getDate() + index);
-					mealMap.set(dateToKey(mealDate), meal.meal);
+					mealMap.set(dateToKey(mealDate), meal.name);
 				}
 			});
 			setLocalMeals(mealMap);
@@ -81,8 +81,8 @@ export function MealPlanner() {
 
 	// Update the meal plan when a single meal is regenerated and refresh database
 	useEffect(() => {
-		if (singleMealObject?.meal && isRegeneratingFor) {
-			const newMeal = singleMealObject.meal;
+		if (singleMealObject?.name && isRegeneratingFor) {
+			const newMeal = singleMealObject.name;
 			setLocalMeals((prevMeals) => {
 				const newMeals = new Map(prevMeals);
 				newMeals.set(dateToKey(isRegeneratingFor), newMeal);
@@ -115,28 +115,11 @@ export function MealPlanner() {
 	const combinedMeals = useCallback(() => {
 		const combined = new Map(localMeals);
 
-		// Add database meals, which take priority over local AI-generated ones
+		// Add database meals, which use unix timestamps for dates
 		dbMeals.forEach((meal) => {
-			// For now, we'll use the day name as the key - this could be improved
-			// by storing actual dates in the database
-			const dayNames = [
-				"Sunday",
-				"Monday",
-				"Tuesday",
-				"Wednesday",
-				"Thursday",
-				"Friday",
-				"Saturday",
-			];
-			const dayIndex = dayNames.indexOf(meal.day);
-			if (dayIndex !== -1) {
-				const today = new Date();
-				const mealDate = new Date(today);
-				// Find the next occurrence of this day
-				const daysUntilTarget = (dayIndex - today.getDay() + 7) % 7;
-				mealDate.setDate(today.getDate() + daysUntilTarget);
-				combined.set(dateToKey(mealDate), meal.name);
-			}
+			// Convert unix timestamp to date
+			const mealDate = new Date(meal.day * 1000);
+			combined.set(dateToKey(mealDate), meal.name);
 		});
 
 		return combined;

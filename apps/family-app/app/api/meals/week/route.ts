@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 		// Save each meal to database
 		if (result.object?.meals) {
 			const mealInserts = result.object.meals.map((meal) => ({
-				name: meal.meal,
+				name: meal.name,
 				day: meal.day,
 				recipe: "", // Will be filled when recipe is generated
 			}));

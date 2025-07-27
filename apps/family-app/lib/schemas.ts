@@ -1,11 +1,28 @@
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+import { meals } from "./db/schema";
 
-export const mealSchema = z.object({
-	day: z.string().describe("Day of the week"),
-	meal: z.string().describe("Name of the meal"),
-});
+// Derive schemas from Drizzle table
+export const insertMealSchema = createInsertSchema(meals);
+export const selectMealSchema = createSelectSchema(meals);
 
-export type Meal = z.infer<typeof mealSchema>;
+// For AI generation, transform between date strings and unix timestamps
+export const mealSchema = z
+	.object({
+		day: z
+			.string()
+			.describe("Date in YYYY-MM-DD format")
+			.transform((dateStr) => {
+				return Math.floor(new Date(dateStr).getTime() / 1000);
+			}),
+		meal: z.string().describe("Name of the meal"),
+	})
+	.transform((data) => ({
+		name: data.meal,
+		day: data.day,
+	}));
+
+export type Meal = z.infer<typeof selectMealSchema>;
 
 export const mealPlanSchema = z.object({
 	meals: z.array(mealSchema).describe("Weekly meal plan"),
