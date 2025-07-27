@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@ai-sdk/react": "2.0.0-beta.28",
+		"@repo/ui": "workspace:*",
 		"@repo/utils": "workspace:*",
 		"ai": "5.0.0-beta.28",
 		"effect": "^3.17.2",
