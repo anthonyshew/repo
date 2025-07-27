@@ -1,8 +1,8 @@
 "use client";
 
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { useState, useEffect } from "react";
-import { mealPlanSchema, singleMealSchema } from "../lib/schemas";
+import { useEffect, useState } from "react";
+import { mealPlanSchema, mealSchema } from "../lib/schemas";
 import type { Meal } from "../lib/types";
 
 export function MealPlanner() {
@@ -21,7 +21,7 @@ export function MealPlanner() {
 		isLoading: isSingleMealLoading,
 	} = useObject({
 		api: "/api/meals/day",
-		schema: singleMealSchema,
+		schema: mealSchema,
 	});
 
 	const generateAIMeals = () => {
@@ -34,18 +34,23 @@ export function MealPlanner() {
 	// Update local meals when main object changes
 	useEffect(() => {
 		if (object?.meals) {
-			setLocalMeals(object.meals);
+			const validMeals = object.meals.filter(
+				(meal): meal is Meal =>
+					meal !== undefined &&
+					meal.day !== undefined &&
+					meal.meal !== undefined,
+			);
+			setLocalMeals(validMeals);
 		}
 	}, [object?.meals]);
 
 	// Update the meal plan when a single meal is regenerated
 	useEffect(() => {
-		if (singleMealObject && isRegeneratingFor) {
+		if (singleMealObject?.meal && isRegeneratingFor) {
+			const newMeal = singleMealObject.meal;
 			setLocalMeals((prevMeals) =>
 				prevMeals.map((meal) =>
-					meal.day === isRegeneratingFor
-						? { ...meal, meal: singleMealObject.meal }
-						: meal,
+					meal.day === isRegeneratingFor ? { ...meal, meal: newMeal } : meal,
 				),
 			);
 			setIsRegeneratingFor(null);
@@ -54,7 +59,7 @@ export function MealPlanner() {
 
 	const regenerateSingleMeal = (dayToRegenerate: string) => {
 		setIsRegeneratingFor(dayToRegenerate);
-		const currentMeal = localMeals.find(m => m.day === dayToRegenerate)?.meal;
+		const currentMeal = localMeals.find((m) => m.day === dayToRegenerate)?.meal;
 		submitSingleMeal(
 			`Generate a single meal recommendation for ${dayToRegenerate}. Provide the day as "${dayToRegenerate}" and a new meal name. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
 		);
@@ -93,7 +98,11 @@ export function MealPlanner() {
 							<button
 								type="button"
 								onClick={() => regenerateSingleMeal(meal.day)}
-								disabled={isRegeneratingFor === meal.day || isLoading || isSingleMealLoading}
+								disabled={
+									isRegeneratingFor === meal.day ||
+									isLoading ||
+									isSingleMealLoading
+								}
 								className="ml-2 px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
 								title="Regenerate this meal"
 							>

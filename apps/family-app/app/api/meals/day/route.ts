@@ -1,6 +1,6 @@
 import { generateObject } from "ai";
 import { Effect } from "effect";
-import { singleMealSchema } from "../../../../lib/schemas";
+import { mealSchema } from "../../../../lib/schemas";
 
 export const maxDuration = 30;
 
@@ -11,8 +11,10 @@ export async function POST(request: Request) {
 		const result = yield* Effect.promise(() =>
 			generateObject({
 				model: "xai/grok-3",
-				prompt: prompt || "Generate a single meal recommendation for dinner. Focus on variety, nutrition, and family-friendly meals for 3 people.",
-				schema: singleMealSchema,
+				prompt:
+					prompt ||
+					"Generate a single meal recommendation for dinner. Focus on variety, nutrition, and family-friendly meals for 3 people.",
+				schema: mealSchema,
 			}),
 		);
 
