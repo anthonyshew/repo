@@ -217,7 +217,6 @@ function MealPlanner() {
 				?.map((part) => (part.type === "text" ? part.text : ""))
 				.join("") || "";
 
-
 		// Check if this is a single meal regeneration
 		if (isRegeneratingFor) {
 			// For single meal regeneration, the content should just be the meal name
@@ -291,7 +290,6 @@ function MealPlanner() {
 			void generateAIMeals();
 		}
 	}, [generateAIMeals, meals.length]);
-
 
 	return (
 		<div className="w-full max-w-2xl mx-auto mb-8 p-4 border rounded-lg bg-white dark:bg-gray-900">
