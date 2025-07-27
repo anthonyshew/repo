@@ -29,7 +29,7 @@
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"@types/web-push": "^3.6.4",
-		"tailwindcss": "^4",
+		"tailwindcss": "^4.1.11",
 		"typescript": "^5"
 	},
 	"imports": {

@@ -19,8 +19,8 @@
 		"./styles.css": "./dist/index.css"
 	},
 	"scripts": {
-		"dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch",
-		"build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+		"dev": "tailwindcss -i ./src/styles.css -o ./dist/index.css --watch --optimize --minify",
+		"build": "tailwindcss -i ./src/styles.css -o ./dist/index.css --optimize --minify",
 		"check-types": "tsc -b"
 	},
 	"dependencies": {
@@ -78,7 +78,7 @@
 		"@repo/tsconfig": "workspace:*",
 		"@tailwindcss/cli": "^4.1.5",
 		"@types/react": "^19.1.8",
-		"tailwindcss": "^4.1.5",
+		"tailwindcss": "^4.1.11",
 		"typescript": "^5.8.3"
 	},
 	"peerDependencies": {
