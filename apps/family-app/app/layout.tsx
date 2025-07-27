@@ -2,6 +2,17 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@repo/ui/styles.css";
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarInset,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	SidebarProvider,
+	SidebarTrigger,
+} from "@repo/ui/sidebar";
+import Link from "next/link";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -50,7 +61,31 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				{children}
+				<SidebarProvider>
+					<Sidebar>
+						<SidebarContent>
+							<div className="p-4">
+								<h2 className="text-lg font-semibold">Team Shew</h2>
+							</div>
+							<SidebarMenu>
+								<SidebarMenuItem>
+									<SidebarMenuButton asChild>
+										<Link href="/">Home</Link>
+									</SidebarMenuButton>
+									<SidebarMenuButton asChild>
+										<Link href="/meals">Meals</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							</SidebarMenu>
+						</SidebarContent>
+					</Sidebar>
+					<SidebarInset>
+						<header className="flex h-16 shrink-0 items-center gap-2 px-4">
+							<SidebarTrigger />
+						</header>
+						<div className="flex-1 overflow-auto">{children}</div>
+					</SidebarInset>
+				</SidebarProvider>
 			</body>
 		</html>
 	);

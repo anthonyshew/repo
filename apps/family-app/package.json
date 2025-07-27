@@ -14,6 +14,7 @@
 		"@repo/utils": "workspace:*",
 		"ai": "5.0.0-beta.28",
 		"effect": "^3.17.2",
+		"lucide-react": "^0.525.0",
 		"next": "15.3.5",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",

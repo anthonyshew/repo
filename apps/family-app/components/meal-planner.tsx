@@ -1,6 +1,10 @@
 "use client";
 
 import { experimental_useObject as useObject } from "@ai-sdk/react";
+import { Button } from "@repo/ui/Button";
+import { Badge } from "@repo/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
+import { RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Meal } from "#/lib/schemas";
 import { mealPlanSchema, mealSchema } from "#/lib/schemas";
@@ -65,52 +69,53 @@ export function MealPlanner() {
 		);
 	};
 	return (
-		<div className="w-full max-w-2xl mx-auto mb-8 p-4 border rounded-lg bg-white dark:bg-gray-900">
-			<h3 className="text-lg font-semibold mb-4">Weekly Meal Plan</h3>
-
-			<div className="mb-4">
-				<button
-					type="button"
+		<Card className="w-full max-w-2xl mx-auto">
+			<CardHeader>
+				<CardTitle>Weekly Meal Plan</CardTitle>
+			</CardHeader>
+			<CardContent className="space-y-4">
+				<Button
 					onClick={generateAIMeals}
 					disabled={isLoading}
-					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
+					className="w-full sm:w-auto"
 				>
 					{isLoading ? "Generating Meal Plan..." : "Generate New Meal Plan"}
-				</button>
-			</div>
+				</Button>
 
-			<ul className="space-y-2">
-				{localMeals.map((meal) => (
-					<li
-						key={meal.day}
-						className="p-3 bg-gray-50 dark:bg-gray-800 rounded border-l-4 border-blue-500"
-					>
-						<div className="flex justify-between items-start">
-							<div className="flex-1">
-								<div className="font-semibold text-blue-600 dark:text-blue-400">
-									{meal.day}
+				<div className="space-y-3">
+					{localMeals.map((meal) => (
+						<Card key={meal.day} className="border-l-4 border-l-blue-500">
+							<CardContent className="pt-4">
+								<div className="flex justify-between items-start">
+									<div className="flex-1 space-y-1">
+										<Badge variant="secondary" className="text-blue-600">
+											{meal.day}
+										</Badge>
+										<p className="text-sm text-muted-foreground">{meal.meal}</p>
+									</div>
+									<Button
+										variant="ghost"
+										size="sm"
+										onClick={() => regenerateSingleMeal(meal.day)}
+										disabled={
+											isRegeneratingFor === meal.day ||
+											isLoading ||
+											isSingleMealLoading
+										}
+										title="Regenerate this meal"
+									>
+										<RefreshCw
+											className={`h-4 w-4 ${
+												isRegeneratingFor === meal.day ? "animate-spin" : ""
+											}`}
+										/>
+									</Button>
 								</div>
-								<div className="text-gray-800 dark:text-gray-200">
-									{meal.meal}
-								</div>
-							</div>
-							<button
-								type="button"
-								onClick={() => regenerateSingleMeal(meal.day)}
-								disabled={
-									isRegeneratingFor === meal.day ||
-									isLoading ||
-									isSingleMealLoading
-								}
-								className="ml-2 px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
-								title="Regenerate this meal"
-							>
-								{isRegeneratingFor === meal.day ? "⏳" : "🔄"}
-							</button>
-						</div>
-					</li>
-				))}
-			</ul>
-		</div>
+							</CardContent>
+						</Card>
+					))}
+				</div>
+			</CardContent>
+		</Card>
 	);
 }
