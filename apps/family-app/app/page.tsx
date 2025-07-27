@@ -2,9 +2,9 @@
 
 import { useChat } from "@ai-sdk/react";
 import { checkEnvVar } from "@repo/utils/check-env-var";
+import { Effect } from "effect";
 import { useCallback, useEffect, useState } from "react";
 import { sendNotification, subscribeUser, unsubscribeUser } from "./actions";
-import { Effect, Either } from "effect";
 
 type Meal = {
 	day: string;
@@ -190,12 +190,12 @@ function MealPlanner() {
 	const generateAIMeals = useCallback(async () => {
 		setIsRegeneratingFor(null);
 		setIsGenerating(true);
-		
+
 		const fetchMeals = Effect.gen(function* () {
 			const response = yield* Effect.promise(() =>
-				fetch("/api/meals", { method: "POST" })
+				fetch("/api/meals", { method: "POST" }),
 			);
-			
+
 			if (response.ok) {
 				const data = yield* Effect.promise(() => response.json());
 				return data.meals;
@@ -204,12 +204,12 @@ function MealPlanner() {
 		});
 
 		const result = await Effect.runPromise(
-			Effect.catchAll(fetchMeals, (error) => 
+			Effect.catchAll(fetchMeals, (error) =>
 				Effect.sync(() => {
 					console.error(error);
 					return null;
-				})
-			)
+				}),
+			),
 		);
 
 		if (result) {
@@ -248,8 +248,8 @@ function MealPlanner() {
 
 		// Try to parse as JSON first (structured output)
 		const parseJson = Effect.gen(function* () {
-			const parsed = yield* Effect.promise(() => 
-				Promise.resolve(JSON.parse(content))
+			const parsed = yield* Effect.promise(() =>
+				Promise.resolve(JSON.parse(content)),
 			);
 			if (parsed.meals && Array.isArray(parsed.meals)) {
 				return parsed.meals;
@@ -258,7 +258,7 @@ function MealPlanner() {
 		});
 
 		const jsonResult = Effect.runSync(
-			Effect.catchAll(parseJson, () => Effect.succeed(null))
+			Effect.catchAll(parseJson, () => Effect.succeed(null)),
 		);
 
 		if (jsonResult) {

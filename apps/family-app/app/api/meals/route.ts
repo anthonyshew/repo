@@ -1,6 +1,6 @@
 import { generateObject } from "ai";
-import { z } from "zod";
 import { Effect } from "effect";
+import { z } from "zod";
 
 export const maxDuration = 30;
 
@@ -23,7 +23,7 @@ export async function POST() {
 				prompt:
 					"You are a personal chef for our family. Create a weekly dinner plan with simple, delicious, and healthy meals for 3 people. Provide the day of the week and meal name only.",
 				schema: mealPlanSchema,
-			})
+			}),
 		);
 
 		return result.object;
@@ -34,8 +34,8 @@ export async function POST() {
 			Effect.sync(() => {
 				console.error("Error in POST handler:", error);
 				return { error: "Internal server error", status: 500 };
-			})
-		)
+			}),
+		),
 	);
 
 	if ("error" in result) {

@@ -1,8 +1,8 @@
 "use server";
 
 import { checkEnvVar } from "@repo/utils/check-env-var";
-import webpush from "web-push";
 import { Effect } from "effect";
+import webpush from "web-push";
 
 const vapidPublicKey = checkEnvVar("NEXT_PUBLIC_VAPID_PUBLIC_KEY");
 const vapidPrivateKey = checkEnvVar("VAPID_PRIVATE_KEY");
@@ -45,7 +45,7 @@ export async function sendNotification(message: string) {
 					body: message,
 					icon: "/next.svg",
 				}),
-			)
+			),
 		);
 
 		return { success: true };
@@ -56,7 +56,7 @@ export async function sendNotification(message: string) {
 			Effect.sync(() => {
 				console.error("Error sending push notification:", error);
 				return { success: false, error: "Failed to send notification" };
-			})
-		)
+			}),
+		),
 	);
 }
