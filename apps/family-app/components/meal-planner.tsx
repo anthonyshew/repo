@@ -120,7 +120,7 @@ export function MealPlanner() {
 										!localMeals.has(dateToKey(date)) &&
 										date > new Date(new Date().setHours(23, 59, 59, 999)),
 									isGenerating: (date) =>
-										isRegeneratingFor &&
+										!!isRegeneratingFor &&
 										dateToKey(date) === dateToKey(isRegeneratingFor),
 								}}
 								modifiersClassNames={{
