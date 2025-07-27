@@ -4,6 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { checkEnvVar } from "@repo/utils/check-env-var";
 import { useCallback, useEffect, useState } from "react";
 import { sendNotification, subscribeUser, unsubscribeUser } from "./actions";
+import { Effect, Either } from "effect";
 
 type Meal = {
 	day: string;
@@ -189,19 +190,32 @@ function MealPlanner() {
 	const generateAIMeals = useCallback(async () => {
 		setIsRegeneratingFor(null);
 		setIsGenerating(true);
-		try {
-			const response = await fetch("/api/meals", {
-				method: "POST",
-			});
+		
+		const fetchMeals = Effect.gen(function* () {
+			const response = yield* Effect.promise(() =>
+				fetch("/api/meals", { method: "POST" })
+			);
+			
 			if (response.ok) {
-				const data = await response.json();
-				setMeals(data.meals);
+				const data = yield* Effect.promise(() => response.json());
+				return data.meals;
 			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setIsGenerating(false);
+			return yield* Effect.fail(new Error("Failed to fetch meals"));
+		});
+
+		const result = await Effect.runPromise(
+			Effect.catchAll(fetchMeals, (error) => 
+				Effect.sync(() => {
+					console.error(error);
+					return null;
+				})
+			)
+		);
+
+		if (result) {
+			setMeals(result);
 		}
+		setIsGenerating(false);
 	}, []);
 
 	// Parse meals from the latest assistant message
@@ -233,14 +247,23 @@ function MealPlanner() {
 		}
 
 		// Try to parse as JSON first (structured output)
-		try {
-			const parsed = JSON.parse(content);
+		const parseJson = Effect.gen(function* () {
+			const parsed = yield* Effect.promise(() => 
+				Promise.resolve(JSON.parse(content))
+			);
 			if (parsed.meals && Array.isArray(parsed.meals)) {
-				setMeals(parsed.meals);
-				return;
+				return parsed.meals;
 			}
-		} catch {
-			// Fall back to text parsing if JSON parsing fails
+			return yield* Effect.fail(new Error("Invalid meal structure"));
+		});
+
+		const jsonResult = Effect.runSync(
+			Effect.catchAll(parseJson, () => Effect.succeed(null))
+		);
+
+		if (jsonResult) {
+			setMeals(jsonResult);
+			return;
 		}
 
 		// Original logic for full meal plan parsing
