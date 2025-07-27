@@ -3,11 +3,11 @@
 import { experimental_useObject as useObject } from "@ai-sdk/react";
 import { useState } from "react";
 import { recipeSchema } from "../lib/schemas";
-import type { Recipe } from "../lib/types";
+import type { RecipeType } from "../lib/types";
 
 export function Recipe() {
 	const [selectedMeal, setSelectedMeal] = useState("");
-	const [currentRecipe, setCurrentRecipe] = useState<Recipe | null>(null);
+	const [currentRecipe, setCurrentRecipe] = useState<RecipeType | null>(null);
 
 	const { object, submit, isLoading } = useObject({
 		api: "/api/recipe",
@@ -60,19 +60,25 @@ export function Recipe() {
 						<h4 className="text-xl font-bold text-green-600 dark:text-green-400 mb-2">
 							{(currentRecipe || object)?.mealName}
 						</h4>
-						
+
 						<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-sm">
 							<div className="flex items-center">
 								<span className="font-semibold">Prep Time:</span>
-								<span className="ml-2">{(currentRecipe || object)?.prepTime}</span>
+								<span className="ml-2">
+									{(currentRecipe || object)?.prepTime}
+								</span>
 							</div>
 							<div className="flex items-center">
 								<span className="font-semibold">Cook Time:</span>
-								<span className="ml-2">{(currentRecipe || object)?.cookTime}</span>
+								<span className="ml-2">
+									{(currentRecipe || object)?.cookTime}
+								</span>
 							</div>
 							<div className="flex items-center">
 								<span className="font-semibold">Servings:</span>
-								<span className="ml-2">{(currentRecipe || object)?.servings}</span>
+								<span className="ml-2">
+									{(currentRecipe || object)?.servings}
+								</span>
 							</div>
 						</div>
 
@@ -82,8 +88,8 @@ export function Recipe() {
 									Ingredients:
 								</h5>
 								<ul className="space-y-1">
-									{(currentRecipe || object)?.ingredients?.map((ingredient, index) => (
-										<li key={index} className="flex items-start">
+									{(currentRecipe || object)?.ingredients?.map((ingredient) => (
+										<li key={ingredient} className="flex items-start">
 											<span className="text-green-500 mr-2">•</span>
 											<span className="text-gray-700 dark:text-gray-300">
 												{ingredient}
@@ -98,16 +104,18 @@ export function Recipe() {
 									Instructions:
 								</h5>
 								<ol className="space-y-2">
-									{(currentRecipe || object)?.instructions?.map((instruction, index) => (
-										<li key={index} className="flex items-start">
-											<span className="bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
-												{index + 1}
-											</span>
-											<span className="text-gray-700 dark:text-gray-300">
-												{instruction}
-											</span>
-										</li>
-									))}
+									{(currentRecipe || object)?.instructions?.map(
+										(instruction, index) => (
+											<li key={instruction} className="flex items-start">
+												<span className="bg-blue-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center mr-2 mt-0.5 flex-shrink-0">
+													{index + 1}
+												</span>
+												<span className="text-gray-700 dark:text-gray-300">
+													{instruction}
+												</span>
+											</li>
+										),
+									)}
 								</ol>
 							</div>
 						</div>

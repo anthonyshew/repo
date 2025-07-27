@@ -3,7 +3,7 @@ export type Meal = {
 	meal: string;
 };
 
-export type Recipe = {
+export type RecipeType = {
 	mealName: string;
 	ingredients: string[];
 	instructions: string[];
