@@ -3,7 +3,7 @@
 import { experimental_useObject as useObject } from "@ai-sdk/react";
 import { useState } from "react";
 import { recipeSchema } from "#/lib/schemas";
-import type { RecipeType } from "#/lib/types";
+import type { RecipeType } from "#/lib/schemas";
 
 export function Recipe() {
 	const [selectedMeal, setSelectedMeal] = useState("");
