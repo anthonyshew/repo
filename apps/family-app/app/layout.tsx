@@ -8,7 +8,11 @@ import {
 	SidebarProvider,
 	SidebarInset,
 	SidebarTrigger,
+	SidebarMenu,
+	SidebarMenuItem,
+	SidebarMenuButton,
 } from "@repo/ui/sidebar";
+import Link from "next/link";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -61,18 +65,25 @@ export default function RootLayout({
 					<Sidebar>
 						<SidebarContent>
 							<div className="p-4">
-								<h2 className="text-lg font-semibold">Family App</h2>
+								<h2 className="text-lg font-semibold">Team Shew</h2>
 							</div>
+							<SidebarMenu>
+								<SidebarMenuItem>
+									<SidebarMenuButton asChild>
+										<Link href="/">Home</Link>
+									</SidebarMenuButton>
+									<SidebarMenuButton asChild>
+										<Link href="/meals">Meals</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							</SidebarMenu>
 						</SidebarContent>
 					</Sidebar>
 					<SidebarInset>
-						<header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+						<header className="flex h-16 shrink-0 items-center gap-2 px-4">
 							<SidebarTrigger />
-							<h1 className="text-xl font-semibold">Team Shew</h1>
 						</header>
-						<div className="flex-1 overflow-auto">
-							{children}
-						</div>
+						<div className="flex-1 overflow-auto">{children}</div>
 					</SidebarInset>
 				</SidebarProvider>
 			</body>
