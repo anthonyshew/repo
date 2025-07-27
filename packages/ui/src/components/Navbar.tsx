@@ -1,5 +1,7 @@
+import type Link from "next/link";
 import type { ElementType } from "react";
-import type { NextLinkType } from "../utils/types";
+
+type NextLinkType = typeof Link;
 
 interface NavbarProps {
 	links: {
