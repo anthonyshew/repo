@@ -1,29 +1,63 @@
 "use client";
 
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { mealPlanSchema, singleMealSchema } from "../lib/schemas";
 import type { Meal } from "../lib/types";
-import { mealPlanSchema } from "../lib/schemas";
 
 export function MealPlanner() {
 	const [isRegeneratingFor, setIsRegeneratingFor] = useState<string | null>(
 		null,
 	);
+	const [localMeals, setLocalMeals] = useState<Meal[]>([]);
 	const { object, submit, isLoading } = useObject({
-		api: "/api/meals",
+		api: "/api/meals/week",
 		schema: mealPlanSchema,
+	});
+
+	const {
+		object: singleMealObject,
+		submit: submitSingleMeal,
+		isLoading: isSingleMealLoading,
+	} = useObject({
+		api: "/api/meals/day",
+		schema: singleMealSchema,
 	});
 
 	const generateAIMeals = () => {
 		setIsRegeneratingFor(null);
-		submit("Generate a weekly dinner plan with simple, delicious, and healthy meals for 3 people.");
+		submit(
+			"Generate a weekly dinner plan with simple, delicious, and healthy meals for 3 people.",
+		);
 	};
 
-	const meals = object?.meals || [];
+	// Update local meals when main object changes
+	useEffect(() => {
+		if (object?.meals) {
+			setLocalMeals(object.meals);
+		}
+	}, [object?.meals]);
+
+	// Update the meal plan when a single meal is regenerated
+	useEffect(() => {
+		if (singleMealObject && isRegeneratingFor) {
+			setLocalMeals((prevMeals) =>
+				prevMeals.map((meal) =>
+					meal.day === isRegeneratingFor
+						? { day: singleMealObject.day, meal: singleMealObject.meal }
+						: meal,
+				),
+			);
+			setIsRegeneratingFor(null);
+		}
+	}, [singleMealObject, isRegeneratingFor]);
 
 	const regenerateSingleMeal = (dayToRegenerate: string) => {
 		setIsRegeneratingFor(dayToRegenerate);
-		submit(`Generate a new weekly meal plan, but change only ${dayToRegenerate} to a different meal. Keep all other days the same as: ${meals.filter(m => m.day !== dayToRegenerate).map(m => `${m.day}: ${m.meal}`).join(", ")}`);
+		const currentMeal = localMeals.find(m => m.day === dayToRegenerate)?.meal;
+		submitSingleMeal(
+			`Generate a single meal recommendation for ${dayToRegenerate}. Provide the day as "${dayToRegenerate}" and a new meal name. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
+		);
 	};
 
 	return (
@@ -42,7 +76,7 @@ export function MealPlanner() {
 			</div>
 
 			<ul className="space-y-2">
-				{meals.map((meal) => (
+				{localMeals.map((meal) => (
 					<li
 						key={meal.day}
 						className="p-3 bg-gray-50 dark:bg-gray-800 rounded border-l-4 border-blue-500"
@@ -59,7 +93,7 @@ export function MealPlanner() {
 							<button
 								type="button"
 								onClick={() => regenerateSingleMeal(meal.day)}
-								disabled={isRegeneratingFor === meal.day || isLoading}
+								disabled={isRegeneratingFor === meal.day || isLoading || isSingleMealLoading}
 								className="ml-2 px-2 py-1 text-xs bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
 								title="Regenerate this meal"
 							>
