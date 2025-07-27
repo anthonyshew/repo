@@ -1,10 +1,10 @@
 "use client";
 
-import { Chat } from "../components/chat";
-import { InstallPrompt } from "../components/install-prompt";
-import { MealPlanner } from "../components/meal-planner";
-import { PushNotificationManager } from "../components/push-notification-manager";
-import { Recipe } from "../components/recipe";
+import { Chat } from "#/components/chat";
+import { InstallPrompt } from "#/components/install-prompt";
+import { MealPlanner } from "#/components/meal-planner";
+import { PushNotificationManager } from "#/components/push-notification-manager";
+import { Recipe } from "#/components/recipe";
 
 export default function Home() {
 	return (

@@ -1,6 +1,6 @@
 import { generateObject } from "ai";
 import { Effect } from "effect";
-import { recipeSchema } from "../../../lib/schemas";
+import { recipeSchema } from "#/lib/schemas";
 
 export const maxDuration = 30;
 
