@@ -19,11 +19,7 @@
 		"next-themes": "^0.4.6",
 		"react": "latest",
 		"react-dom": "latest",
-<<<<<<< HEAD
 		"zod": "^4.0.10"
-=======
-		"zod": "^3.25.76"
->>>>>>> b6a11451433849ff27f75a18d0a19aea101ce9f6
 	},
 	"devDependencies": {
 		"@repo/next-config": "workspace:*",
