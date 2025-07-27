@@ -1,13 +1,13 @@
 "use client";
 
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { useState } from "react";
-import { Clock, Users, ChefHat } from "lucide-react";
 import { Button } from "@repo/ui/Button";
-import { Input } from "@repo/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import { Badge } from "@repo/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
+import { Input } from "@repo/ui/input";
 import { Separator } from "@repo/ui/separator";
+import { ChefHat, Clock, Users } from "lucide-react";
+import { useState } from "react";
 import type { RecipeType } from "#/lib/schemas";
 import { recipeSchema } from "#/lib/schemas";
 
@@ -90,12 +90,14 @@ export function Recipe() {
 									<h5 className="font-semibold text-lg">Ingredients</h5>
 									<Separator />
 									<ul className="space-y-2">
-										{(currentRecipe || object)?.ingredients?.map((ingredient) => (
-											<li key={ingredient} className="flex items-start gap-2">
-												<span className="text-green-500 mt-1">•</span>
-												<span className="text-sm">{ingredient}</span>
-											</li>
-										))}
+										{(currentRecipe || object)?.ingredients?.map(
+											(ingredient) => (
+												<li key={ingredient} className="flex items-start gap-2">
+													<span className="text-green-500 mt-1">•</span>
+													<span className="text-sm">{ingredient}</span>
+												</li>
+											),
+										)}
 									</ul>
 								</div>
 
@@ -105,11 +107,19 @@ export function Recipe() {
 									<ol className="space-y-3">
 										{(currentRecipe || object)?.instructions?.map(
 											(instruction, index) => (
-												<li key={instruction} className="flex items-start gap-3">
-													<Badge variant="default" className="min-w-[24px] h-6 rounded-full flex items-center justify-center text-xs">
+												<li
+													key={instruction}
+													className="flex items-start gap-3"
+												>
+													<Badge
+														variant="default"
+														className="min-w-[24px] h-6 rounded-full flex items-center justify-center text-xs"
+													>
 														{index + 1}
 													</Badge>
-													<span className="text-sm leading-relaxed">{instruction}</span>
+													<span className="text-sm leading-relaxed">
+														{instruction}
+													</span>
 												</li>
 											),
 										)}

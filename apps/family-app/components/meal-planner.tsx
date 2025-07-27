@@ -1,11 +1,11 @@
 "use client";
 
 import { experimental_useObject as useObject } from "@ai-sdk/react";
-import { useEffect, useState } from "react";
-import { RefreshCw } from "lucide-react";
 import { Button } from "@repo/ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import { Badge } from "@repo/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
+import { RefreshCw } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { Meal } from "#/lib/schemas";
 import { mealPlanSchema, mealSchema } from "#/lib/schemas";
 
@@ -74,7 +74,7 @@ export function MealPlanner() {
 				<CardTitle>Weekly Meal Plan</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				<Button 
+				<Button
 					onClick={generateAIMeals}
 					disabled={isLoading}
 					className="w-full sm:w-auto"
@@ -91,9 +91,7 @@ export function MealPlanner() {
 										<Badge variant="secondary" className="text-blue-600">
 											{meal.day}
 										</Badge>
-										<p className="text-sm text-muted-foreground">
-											{meal.meal}
-										</p>
+										<p className="text-sm text-muted-foreground">{meal.meal}</p>
 									</div>
 									<Button
 										variant="ghost"
@@ -106,10 +104,10 @@ export function MealPlanner() {
 										}
 										title="Regenerate this meal"
 									>
-										<RefreshCw 
+										<RefreshCw
 											className={`h-4 w-4 ${
 												isRegeneratingFor === meal.day ? "animate-spin" : ""
-											}`} 
+											}`}
 										/>
 									</Button>
 								</div>

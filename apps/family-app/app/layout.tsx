@@ -5,12 +5,12 @@ import "@repo/ui/styles.css";
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarProvider,
 	SidebarInset,
-	SidebarTrigger,
 	SidebarMenu,
-	SidebarMenuItem,
 	SidebarMenuButton,
+	SidebarMenuItem,
+	SidebarProvider,
+	SidebarTrigger,
 } from "@repo/ui/sidebar";
 import Link from "next/link";
 
