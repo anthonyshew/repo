@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 		if (result.object) {
 			yield* Effect.promise(async () => {
 				const insertResult = await db.insert(meals).values({
-					name: result.object.meal,
+					name: result.object.name,
 					day: result.object.day,
 					recipe: "", // Will be filled when recipe is generated
 				});

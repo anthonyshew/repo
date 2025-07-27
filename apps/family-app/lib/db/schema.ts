@@ -4,10 +4,10 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 export const meals = sqliteTable("meals", {
 	id: integer("id").primaryKey({ autoIncrement: true }),
 	name: text("name").notNull(),
-	day: text("day").notNull(),
+	day: integer("day").notNull(),
 	recipe: text("recipe").notNull(),
-	createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
-	updatedAt: text("updated_at").notNull().default(sql`(datetime('now'))`),
+	createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+	updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
 export const ingredients = sqliteTable("ingredients", {
@@ -18,7 +18,7 @@ export const ingredients = sqliteTable("ingredients", {
 	name: text("name").notNull(),
 	quantity: text("quantity"),
 	unit: text("unit"),
-	createdAt: text("created_at").notNull().default(sql`(datetime('now'))`),
+	createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
 export const mealsRelations = relations(meals, ({ many }) => ({
