@@ -28,13 +28,13 @@ importers:
     dependencies:
       '@ai-sdk/react':
         specifier: 2.0.0-beta.28
-        version: 2.0.0-beta.28(react@19.1.0)(zod@3.25.76)
+        version: 2.0.0-beta.28(react@19.1.0)(zod@4.0.10)
       '@repo/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       ai:
         specifier: 5.0.0-beta.28
-        version: 5.0.0-beta.28(zod@3.25.76)
+        version: 5.0.0-beta.28(zod@4.0.10)
       next:
         specifier: 15.3.5
         version: 15.3.5(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -47,6 +47,9 @@ importers:
       web-push:
         specifier: ^3.6.7
         version: 3.6.7
+      zod:
+        specifier: ^4.0.10
+        version: 4.0.10
     devDependencies:
       '@repo/next-config':
         specifier: workspace:*
@@ -115,8 +118,8 @@ importers:
         specifier: latest
         version: 19.1.0(react@19.1.0)
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
+        specifier: ^4.0.10
+        version: 4.0.10
     devDependencies:
       '@repo/next-config':
         specifier: workspace:*
@@ -2434,44 +2437,44 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@3.25.74:
-    resolution: {integrity: sha512-J8poo92VuhKjNknViHRAIuuN6li/EwFbAC8OedzI8uxpEPGiXHGQu9wemIAioIpqgfB4SySaJhdk0mH5Y4ICBg==}
-
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.0.10:
+    resolution: {integrity: sha512-3vB+UU3/VmLL2lvwcY/4RV2i9z/YU0DTV/tDuYjrwmx5WeJ7hwy+rGEEx8glHp6Yxw7ibRbKSaIFBgReRPe5KA==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
 
-  '@ai-sdk/gateway@1.0.0-beta.14(zod@3.25.76)':
+  '@ai-sdk/gateway@1.0.0-beta.14(zod@4.0.10)':
     dependencies:
       '@ai-sdk/provider': 2.0.0-beta.1
-      '@ai-sdk/provider-utils': 3.0.0-beta.6(zod@3.25.76)
-      zod: 3.25.76
+      '@ai-sdk/provider-utils': 3.0.0-beta.6(zod@4.0.10)
+      zod: 4.0.10
 
-  '@ai-sdk/provider-utils@3.0.0-beta.6(zod@3.25.76)':
+  '@ai-sdk/provider-utils@3.0.0-beta.6(zod@4.0.10)':
     dependencies:
       '@ai-sdk/provider': 2.0.0-beta.1
       '@standard-schema/spec': 1.0.0
       eventsource-parser: 3.0.3
-      zod: 3.25.76
-      zod-to-json-schema: 3.24.6(zod@3.25.76)
+      zod: 4.0.10
+      zod-to-json-schema: 3.24.6(zod@4.0.10)
 
   '@ai-sdk/provider@2.0.0-beta.1':
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/react@2.0.0-beta.28(react@19.1.0)(zod@3.25.76)':
+  '@ai-sdk/react@2.0.0-beta.28(react@19.1.0)(zod@4.0.10)':
     dependencies:
-      '@ai-sdk/provider-utils': 3.0.0-beta.6(zod@3.25.76)
-      ai: 5.0.0-beta.28(zod@3.25.76)
+      '@ai-sdk/provider-utils': 3.0.0-beta.6(zod@4.0.10)
+      ai: 5.0.0-beta.28(zod@4.0.10)
       react: 19.1.0
       swr: 2.3.4(react@19.1.0)
       throttleit: 2.1.0
     optionalDependencies:
-      zod: 3.25.76
+      zod: 4.0.10
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -3286,13 +3289,13 @@ snapshots:
 
   agent-base@7.1.4: {}
 
-  ai@5.0.0-beta.28(zod@3.25.76):
+  ai@5.0.0-beta.28(zod@4.0.10):
     dependencies:
-      '@ai-sdk/gateway': 1.0.0-beta.14(zod@3.25.76)
+      '@ai-sdk/gateway': 1.0.0-beta.14(zod@4.0.10)
       '@ai-sdk/provider': 2.0.0-beta.1
-      '@ai-sdk/provider-utils': 3.0.0-beta.6(zod@3.25.76)
+      '@ai-sdk/provider-utils': 3.0.0-beta.6(zod@4.0.10)
       '@opentelemetry/api': 1.9.0
-      zod: 3.25.76
+      zod: 4.0.10
 
   ansi-sequence-parser@1.1.1: {}
 
@@ -3752,8 +3755,8 @@ snapshots:
       smol-toml: 1.4.1
       strip-json-comments: 5.0.2
       typescript: 5.8.3
-      zod: 3.25.74
-      zod-validation-error: 3.5.3(zod@3.25.74)
+      zod: 3.25.76
+      zod-validation-error: 3.5.3(zod@3.25.76)
 
   lightningcss-darwin-arm64@1.30.1:
     optional: true
@@ -4804,16 +4807,16 @@ snapshots:
 
   yallist@5.0.0: {}
 
-  zod-to-json-schema@3.24.6(zod@3.25.76):
+  zod-to-json-schema@3.24.6(zod@4.0.10):
+    dependencies:
+      zod: 4.0.10
+
+  zod-validation-error@3.5.3(zod@3.25.76):
     dependencies:
       zod: 3.25.76
 
-  zod-validation-error@3.5.3(zod@3.25.74):
-    dependencies:
-      zod: 3.25.74
-
-  zod@3.25.74: {}
-
   zod@3.25.76: {}
+
+  zod@4.0.10: {}
 
   zwitch@2.0.4: {}

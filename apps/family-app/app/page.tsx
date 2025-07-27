@@ -183,14 +183,26 @@ function MealPlanner() {
 	const [isRegeneratingFor, setIsRegeneratingFor] = useState<string | null>(
 		null,
 	);
+	const [isGenerating, setIsGenerating] = useState(false);
 	const { messages, sendMessage, status } = useChat();
 
 	const generateAIMeals = useCallback(async () => {
 		setIsRegeneratingFor(null);
-		sendMessage({
-			text: 'Generate a weekly meal plan for 7 days (Monday through Sunday). For each day, provide just the meal name. Format your response as a simple list with the day and meal separated by a colon, like "Monday: Spaghetti Bolognese". Focus on variety, nutrition, and family-friendly meals for 3 people.',
-		});
-	}, [sendMessage]);
+		setIsGenerating(true);
+		try {
+			const response = await fetch('/api/meals', {
+				method: 'POST',
+			});
+			if (response.ok) {
+				const data = await response.json();
+				setMeals(data.meals);
+			}
+		} catch (error) {
+			// Handle error silently or show user-friendly message
+		} finally {
+			setIsGenerating(false);
+		}
+	}, []);
 
 	// Parse meals from the latest assistant message
 	const parseMealsFromMessages = useCallback(() => {
@@ -200,14 +212,11 @@ function MealPlanner() {
 
 		if (!lastAssistantMessage) return;
 
-		console.log("Last assistant message:", lastAssistantMessage);
-
 		const content =
 			lastAssistantMessage.parts
 				?.map((part) => (part.type === "text" ? part.text : ""))
 				.join("") || "";
 
-		console.log("Extracted content:", content);
 
 		// Check if this is a single meal regeneration
 		if (isRegeneratingFor) {
@@ -224,9 +233,19 @@ function MealPlanner() {
 			}
 		}
 
+		// Try to parse as JSON first (structured output)
+		try {
+			const parsed = JSON.parse(content);
+			if (parsed.meals && Array.isArray(parsed.meals)) {
+				setMeals(parsed.meals);
+				return;
+			}
+		} catch {
+			// Fall back to text parsing if JSON parsing fails
+		}
+
 		// Original logic for full meal plan parsing
 		const lines = content.split("\n").filter((line: string) => line.trim());
-		console.log("Filtered lines:", lines);
 
 		const aiMeals: Meal[] = [];
 		const days = [
@@ -244,20 +263,14 @@ function MealPlanner() {
 				const [day, meal] = line.split(":").map((s: string) => s.trim());
 				// Remove leading dash and any extra whitespace
 				const cleanDay = day.replace(/^-\s*/, "");
-				console.log(
-					`Found day: "${day}", clean day: "${cleanDay}", meal: "${meal}"`,
-				);
 				if (days.includes(cleanDay) && meal) {
 					aiMeals.push({ day: cleanDay, meal });
 				}
 			}
 		}
 
-		console.log("Parsed meals:", aiMeals);
 		if (aiMeals.length === 7) {
 			setMeals(aiMeals);
-		} else {
-			console.warn(`Expected 7 meals, found ${aiMeals.length}`);
 		}
 	}, [messages, isRegeneratingFor]);
 
@@ -279,6 +292,7 @@ function MealPlanner() {
 		}
 	}, [generateAIMeals, meals.length]);
 
+
 	return (
 		<div className="w-full max-w-2xl mx-auto mb-8 p-4 border rounded-lg bg-white dark:bg-gray-900">
 			<h3 className="text-lg font-semibold mb-4">Weekly Meal Plan</h3>
@@ -287,10 +301,10 @@ function MealPlanner() {
 				<button
 					type="button"
 					onClick={generateAIMeals}
-					disabled={status === "streaming" || status === "submitted"}
+					disabled={isGenerating}
 					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
 				>
-					{status === "streaming" || status === "submitted"
+					{isGenerating
 						? "Generating Meal Plan..."
 						: "Generate New Meal Plan"}
 				</button>

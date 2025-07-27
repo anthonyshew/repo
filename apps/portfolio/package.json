@@ -19,12 +19,12 @@
 		"next-themes": "^0.4.6",
 		"react": "latest",
 		"react-dom": "latest",
-		"zod": "^3.25.76"
+		"zod": "^4.0.10"
 	},
 	"devDependencies": {
 		"@repo/next-config": "workspace:*",
-		"@repo/tsconfig": "workspace:*",
 		"@repo/tailwind-config": "workspace:*",
+		"@repo/tsconfig": "workspace:*",
 		"@tailwindcss/typography": "^0.5.16",
 		"@types/node": "^24.0.10",
 		"@types/react": "^19.1.8",
