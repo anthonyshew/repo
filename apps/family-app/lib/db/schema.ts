@@ -6,8 +6,12 @@ export const meals = sqliteTable("meals", {
 	name: text("name").notNull(),
 	day: integer("day").notNull(),
 	recipe: text("recipe").notNull(),
-	createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
-	updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.notNull()
+		.default(sql`(unixepoch())`),
+	updatedAt: integer("updated_at", { mode: "timestamp" })
+		.notNull()
+		.default(sql`(unixepoch())`),
 });
 
 export const ingredients = sqliteTable("ingredients", {
@@ -18,7 +22,9 @@ export const ingredients = sqliteTable("ingredients", {
 	name: text("name").notNull(),
 	quantity: text("quantity"),
 	unit: text("unit"),
-	createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.notNull()
+		.default(sql`(unixepoch())`),
 });
 
 export const mealsRelations = relations(meals, ({ many }) => ({
