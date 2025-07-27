@@ -44,7 +44,7 @@ export function MealPlanner() {
 			setLocalMeals((prevMeals) =>
 				prevMeals.map((meal) =>
 					meal.day === isRegeneratingFor
-						? { day: singleMealObject.day, meal: singleMealObject.meal }
+						? { ...meal, meal: singleMealObject.meal }
 						: meal,
 				),
 			);
