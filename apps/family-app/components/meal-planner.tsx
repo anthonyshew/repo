@@ -1,7 +1,7 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { Effect } from "effect";
+import { DefaultChatTransport } from "ai";
 import { useCallback, useEffect, useState } from "react";
 import type { Meal } from "../lib/types";
 
@@ -10,39 +10,14 @@ export function MealPlanner() {
 	const [isRegeneratingFor, setIsRegeneratingFor] = useState<string | null>(
 		null,
 	);
-	const [isGenerating, setIsGenerating] = useState(false);
-	const { messages, sendMessage, status } = useChat();
+	const { messages, sendMessage, status } = useChat({
+		transport: new DefaultChatTransport({ api: "/api/meals" }),
+	});
 
-	const generateAIMeals = useCallback(async () => {
+	const generateAIMeals = useCallback(() => {
 		setIsRegeneratingFor(null);
-		setIsGenerating(true);
-
-		const fetchMeals = Effect.gen(function* () {
-			const response = yield* Effect.promise(() =>
-				fetch("/api/meals", { method: "POST" }),
-			);
-
-			if (response.ok) {
-				const data = yield* Effect.promise(() => response.json());
-				return data.meals;
-			}
-			return yield* Effect.fail(new Error("Failed to fetch meals"));
-		});
-
-		const result = await Effect.runPromise(
-			Effect.catchAll(fetchMeals, (error) =>
-				Effect.sync(() => {
-					console.error(error);
-					return null;
-				}),
-			),
-		);
-
-		if (result) {
-			setMeals(result);
-		}
-		setIsGenerating(false);
-	}, []);
+		sendMessage();
+	}, [sendMessage]);
 
 	// Parse meals from the latest assistant message
 	const parseMealsFromMessages = useCallback(() => {
@@ -73,23 +48,14 @@ export function MealPlanner() {
 		}
 
 		// Try to parse as JSON first (structured output)
-		const parseJson = Effect.gen(function* () {
-			const parsed = yield* Effect.promise(() =>
-				Promise.resolve(JSON.parse(content)),
-			);
+		try {
+			const parsed = JSON.parse(content);
 			if (parsed.meals && Array.isArray(parsed.meals)) {
-				return parsed.meals;
+				setMeals(parsed.meals);
+				return;
 			}
-			return yield* Effect.fail(new Error("Invalid meal structure"));
-		});
-
-		const jsonResult = Effect.runSync(
-			Effect.catchAll(parseJson, () => Effect.succeed(null)),
-		);
-
-		if (jsonResult) {
-			setMeals(jsonResult);
-			return;
+		} catch {
+			// Fall through to manual parsing
 		}
 
 		// Original logic for full meal plan parsing
@@ -134,12 +100,6 @@ export function MealPlanner() {
 		});
 	};
 
-	useEffect(() => {
-		if (meals.length === 0) {
-			void generateAIMeals();
-		}
-	}, [generateAIMeals, meals.length]);
-
 	return (
 		<div className="w-full max-w-2xl mx-auto mb-8 p-4 border rounded-lg bg-white dark:bg-gray-900">
 			<h3 className="text-lg font-semibold mb-4">Weekly Meal Plan</h3>
@@ -148,10 +108,12 @@ export function MealPlanner() {
 				<button
 					type="button"
 					onClick={generateAIMeals}
-					disabled={isGenerating}
+					disabled={status === "streaming" || status === "submitted"}
 					className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
 				>
-					{isGenerating ? "Generating Meal Plan..." : "Generate New Meal Plan"}
+					{status === "streaming" || status === "submitted"
+						? "Generating Meal Plan..."
+						: "Generate New Meal Plan"}
 				</button>
 			</div>
 
