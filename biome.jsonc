@@ -10,6 +10,7 @@
 			"!**/dist/**",
 			"!**/build/**",
 			"!**/.turbo/**",
+			"!**/.claude/**",
 			"!**/coverage/**",
 			"!**/.source/**",
 			"!packages/ui/src/styles.css" // Biome can't parse the oddities of Tailwind syntax
