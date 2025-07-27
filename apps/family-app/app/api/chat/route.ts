@@ -1,14 +1,15 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import { Effect } from "effect";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-	try {
-		const body = await req.json();
+	const processChat = Effect.gen(function* () {
+		const body = yield* Effect.promise(() => req.json());
 		const { messages }: { messages: UIMessage[] } = body;
 
 		if (!messages || !Array.isArray(messages)) {
-			return new Response("Messages must be an array", { status: 400 });
+			return yield* Effect.fail(new Error("Messages must be an array"));
 		}
 
 		// For regular chat messages, use streaming
@@ -20,8 +21,19 @@ export async function POST(req: Request) {
 		});
 
 		return result.toUIMessageStreamResponse();
-	} catch (error) {
-		console.error("Error in POST handler:", error);
-		return new Response("Internal server error", { status: 500 });
-	}
+	});
+
+	return await Effect.runPromise(
+		Effect.matchEffect(processChat, {
+			onFailure: (error) =>
+				Effect.sync(() => {
+					console.error("Error in POST handler:", error);
+					const errorMessage = error.message || "Internal server error";
+					const status =
+						errorMessage === "Messages must be an array" ? 400 : 500;
+					return new Response(errorMessage, { status });
+				}),
+			onSuccess: (response) => Effect.succeed(response),
+		}),
+	);
 }

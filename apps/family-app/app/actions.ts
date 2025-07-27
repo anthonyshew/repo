@@ -1,6 +1,7 @@
 "use server";
 
 import { checkEnvVar } from "@repo/utils/check-env-var";
+import { Effect } from "effect";
 import webpush from "web-push";
 
 const vapidPublicKey = checkEnvVar("NEXT_PUBLIC_VAPID_PUBLIC_KEY");
@@ -30,23 +31,32 @@ export async function unsubscribeUser() {
 }
 
 export async function sendNotification(message: string) {
-	if (!subscription) {
-		throw new Error("No subscription available");
-	}
+	const sendPushNotification = Effect.gen(function* () {
+		if (!subscription) {
+			return yield* Effect.fail(new Error("No subscription available"));
+		}
 
-	try {
-		await webpush.sendNotification(
-			// @ts-expect-error -- TODO: Type is messed up - or code is actually wrong?
-			subscription,
-			JSON.stringify({
-				title: "Family App Notification",
-				body: message,
-				icon: "/next.svg",
-			}),
+		yield* Effect.promise(() =>
+			webpush.sendNotification(
+				// @ts-expect-error -- TODO: Type is messed up - or code is actually wrong?
+				subscription,
+				JSON.stringify({
+					title: "Family App Notification",
+					body: message,
+					icon: "/next.svg",
+				}),
+			),
 		);
+
 		return { success: true };
-	} catch (error) {
-		console.error("Error sending push notification:", error);
-		return { success: false, error: "Failed to send notification" };
-	}
+	});
+
+	return await Effect.runPromise(
+		Effect.catchAll(sendPushNotification, (error) =>
+			Effect.sync(() => {
+				console.error("Error sending push notification:", error);
+				return { success: false, error: "Failed to send notification" };
+			}),
+		),
+	);
 }
