@@ -3,23 +3,15 @@
 import { experimental_useObject as useObject } from "@ai-sdk/react";
 import { Button } from "@repo/ui/Button";
 import { Badge } from "@repo/ui/badge";
-import { Calendar } from "@repo/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/card";
 import { CalendarDays, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import type { Meal } from "#/lib/db";
-import { mealPlanSchema, mealSchema } from "#/lib/schemas";
+import { mealSchema } from "#/lib/schemas";
 
 export function MealPlanner() {
 	const [isRegeneratingFor, setIsRegeneratingFor] = useState<Date | null>(null);
 	const [dbMeals, setDbMeals] = useState<Meal[]>([]);
-	const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-		new Date(),
-	);
-	const { object, submit, isLoading } = useObject({
-		api: "/api/meals/week",
-		schema: mealPlanSchema,
-	});
 
 	const {
 		object: singleMealObject,
@@ -48,24 +40,8 @@ export function MealPlanner() {
 		void fetchDbMeals();
 	}, [fetchDbMeals]);
 
-	const generateAIMeals = () => {
-		setIsRegeneratingFor(null);
-		submit(
-			"Generate a weekly dinner plan with simple, delicious, and healthy meals for 3 people.",
-		);
-	};
-
 	// Convert date to a consistent string format for storage
 	const dateToKey = useCallback((date: Date) => date.toDateString(), []);
-
-	// Update local meals when main object changes and refresh database
-	useEffect(() => {
-		if (object?.meals) {
-			// No need to process locally since meals are saved to DB with dates
-			// Just refresh database meals after AI generation
-			void fetchDbMeals();
-		}
-	}, [object?.meals, fetchDbMeals]);
 
 	// Update the meal plan when a single meal is regenerated and refresh database
 	useEffect(() => {
@@ -113,9 +89,17 @@ export function MealPlanner() {
 
 	const allMeals = combinedMeals();
 
-	const selectedMeal = selectedDate
-		? allMeals.get(dateToKey(selectedDate))
-		: null;
+	// Generate array of next 7 days starting from today
+	const getNext7Days = () => {
+		const days = [];
+		const today = new Date();
+		for (let i = 0; i < 7; i++) {
+			const date = new Date(today);
+			date.setDate(today.getDate() + i);
+			days.push(date);
+		}
+		return days;
+	};
 
 	return (
 		<div className="w-full max-w-4xl mx-auto space-y-6">
@@ -123,156 +107,68 @@ export function MealPlanner() {
 				<CardHeader>
 					<CardTitle className="flex items-center gap-2">
 						<CalendarDays className="h-5 w-5" />
-						Meal Planning Calendar
+						Meal Planning
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
-					<Button
-						onClick={generateAIMeals}
-						disabled={isLoading}
-						className="w-full sm:w-auto"
-					>
-						{isLoading ? "Generating Meal Plan..." : "Generate New Meal Plan"}
-					</Button>
+					<div className="space-y-3">
+						{getNext7Days().map((date) => {
+							const dateKey = dateToKey(date);
+							const meal = allMeals.get(dateKey);
+							const isGenerating =
+								isRegeneratingFor && dateToKey(isRegeneratingFor) === dateKey;
 
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-						<div className="space-y-4">
-							<Calendar
-								mode="single"
-								selected={selectedDate}
-								onSelect={setSelectedDate}
-								modifiers={{
-									noMeal: (date) =>
-										!allMeals.has(dateToKey(date)) &&
-										date > new Date(new Date().setHours(23, 59, 59, 999)),
-									isGenerating: (date) =>
-										!!isRegeneratingFor &&
-										dateToKey(date) === dateToKey(isRegeneratingFor),
-								}}
-								modifiersClassNames={{
-									noMeal:
-										"relative after:content-[''] after:absolute after:top-1 after:right-1 after:w-2 after:h-2 after:bg-red-500 after:rounded-full after:z-10 after:pointer-events-none",
-									isGenerating:
-										"bg-yellow-100 text-yellow-800 animate-pulse dark:bg-yellow-900 dark:text-yellow-100",
-								}}
-								className="rounded-md border"
-							/>
-						</div>
+							return (
+								<Card key={dateKey} className="p-4">
+									<div className="flex items-center justify-between">
+										<div className="flex-1">
+											<h3 className="font-semibold text-lg">
+												{date.toLocaleDateString("en-US", {
+													weekday: "long",
+													month: "long",
+													day: "numeric",
+												})}
+											</h3>
+											{meal ? (
+												<p className="text-muted-foreground mt-1">{meal}</p>
+											) : (
+												<p className="text-muted-foreground mt-1 italic">
+													No meal planned
+												</p>
+											)}
+										</div>
 
-						<div className="space-y-4">
-							{selectedDate && (
-								<Card>
-									<CardContent className="pt-6">
-										<div className="space-y-3">
-											<div className="flex items-center justify-between">
-												<h3 className="font-semibold">
-													{selectedDate.toLocaleDateString("en-US", {
-														weekday: "long",
-														month: "long",
-														day: "numeric",
-													})}
-												</h3>
-												<Badge variant={selectedMeal ? "default" : "secondary"}>
-													{selectedMeal ? "Planned" : "No meal"}
-												</Badge>
-											</div>
+										<div className="flex items-center gap-2">
+											<Badge variant={meal ? "default" : "secondary"}>
+												{meal ? "Planned" : "No meal"}
+											</Badge>
 
-											{selectedMeal ? (
-												<div className="space-y-3">
-													<p className="text-sm text-muted-foreground">
-														{selectedMeal}
-													</p>
-													<Button
-														variant="outline"
-														size="sm"
-														onClick={() => regenerateSingleMeal(selectedDate)}
-														disabled={
-															(isRegeneratingFor &&
-																dateToKey(selectedDate) ===
-																	dateToKey(isRegeneratingFor)) ||
-															isLoading ||
-															isSingleMealLoading
-														}
-														className="w-full"
-													>
-														<RefreshCw
-															className={`h-4 w-4 mr-2 ${
-																isRegeneratingFor &&
-																dateToKey(selectedDate) ===
-																	dateToKey(isRegeneratingFor)
-																	? "animate-spin"
-																	: ""
-															}`}
-														/>
-														Generate New Meal
-													</Button>
-												</div>
+											{meal ? (
+												<Button
+													variant="outline"
+													size="sm"
+													onClick={() => regenerateSingleMeal(date)}
+													disabled={isGenerating || isSingleMealLoading}
+												>
+													<RefreshCw
+														className={`h-4 w-4 mr-2 ${isGenerating ? "animate-spin" : ""}`}
+													/>
+													{isGenerating ? "Generating..." : "Regenerate"}
+												</Button>
 											) : (
 												<Button
-													onClick={() => generateMealForDate(selectedDate)}
-													disabled={
-														(isRegeneratingFor &&
-															dateToKey(selectedDate) ===
-																dateToKey(isRegeneratingFor)) ||
-														isLoading ||
-														isSingleMealLoading
-													}
-													className="w-full"
+													size="sm"
+													onClick={() => generateMealForDate(date)}
+													disabled={isGenerating || isSingleMealLoading}
 												>
-													{isRegeneratingFor &&
-													dateToKey(selectedDate) ===
-														dateToKey(isRegeneratingFor)
-														? "Generating..."
-														: "Generate Meal"}
+													{isGenerating ? "Generating..." : "Generate"}
 												</Button>
 											)}
 										</div>
-									</CardContent>
+									</div>
 								</Card>
-							)}
-
-							{allMeals.size > 0 && (
-								<Card>
-									<CardHeader>
-										<CardTitle className="text-base">Upcoming Meals</CardTitle>
-									</CardHeader>
-									<CardContent>
-										<div className="space-y-2 max-h-64 overflow-y-auto">
-											{Array.from(allMeals.entries())
-												.sort(
-													([a], [b]) =>
-														new Date(a).getTime() - new Date(b).getTime(),
-												)
-												.slice(0, 7)
-												.map(([dateKey, meal]) => {
-													const date = new Date(dateKey);
-													return (
-														<button
-															key={dateKey}
-															type="button"
-															className="flex items-center justify-between p-2 rounded-md border cursor-pointer hover:bg-muted/50 w-full text-left"
-															onClick={() => setSelectedDate(date)}
-														>
-															<div>
-																<p className="text-sm font-medium">
-																	{date.toLocaleDateString("en-US", {
-																		weekday: "short",
-																		month: "short",
-																		day: "numeric",
-																	})}
-																</p>
-																<p className="text-xs text-muted-foreground">
-																	{meal}
-																</p>
-															</div>
-														</button>
-													);
-												})}
-										</div>
-									</CardContent>
-								</Card>
-							)}
-						</div>
+							);
+						})}
 					</div>
 				</CardContent>
 			</Card>
