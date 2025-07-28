@@ -80,17 +80,21 @@ export function MealPlanner() {
 		setIsRegeneratingFor(date);
 		const currentMeal = allMeals.get(dateToKey(date));
 		const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
-		submitSingleMeal(
-			`Generate a single meal recommendation for ${dayName}. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
-		);
+		const timestamp = Math.floor(date.getTime() / 1000);
+		submitSingleMeal({
+			prompt: `Generate a single meal recommendation for ${dayName}. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
+			date: timestamp,
+		});
 	};
 
 	const generateMealForDate = (date: Date) => {
 		const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
+		const timestamp = Math.floor(date.getTime() / 1000);
 		setIsRegeneratingFor(date);
-		submitSingleMeal(
-			`Generate a single meal recommendation for ${dayName}. Focus on variety, nutrition, and family-friendly meals for 3 people.`,
-		);
+		submitSingleMeal({
+			prompt: `Generate a single meal recommendation for ${dayName}. Focus on variety, nutrition, and family-friendly meals for 3 people.`,
+			date: timestamp,
+		});
 	};
 
 	// Create meals map from database only
