@@ -1,7 +1,7 @@
 import { generateObject } from "ai";
 import { Effect } from "effect";
 import { db, meals } from "#/lib/db";
-import { mealPlanSchema, convertMealForInsert } from "#/lib/schemas";
+import { convertMealForInsert, mealPlanSchema } from "#/lib/schemas";
 
 export const maxDuration = 30;
 
