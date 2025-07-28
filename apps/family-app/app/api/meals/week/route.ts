@@ -23,9 +23,9 @@ export async function POST(request: Request) {
 		if (result.object?.meals) {
 			const todayTimestamp = Math.floor(Date.now() / 1000);
 			const oneDayInSeconds = 24 * 60 * 60;
-			
-			const mealInserts = result.object.meals.map((meal, index) => 
-				convertMealForInsert(meal, todayTimestamp + (index * oneDayInSeconds))
+
+			const mealInserts = result.object.meals.map((meal, index) =>
+				convertMealForInsert(meal, todayTimestamp + index * oneDayInSeconds),
 			);
 
 			yield* Effect.promise(async () => {
