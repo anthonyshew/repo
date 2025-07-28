@@ -2,25 +2,45 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { meals } from "./db/schema";
 
+// Utility type for creating AI-compatible schemas that stay in sync with Drizzle
+// biome-ignore lint/complexity/noBannedTypes: It's what I want.
+type AICompatibleSchema<TDrizzle, TOverrides = {}> = {
+	[K in keyof TDrizzle]: K extends keyof TOverrides
+		? TOverrides[K]
+		: TDrizzle[K];
+};
+
 // Derive schemas from Drizzle table
 export const insertMealSchema = createInsertSchema(meals);
 export const selectMealSchema = createSelectSchema(meals);
 
-// For AI generation, transform between date strings and unix timestamps
-export const mealSchema = z
-	.object({
-		day: z
-			.string()
-			.describe("Date in YYYY-MM-DD format")
-			.transform((dateStr) => {
-				return Math.floor(new Date(dateStr).getTime() / 1000);
-			}),
-		meal: z.string().describe("Name of the meal"),
-	})
-	.transform((data) => ({
-		name: data.meal,
-		day: data.day,
-	}));
+// Get the exact shape from Drizzle insert schema
+type DrizzleInsertMeal = z.infer<typeof insertMealSchema>;
+
+// Create AI schema that must match Drizzle structure, but with string day for JSON Schema compatibility
+export const mealSchema = z.object({
+	test: z.string(),
+	name: z.string().describe("Name of the meal"),
+	day: z.string().describe("Date in YYYY-MM-DD format"),
+	recipe: z.string().describe("Recipe description").default(""),
+}) satisfies z.ZodType<
+	AICompatibleSchema<
+		DrizzleInsertMeal,
+		{
+			day: string; // Override: string instead of number for JSON Schema compatibility
+		}
+	>
+>;
+
+// Type-safe converter that must satisfy both input and output types
+export const convertMealForInsert = (
+	meal: z.infer<typeof mealSchema>,
+): DrizzleInsertMeal => ({
+	name: meal.name,
+	day: Math.floor(new Date(meal.day).getTime() / 1000),
+	recipe: meal.recipe,
+	// If you add fields to DrizzleInsertMeal, TypeScript will force you to handle them here
+});
 
 export type Meal = z.infer<typeof selectMealSchema>;
 

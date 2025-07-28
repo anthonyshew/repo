@@ -1,7 +1,7 @@
 import { generateObject } from "ai";
 import { Effect } from "effect";
 import { db, meals } from "#/lib/db";
-import { mealSchema } from "#/lib/schemas";
+import { convertMealForInsert, mealSchema } from "#/lib/schemas";
 
 export const maxDuration = 30;
 
@@ -22,11 +22,9 @@ export async function POST(request: Request) {
 		// Save to database
 		if (result.object) {
 			yield* Effect.promise(async () => {
-				const insertResult = await db.insert(meals).values({
-					name: result.object.name,
-					day: result.object.day,
-					recipe: "", // Will be filled when recipe is generated
-				});
+				const insertResult = await db
+					.insert(meals)
+					.values(convertMealForInsert(result.object));
 				return insertResult;
 			});
 		}
