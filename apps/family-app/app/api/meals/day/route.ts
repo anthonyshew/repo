@@ -6,10 +6,10 @@ import { convertMealForInsert, mealSchema } from "#/lib/schemas";
 export const maxDuration = 30;
 
 export async function POST(request: Request) {
-	const { prompt, date } = await request.json(); // day is Unix timestamp for the meal date
+	const { prompt, date } = await request.json();
 
 	const generateSingleMeal = Effect.gen(function* () {
-		const mealDate = date || Math.floor(Date.now() / 1000); // Use provided day or default to today
+		const mealDate = date || Math.floor(Date.now() / 1000); // Use provided timestamp or default to today
 		const result = yield* Effect.promise(() =>
 			generateObject({
 				model: "xai/grok-3",
