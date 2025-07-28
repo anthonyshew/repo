@@ -12,7 +12,6 @@ import { mealPlanSchema, mealSchema } from "#/lib/schemas";
 
 export function MealPlanner() {
 	const [isRegeneratingFor, setIsRegeneratingFor] = useState<Date | null>(null);
-	const [localMeals, setLocalMeals] = useState<Map<string, string>>(new Map());
 	const [dbMeals, setDbMeals] = useState<Meal[]>([]);
 	const [selectedDate, setSelectedDate] = useState<Date | undefined>(
 		new Date(),
@@ -62,44 +61,27 @@ export function MealPlanner() {
 	// Update local meals when main object changes and refresh database
 	useEffect(() => {
 		if (object?.meals) {
-			const mealMap = new Map<string, string>();
-			const today = new Date();
-
-			object.meals.forEach((meal, index) => {
-				if (meal?.day && meal?.name) {
-					// Calculate date based on today + index
-					const mealDate = new Date(today);
-					mealDate.setDate(today.getDate() + index);
-					mealMap.set(dateToKey(mealDate), meal.name);
-				}
-			});
-			setLocalMeals(mealMap);
-			// Refresh database meals after AI generation
+			// No need to process locally since meals are saved to DB with dates
+			// Just refresh database meals after AI generation
 			void fetchDbMeals();
 		}
-	}, [object?.meals, dateToKey, fetchDbMeals]);
+	}, [object?.meals, fetchDbMeals]);
 
 	// Update the meal plan when a single meal is regenerated and refresh database
 	useEffect(() => {
 		if (singleMealObject?.name && isRegeneratingFor) {
-			const newMeal = singleMealObject.name;
-			setLocalMeals((prevMeals) => {
-				const newMeals = new Map(prevMeals);
-				newMeals.set(dateToKey(isRegeneratingFor), newMeal);
-				return newMeals;
-			});
 			setIsRegeneratingFor(null);
 			// Refresh database meals after single meal generation
 			void fetchDbMeals();
 		}
-	}, [singleMealObject, isRegeneratingFor, dateToKey, fetchDbMeals]);
+	}, [singleMealObject, isRegeneratingFor, fetchDbMeals]);
 
 	const regenerateSingleMeal = (date: Date) => {
 		setIsRegeneratingFor(date);
 		const currentMeal = allMeals.get(dateToKey(date));
 		const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
 		submitSingleMeal(
-			`Generate a single meal recommendation for ${dayName}. Provide the day as "${dayName}" and a new meal name. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
+			`Generate a single meal recommendation for ${dayName}. Focus on variety, nutrition, and family-friendly meals for 3 people. Make it different from "${currentMeal}" and common meals like spaghetti, pizza, or tacos.`,
 		);
 	};
 
@@ -107,13 +89,13 @@ export function MealPlanner() {
 		const dayName = date.toLocaleDateString("en-US", { weekday: "long" });
 		setIsRegeneratingFor(date);
 		submitSingleMeal(
-			`Generate a single meal recommendation for ${dayName}. Provide the day as "${dayName}" and a new meal name. Focus on variety, nutrition, and family-friendly meals for 3 people.`,
+			`Generate a single meal recommendation for ${dayName}. Focus on variety, nutrition, and family-friendly meals for 3 people.`,
 		);
 	};
 
-	// Create a combined meals map that prioritizes database meals
+	// Create meals map from database only
 	const combinedMeals = useCallback(() => {
-		const combined = new Map(localMeals);
+		const combined = new Map<string, string>();
 
 		// Add database meals, which use unix timestamps for dates
 		dbMeals.forEach((meal) => {
@@ -123,7 +105,7 @@ export function MealPlanner() {
 		});
 
 		return combined;
-	}, [localMeals, dbMeals, dateToKey]);
+	}, [dbMeals, dateToKey]);
 
 	const allMeals = combinedMeals();
 
