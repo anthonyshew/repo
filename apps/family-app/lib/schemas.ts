@@ -9,7 +9,6 @@ export const selectMealSchema = createSelectSchema(meals);
 // Get the exact shape from Drizzle insert schema
 type DrizzleInsertMeal = z.infer<typeof insertMealSchema>;
 
-// AI schema for generating meal content only (no dates)
 export const mealSchema = z.object({
 	name: z.string().describe("Name of the meal"),
 	recipe: z.string().describe("Recipe description").default(""),
@@ -18,11 +17,19 @@ export const mealSchema = z.object({
 // Type-safe converter that adds date when converting to database format
 export const convertMealForInsert = (
 	meal: z.infer<typeof mealSchema>,
-	day: number, // Unix timestamp provided by caller
+	timestamp: number, // Unix timestamp provided by caller
 ): DrizzleInsertMeal => {
+	// Validate that day is a proper Unix timestamp
+	const validatedDay = z
+		.number()
+		.int()
+		.positive()
+		.describe("Unix timestamp in seconds")
+		.parse(timestamp);
+
 	return {
 		name: meal.name,
-		day: day,
+		day: validatedDay,
 		recipe: meal.recipe,
 	};
 };
