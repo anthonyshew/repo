@@ -1,10 +1,7 @@
 import { Fira_Code } from "next/font/google";
-import localFont from "next/font/local";
+import { GeistSans } from 'geist/font/sans';
 
-export const inter = localFont({
-	src: "../public/fonts/Inter.ttf",
-	variable: "--font-inter",
-});
+export const geist = GeistSans;
 
 export const firaCode = Fira_Code({
 	variable: "--font-fira-code",

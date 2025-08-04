@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@repo/ui";
 import { Analytics } from "@repo/analytics";
 import Link from "next/link";
-import { inter } from "#/app/fonts";
+import { geist } from "#/app/fonts";
 import { buildMeta } from "#/app/metadata";
 import "#/app/globals.css";
 import { ThemeWrapper } from "#/app/providers";
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html
-			className={`min-h-screen ${inter.className} antialiased`}
+			className={`min-h-screen ${geist.className} antialiased`}
 			lang="en"
 			suppressHydrationWarning
 		>
