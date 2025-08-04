@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Navbar } from "@repo/ui";
 import { Analytics } from "@repo/analytics";
 import Link from "next/link";
-import { geist } from "#/app/fonts";
+import { geist } from "#/lib/fonts";
 import { buildMeta } from "#/app/metadata";
 import "#/app/globals.css";
 import { ThemeWrapper } from "#/app/providers";

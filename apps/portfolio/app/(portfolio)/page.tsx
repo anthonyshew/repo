@@ -13,7 +13,7 @@ import Balancer from "react-wrap-balancer";
 import Link from "next/link";
 import { buildMeta } from "#/app/metadata";
 import { tagline } from "#/app/constants";
-import { firaCode } from "#/app/fonts";
+import { geistMono } from "#/lib/fonts";
 
 export const revalidate = 3600; // hourly
 
@@ -37,7 +37,7 @@ export default function Home() {
 						Anthony Shew
 					</h1>
 					<p
-						className={`m-0 mt-1 ${firaCode.className} text-xs sm:text-lg dark:text-slate-400`}
+						className={`m-0 mt-1 ${geistMono.className} text-xs sm:text-lg dark:text-slate-400`}
 					>
 						<Balancer>{tagline}</Balancer>
 					</p>
