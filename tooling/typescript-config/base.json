@@ -2,11 +2,12 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"display": "Default",
 	"compilerOptions": {
-		"composite": false,
+		"composite": true,
 		"declaration": true,
 		"declarationMap": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
+		"emitDeclarationOnly": true,
 		"incremental": true,
 		"inlineSources": false,
 		"isolatedModules": true,
@@ -17,7 +18,8 @@
 		"preserveWatchOutput": true,
 		"noImplicitAny": true,
 		"skipLibCheck": true,
-		"strict": true
-	},
-	"exclude": ["node_modules"]
+		"strict": true,
+		"tsBuildInfoFile": "${configDir}/dist/tsbuildinfo.json",
+		"outDir": "${configDir}/dist"
+	}
 }

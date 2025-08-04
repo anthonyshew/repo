@@ -3,22 +3,15 @@
 	"version": "0.1.0",
 	"scripts": {
 		"build": "next build --turbopack",
-		"dev": "next dev",
-		"spellcheck": "spellchecker --files '**/*.mdx' --dictionaries 'dictionary.txt' --no-suggestions --quiet",
+		"dev": "next dev --turbopack --port=3000",
 		"start": "next start",
-		"typecheck": "fumadocs-mdx && tsc --noEmit"
+		"check-types": "fumadocs-mdx && tsc -b"
 	},
 	"dependencies": {
-		"@mdx-js/mdx": "^3.1.0",
-		"@mdx-js/react": "^3.1.0",
-		"@repo/analytics": "workspace:*",
 		"@repo/ui": "workspace:*",
 		"@tailwindcss/postcss": "^4.1.11",
-		"@vercel/og": "^0.6.8",
-		"bright": "^1.0.0",
-		"class-variance-authority": "^0.7.1",
+		"@vercel/analytics": "^1.5.0",
 		"date-fns": "^4.1.0",
-		"framer-motion": "^12.23.0",
 		"fumadocs-core": "^15.6.1",
 		"fumadocs-mdx": "^11.6.10",
 		"geist": "^1.4.2",
@@ -27,24 +20,17 @@
 		"next-themes": "^0.4.6",
 		"react": "latest",
 		"react-dom": "latest",
-		"react-wrap-balancer": "^1.1.1",
-		"reactflow": "^11.11.4",
-		"rehype-mdx-code-props": "^3.0.1",
-		"spellchecker-cli": "^7.0.0",
-		"tailwind-merge": "^3.3.1",
-		"tailwindcss-animate": "^1.0.7",
-		"zod": "^3.25.74"
+		"zod": "^4.0.10"
 	},
 	"devDependencies": {
+		"@repo/next-config": "workspace:*",
+		"@repo/tailwind-config": "workspace:*",
 		"@repo/tsconfig": "workspace:*",
 		"@tailwindcss/typography": "^0.5.16",
-		"@types/node": "^24.0.10",
+		"@types/node": "^22",
 		"@types/react": "^19.1.8",
 		"autoprefixer": "^10.4.21",
-		"lucide-icons-react": "^1.0.2",
-		"postcss": "^8.5.6",
-		"postcss-import": "^16.1.1",
 		"tailwindcss": "^4.1.11",
-		"typescript": "latest"
+		"typescript": "^5.8.3"
 	}
 }

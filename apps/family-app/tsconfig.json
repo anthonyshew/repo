@@ -1,0 +1,36 @@
+{
+	"extends": "@repo/tsconfig/nextjs.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"#/*": ["./*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.js",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts"
+	],
+	"exclude": ["node_modules", ".next", "dist"],
+	"references": [
+		{
+			"path": "../../tooling/next-config"
+		},
+		{
+			"path": "../../tooling/tailwind-config"
+		},
+		{
+			"path": "../../packages/ui"
+		},
+		{
+			"path": "../../packages/utils"
+		}
+	]
+}

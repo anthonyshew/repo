@@ -1,0 +1,24 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"files": [],
+	"references": [
+		{
+			"path": "./apps/portfolio"
+		},
+		{
+			"path": "./apps/family-app"
+		},
+		{
+			"path": "./packages/ui"
+		},
+		{
+			"path": "./packages/utils"
+		},
+		{
+			"path": "./tooling/next-config"
+		},
+		{
+			"path": "./tooling/tailwind-config"
+		}
+	]
+}

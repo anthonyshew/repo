@@ -1,7 +1,3 @@
-# Welcome to Monorepo Maestros
+# My portfolio
 
-Todo.
-
-## Also, my personal site is in here
-
-Also, todo.
+I'm a developer, so I have to have my personal site, right?

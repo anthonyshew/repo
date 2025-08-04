@@ -22,7 +22,6 @@ export function LinkHeading({
 		// @ts-expect-error Don't care at the moment!
 		if (nodeChildren.props) {
 			// @ts-expect-error Don't care at the moment!
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
 			return nodeChildren.props.children;
 		}
 		return nodeChildren;
@@ -38,12 +37,12 @@ export function LinkHeading({
 
 	return (
 		<Comp
-			className="mt-0!"
+			className="ui:mt-0!"
 			id={replaceNonAlphanumericsWithDash(childrenString)}
 		>
-			<span className="block pt-8" />
+			<span className="ui:block ui:pt-8" />
 			<a
-				className="font-bold no-underline hover:underline"
+				className="ui:font-bold ui:no-underline hover:ui:underline"
 				href={`#${replaceNonAlphanumericsWithDash(childrenString)}`}
 				{...props}
 			>

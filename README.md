@@ -1,7 +1,3 @@
-# Welcome to Monorepo Maestros
+# Welcome to my personal monorepo!
 
-Todo.
-
-## Also, my personal site is in here
-
-Also, todo.
+I keep the stuff I'm working on in my free time in here. Feel free to explore!

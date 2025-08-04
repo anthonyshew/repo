@@ -1,19 +1,12 @@
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-	Discord,
-	ThreadsApp,
-	Xitter,
-	// Button,
-} from "@repo/ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui/Avatar";
+import { Discord } from "@repo/ui/Discord";
+import { ThreadsApp } from "@repo/ui/Icons";
+import { Xitter } from "@repo/ui/Xitter";
 import { Github, Youtube } from "lucide-react";
 import type { Metadata } from "next";
-import Balancer from "react-wrap-balancer";
 import Link from "next/link";
-import { buildMeta } from "#/app/metadata";
 import { tagline } from "#/app/constants";
-import { geistMono } from "#/lib/fonts";
+import { buildMeta } from "#/app/metadata";
 
 export const revalidate = 3600; // hourly
 
@@ -36,10 +29,8 @@ export default function Home() {
 					<h1 className="m-0 text-xl font-bold text-black dark:text-white sm:text-4xl">
 						Anthony Shew
 					</h1>
-					<p
-						className={`m-0 mt-1 ${geistMono.className} text-xs sm:text-lg dark:text-slate-400`}
-					>
-						<Balancer>{tagline}</Balancer>
+					<p className="m-0 mt-1 font-mono text-xs text-pretty sm:text-lg dark:text-slate-400">
+						{tagline}
 					</p>
 				</div>
 			</div>

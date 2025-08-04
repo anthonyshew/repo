@@ -1,0 +1,15 @@
+{
+	"name": "@repo/next-config",
+	"exports": {
+		".": {
+			"types": "./dist/next.config.d.ts",
+			"default": "./next.config.ts"
+		}
+	},
+	"peerDependencies": {
+		"next": "*"
+	},
+	"devDependencies": {
+		"@repo/tsconfig": "workspace:*"
+	}
+}

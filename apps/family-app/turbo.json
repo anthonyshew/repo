@@ -1,0 +1,12 @@
+{
+	"extends": ["//"],
+	"tasks": {
+		"studio": {
+			"persistent": true,
+			"cache": false
+		},
+		"dev": {
+			"with": ["studio"]
+		}
+	}
+}

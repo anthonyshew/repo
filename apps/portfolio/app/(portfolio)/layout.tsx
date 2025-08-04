@@ -1,12 +1,22 @@
+import { Navbar } from "@repo/ui/Navbar";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import { Navbar } from "@repo/ui";
-import { Analytics } from "@repo/analytics";
+import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
-import { geist } from "#/lib/fonts";
 import { buildMeta } from "#/app/metadata";
 import "#/app/globals.css";
 import { ThemeWrapper } from "#/app/providers";
 import { ThemeController } from "#/components/ThemeController";
+
+const geistSans = Geist({
+	variable: "--font-geist-sans",
+	subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+	variable: "--font-geist-mono",
+	subsets: ["latin"],
+});
 
 export const generateMetadata = (): Metadata => {
 	return buildMeta({
@@ -21,7 +31,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html
-			className={`min-h-screen ${geist.className} antialiased`}
+			className={`min-h-screen ${geistSans.className} ${geistMono.className} antialiased`}
 			lang="en"
 			suppressHydrationWarning
 		>

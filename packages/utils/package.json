@@ -1,0 +1,15 @@
+{
+	"name": "@repo/utils",
+	"exports": {
+		"./check-env-var": {
+			"types": "./dist/check-env-var.d.ts",
+			"default": "./src/check-env-var.ts"
+		}
+	},
+	"scripts": {
+		"check-types": "tsc -b"
+	},
+	"devDependencies": {
+		"@repo/tsconfig": "workspace:*"
+	}
+}

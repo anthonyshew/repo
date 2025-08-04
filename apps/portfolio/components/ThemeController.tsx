@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Laptop } from "lucide-react";
+import { useEffect, useState } from "react";
 
 type Themes = "dark" | "light" | "system";
 

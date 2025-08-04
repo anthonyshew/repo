@@ -1,41 +1,32 @@
 {
+	"ui": "tui",
 	"tasks": {
 		"dev": {
 			"persistent": true,
-			"cache": false
+			"cache": false,
+			"with": ["//#dev:ts"]
 		},
 		"build": {
-			"dependsOn": ["^build", "^generate"],
+			"dependsOn": ["^build"],
+			"env": [
+				"VAPID_PRIVATE_KEY",
+				"AI_GATEWAY_API_KEY",
+				"ENABLE_EXPERIMENTAL_COREPACK"
+			],
 			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
 		},
-		"generate": {
-			"outputs": [".contentlayer/**"]
-		},
-		"topo": {
-			"dependsOn": ["^generate", "^topo"]
-		},
-		"//#format": {},
-		"//#format:fix": {
-			"cache": false
-		},
+		"//#knip": {},
 		"//#lint": {},
-		"lint": {
-			"dependsOn": ["^topo", "^generate", "generate"]
-		},
 		"//#lint:fix": {
-			"dependsOn": ["^topo"],
 			"cache": false
 		},
-		"lint:fix": {
-			"dependsOn": ["^topo", "^generate", "generate"],
-			"cache": false
+		"check-types": {
+			"dependsOn": ["^check-types"],
+			"outputs": ["dist"]
 		},
-		"typecheck": {
-			"dependsOn": ["^topo", "^generate", "generate"]
-		},
-		"spellcheck": {
-			"inputs": ["**/*.mdx"],
-			"cache": false
+		"//#dev:ts": {
+			"cache": false,
+			"persistent": true
 		}
 	}
 }

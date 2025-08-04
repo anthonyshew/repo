@@ -1,0 +1,45 @@
+{
+	"name": "family-app",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "drizzle-kit push && next dev --turbopack --port=3001 --experimental-https",
+		"studio": "drizzle-kit studio",
+		"build": "next build --turbopack",
+		"start": "next start",
+		"check-types": "tsc -b"
+	},
+	"dependencies": {
+		"@ai-sdk/react": "2.0.0-beta.28",
+		"@repo/ui": "workspace:*",
+		"@repo/utils": "workspace:*",
+		"ai": "5.0.0-beta.28",
+		"better-sqlite3": "^12.2.0",
+		"drizzle-kit": "^0.31.4",
+		"drizzle-orm": "^0.44.3",
+		"drizzle-zod": "^0.8.2",
+		"effect": "^3.17.2",
+		"lucide-react": "^0.525.0",
+		"next": "15.4.4",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"web-push": "^3.6.7",
+		"zod": "^4.0.10"
+	},
+	"devDependencies": {
+		"@repo/next-config": "workspace:*",
+		"@repo/tailwind-config": "workspace:*",
+		"@repo/tsconfig": "workspace:*",
+		"@tailwindcss/postcss": "^4",
+		"@types/better-sqlite3": "^7.6.13",
+		"@types/node": "^22",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"@types/web-push": "^3.6.4",
+		"tailwindcss": "^4.1.11",
+		"typescript": "^5"
+	},
+	"imports": {
+		"#/*": "./*"
+	}
+}

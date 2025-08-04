@@ -3,22 +3,25 @@
 	"version": "0.1.0",
 	"scripts": {
 		"build": "turbo run build",
-		"checks": "turbo run format lint typecheck spellcheck --continue",
-		"checks:fix": "turbo run format:fix lint:fix --continue --force",
 		"clean": "find . -name node_modules -o -name .next -o -name dist -o -name .contentlayer -type d -prune | xargs rm -rf",
 		"dev": "turbo run dev",
-		"format": "biome format .",
-		"format:fix": "biome format . --write",
-		"lint": "biome lint .",
-		"lint:fix": "biome lint . --write",
-		"typecheck": "turbo run typecheck --continue"
+		"dev:ts": "tsc -b -w --preserveWatchOutput",
+		"lint": "biome check .",
+		"lint:fix": "biome check . --write",
+		"check-types": "turbo run check-types --continue",
+		"knip": "knip"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.0.6",
-		"turbo": "^2.5.4"
+		"knip": "^5.61.3",
+		"turbo": "^2.5.4",
+		"typescript": "^5.8.3"
 	},
-	"packageManager": "pnpm@10.12.4",
+	"packageManager": "pnpm@10.14.0-0+sha512.2cd47a0cbf5f1d1de7693a88307a0ede5be94e0d3b34853d800ee775efbea0650cb562b77605ec80bc8d925f5cd27c4dfe8bb04d3a0b76090784c664450d32d6",
 	"engines": {
 		"node": ">=22"
+	},
+	"pnpm": {
+		"neverBuiltDependencies": []
 	}
 }
