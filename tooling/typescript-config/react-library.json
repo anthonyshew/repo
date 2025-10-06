@@ -4,7 +4,7 @@
 	"extends": "./base.json",
 	"compilerOptions": {
 		"incremental": true,
-		"lib": ["ES2015", "DOM", "DOM.Iterable"],
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"target": "ES6",
