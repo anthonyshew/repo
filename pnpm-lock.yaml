@@ -353,6 +353,9 @@ importers:
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript-config
+      '@types/node':
+        specifier: ^22
+        version: 22.16.5
 
   tooling/next-config:
     dependencies:
