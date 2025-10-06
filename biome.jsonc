@@ -14,7 +14,8 @@
 			"!**/.claude/**",
 			"!**/coverage/**",
 			"!**/.source/**",
-			"!packages/ui/src/styles.css" // Biome can't parse the oddities of Tailwind syntax
+			"!packages/ui/src/styles.css", // Biome can't parse the oddities of Tailwind syntax
+			"!apps/cli-app/target/**"
 		]
 	},
 	"formatter": {
