@@ -5,15 +5,15 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() >= 3 && args[1] == "pr" && args[2] == "print" {
-        let only_open = args.contains(&"--only-open".to_string());
-        match get_pr_info(only_open) {
+        let include_drafts = args.contains(&"--draft".to_string());
+        match get_pr_info(include_drafts) {
             Ok(output) => println!("{}", output),
             Err(e) => println!("{}", e),
         }
     }
 }
 
-fn get_pr_info(only_open: bool) -> Result<String, String> {
+fn get_pr_info(include_drafts: bool) -> Result<String, String> {
     // Get all PR URLs for the current user
     let urls_output = Command::new("gh")
         .args(&[
@@ -63,8 +63,8 @@ fn get_pr_info(only_open: bool) -> Result<String, String> {
             .unwrap_or("")
             .to_string();
 
-        // Skip drafts if only_open flag is set
-        if only_open && is_draft {
+        // Skip drafts unless --draft flag is set
+        if !include_drafts && is_draft {
             continue;
         }
 
