@@ -14,9 +14,10 @@ fn main() {
 }
 
 fn get_pr_info(include_drafts: bool) -> Result<String, String> {
+    println!("Fetching PRs...");
     // Get all PR URLs for the current user
     let urls_output = Command::new("gh")
-        .args(&[
+        .args([
             "pr",
             "list",
             "--author",
@@ -37,13 +38,22 @@ fn get_pr_info(include_drafts: bool) -> Result<String, String> {
 
     for url in urls.lines() {
         let url = url.trim();
+        println!("Fetching {}...", url);
         if url.is_empty() {
             continue;
         }
 
         // Get PR title and draft status for this URL
         let pr_output = Command::new("gh")
-            .args(&["pr", "view", url, "--json", "title,isDraft", "--jq", "{title: .title, isDraft: .isDraft}"])
+            .args([
+                "pr",
+                "view",
+                url,
+                "--json",
+                "title,isDraft",
+                "--jq",
+                "{title: .title, isDraft: .isDraft}",
+            ])
             .output()
             .map_err(|e| format!("Failed to get PR info: {}", e))?;
 
@@ -51,10 +61,13 @@ fn get_pr_info(include_drafts: bool) -> Result<String, String> {
             continue;
         }
 
-        let pr_info = String::from_utf8_lossy(&pr_output.stdout).trim().to_string();
+        let pr_info = String::from_utf8_lossy(&pr_output.stdout)
+            .trim()
+            .to_string();
 
         // Parse the JSON response
-        let is_draft = pr_info.contains("\"isDraft\":true") || pr_info.contains("\"isDraft\": true");
+        let is_draft =
+            pr_info.contains("\"isDraft\":true") || pr_info.contains("\"isDraft\": true");
         let title = pr_info
             .split("\"title\":")
             .nth(1)
