@@ -34,6 +34,46 @@ class EQSettings:
     air_freq: float = 10000.0
     air_gain_db: float = 1.5
 
+    # Low shelf for warmth (SM7B-style)
+    warmth_freq: float = 150.0
+    warmth_gain_db: float = 0.0  # Disabled by default
+
+
+class SM7BSettings(EQSettings):
+    """EQ settings that emulate the Shure SM7B microphone character.
+    
+    The SM7B is known for:
+    - Warm, smooth low-mids
+    - Reduced proximity effect (less boomy)
+    - Smooth presence without harshness
+    - Gentle high-end rolloff (no sibilance)
+    """
+    
+    def __init__(self):
+        super().__init__(
+            # SM7B has a gentle high-pass, less aggressive than condensers
+            highpass_freq=60.0,
+            highpass_order=2,
+            
+            # Cut the "boxy" frequencies more aggressively
+            mud_freq=350.0,
+            mud_gain_db=-3.0,
+            mud_q=1.5,
+            
+            # SM7B presence is smooth, centered around 4-5kHz
+            presence_freq=4500.0,
+            presence_gain_db=2.5,
+            presence_q=1.0,
+            
+            # SM7B rolls off highs gently - less "air" than condensers
+            air_freq=12000.0,
+            air_gain_db=-1.5,  # Slight cut for smoothness
+            
+            # Add warmth in the low-mids (SM7B signature)
+            warmth_freq=120.0,
+            warmth_gain_db=2.0,
+        )
+
 
 @dataclass
 class CompressorSettings:
@@ -164,6 +204,15 @@ class DSPProcessor:
             self.eq.air_gain_db,
         )
 
+        # Warmth boost (low shelf) - for SM7B-style sound
+        if hasattr(self.eq, 'warmth_gain_db') and abs(self.eq.warmth_gain_db) > 0.1:
+            samples = self._apply_low_shelf(
+                samples,
+                sr,
+                self.eq.warmth_freq,
+                self.eq.warmth_gain_db,
+            )
+
         return samples
 
     def _apply_peaking_eq(
@@ -240,6 +289,47 @@ class DSPProcessor:
         a0 = (A + 1) - (A - 1) * cos_w0 + alpha_sqrt_A
         a1 = 2 * ((A - 1) - (A + 1) * cos_w0)
         a2 = (A + 1) - (A - 1) * cos_w0 - alpha_sqrt_A
+
+        b = np.array([b0 / a0, b1 / a0, b2 / a0])
+        a = np.array([1.0, a1 / a0, a2 / a0])
+
+        return signal.filtfilt(b, a, samples)
+
+    def _apply_low_shelf(
+        self,
+        samples: np.ndarray,
+        sr: int,
+        freq: float,
+        gain_db: float,
+    ) -> np.ndarray:
+        """Apply a low shelf filter.
+
+        Args:
+            samples: Audio samples
+            sr: Sample rate
+            freq: Shelf frequency
+            gain_db: Gain in dB
+
+        Returns:
+            Filtered audio samples
+        """
+        if abs(gain_db) < 0.1:
+            return samples
+
+        A = 10 ** (gain_db / 40)
+        w0 = 2 * np.pi * freq / sr
+        alpha = np.sin(w0) / 2 * np.sqrt(2)
+
+        cos_w0 = np.cos(w0)
+        sqrt_A = np.sqrt(A)
+        alpha_sqrt_A = 2 * sqrt_A * alpha
+
+        b0 = A * ((A + 1) - (A - 1) * cos_w0 + alpha_sqrt_A)
+        b1 = 2 * A * ((A - 1) - (A + 1) * cos_w0)
+        b2 = A * ((A + 1) - (A - 1) * cos_w0 - alpha_sqrt_A)
+        a0 = (A + 1) + (A - 1) * cos_w0 + alpha_sqrt_A
+        a1 = -2 * ((A - 1) + (A + 1) * cos_w0)
+        a2 = (A + 1) + (A - 1) * cos_w0 - alpha_sqrt_A
 
         b = np.array([b0 / a0, b1 / a0, b2 / a0])
         a = np.array([1.0, a1 / a0, a2 / a0])

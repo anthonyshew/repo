@@ -108,6 +108,13 @@ def print_settings(
     default=False,
     help="Suppress all output except errors",
 )
+@click.option(
+    "--mic-style",
+    "mic_style",
+    type=click.Choice(["neutral", "sm7b"], case_sensitive=False),
+    default="neutral",
+    help="Microphone style emulation. 'sm7b' emulates warm Shure SM7B sound. Default: neutral",
+)
 @click.version_option(version=__version__, prog_name="voice-enhancer")
 def main(
     input_file: Path,
@@ -119,6 +126,7 @@ def main(
     keep_intermediate: bool,
     verbose: bool,
     quiet: bool,
+    mic_style: str,
 ) -> None:
     """Enhance voice audio to professional recording booth quality.
 
@@ -168,6 +176,7 @@ def main(
             keep_intermediate=keep_intermediate,
             output_format=output_format,
             verbose=verbose and not quiet,
+            mic_style=mic_style,
         )
 
         if not quiet:

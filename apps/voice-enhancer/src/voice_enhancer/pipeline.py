@@ -13,7 +13,7 @@ from .stages.loader import AudioLoader
 from .stages.separator import VoiceSeparator, FastVoiceSeparator
 from .stages.denoiser import DeepDenoiser, LightDenoiser
 from .stages.cleanup import ResidualCleaner, GentleCleaner
-from .stages.dsp import DSPProcessor, MinimalDSP
+from .stages.dsp import DSPProcessor, MinimalDSP, SM7BSettings
 from .stages.normalizer import LoudnessNormalizer
 
 console = Console()
@@ -37,6 +37,7 @@ class PipelineConfig:
     keep_intermediate: bool = False
     output_format: str = "wav"
     verbose: bool = False
+    mic_style: str = "neutral"  # "neutral" or "sm7b"
 
 
 class VoiceEnhancementPipeline:
@@ -87,6 +88,8 @@ class VoiceEnhancementPipeline:
         # DSP processing
         if quality == QualityPreset.FAST:
             self.dsp = MinimalDSP()
+        elif self.config.mic_style == "sm7b":
+            self.dsp = DSPProcessor(eq=SM7BSettings())
         else:
             self.dsp = DSPProcessor()
 
@@ -215,6 +218,7 @@ def create_pipeline(
     keep_intermediate: bool = False,
     output_format: str = "wav",
     verbose: bool = False,
+    mic_style: str = "neutral",
 ) -> VoiceEnhancementPipeline:
     """Create a voice enhancement pipeline with the given settings.
 
@@ -225,6 +229,7 @@ def create_pipeline(
         keep_intermediate: Whether to keep intermediate files
         output_format: Output format ('wav' or 'mp3')
         verbose: Whether to print detailed progress
+        mic_style: Microphone style emulation ('neutral' or 'sm7b')
 
     Returns:
         Configured VoiceEnhancementPipeline
@@ -244,6 +249,7 @@ def create_pipeline(
         keep_intermediate=keep_intermediate,
         output_format=output_format,
         verbose=verbose,
+        mic_style=mic_style,
     )
 
     return VoiceEnhancementPipeline(config)
