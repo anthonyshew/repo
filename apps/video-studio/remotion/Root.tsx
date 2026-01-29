@@ -67,6 +67,7 @@ export const RemotionRoot = () => {
 				schema={twoEightSchema}
 				defaultProps={{
 					title: "2-8",
+					speechSegments: [],
 				}}
 				calculateMetadata={calculateTwoEightMetadata}
 			/>

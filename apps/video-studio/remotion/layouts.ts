@@ -23,7 +23,7 @@ type LayoutConfig = {
 	monitor: Rect | null;
 };
 
-const OVERLAY_SIZE = Math.round(VIDEO_HEIGHT / 4);
+const OVERLAY_SIZE = Math.round(VIDEO_HEIGHT / 2.5);
 const PADDING = 40;
 
 export function getLayoutConfig(layout: Layout): LayoutConfig {
