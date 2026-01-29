@@ -1,4 +1,3 @@
-import type { Caption } from "@remotion/captions";
 import {
 	AbsoluteFill,
 	type CalculateMetadataFunction,
@@ -11,12 +10,13 @@ import {
 } from "remotion";
 import { z } from "zod";
 import { VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../constants";
-import {
-	getSpeechSegments,
-	getTotalDurationMs,
-	type SpeechSegment,
-} from "../helpers/speech-segments";
 import { getLayoutConfig } from "../layouts";
+
+type Segment = {
+	startMs: number;
+	endMs: number;
+	broll?: boolean;
+};
 
 export const twoEightSchema = z.object({
 	title: z.string().default("2-8"),
@@ -25,6 +25,7 @@ export const twoEightSchema = z.object({
 			z.object({
 				startMs: z.number(),
 				endMs: z.number(),
+				broll: z.boolean().optional(),
 			}),
 		)
 		.default([]),
@@ -32,22 +33,49 @@ export const twoEightSchema = z.object({
 
 type TwoEightProps = z.infer<typeof twoEightSchema>;
 
-const START_FRAME = 92;
-const START_OFFSET_MS = (START_FRAME / VIDEO_FPS) * 1000;
-const FULL_CAM_DURATION_SECONDS = 5;
+const FULL_CAM_DURATION_FRAMES = 30 * VIDEO_FPS;
 const TRANSITION_DURATION_FRAMES = 15;
 
-async function loadCaptions(): Promise<Caption[]> {
-	const response = await fetch(staticFile("2-8/captions.json"));
-	return response.json();
+type GoodTakeJson = {
+	startSec: number;
+	endSec: number;
+	text: string;
+	broll?: boolean;
+};
+
+type GoodTake = {
+	startMs: number;
+	endMs: number;
+	text: string;
+	broll?: boolean;
+};
+
+async function loadGoodTakes(): Promise<GoodTake[]> {
+	const response = await fetch(staticFile("2-8/good-takes.json"));
+	const takes: GoodTakeJson[] = await response.json();
+	return takes.map((take) => ({
+		startMs: take.startSec * 1000,
+		endMs: take.endSec * 1000,
+		text: take.text,
+		broll: take.broll,
+	}));
+}
+
+function getTotalDuration(takes: GoodTake[]): number {
+	return takes.reduce((total, take) => total + (take.endMs - take.startMs), 0);
 }
 
 export const calculateTwoEightMetadata: CalculateMetadataFunction<
 	TwoEightProps
 > = async () => {
-	const captions = await loadCaptions();
-	const speechSegments = getSpeechSegments(captions, START_OFFSET_MS);
-	const totalDurationMs = getTotalDurationMs(speechSegments);
+	const goodTakes = await loadGoodTakes();
+	const totalDurationMs = getTotalDuration(goodTakes);
+
+	const speechSegments = goodTakes.map((take) => ({
+		startMs: take.startMs,
+		endMs: take.endMs,
+		broll: take.broll,
+	}));
 
 	return {
 		durationInFrames: Math.ceil((totalDurationMs / 1000) * VIDEO_FPS),
@@ -61,6 +89,30 @@ export const calculateTwoEightMetadata: CalculateMetadataFunction<
 	};
 };
 
+function BrollPlaceholder() {
+	return (
+		<AbsoluteFill
+			style={{
+				backgroundColor: "#1a1a2e",
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
+			}}
+		>
+			<div
+				style={{
+					color: "#fff",
+					fontSize: 80,
+					fontFamily: "system-ui",
+					textAlign: "center",
+				}}
+			>
+				B-ROLL PLACEHOLDER
+			</div>
+		</AbsoluteFill>
+	);
+}
+
 function VideoSegment({
 	segment,
 	camX,
@@ -72,7 +124,7 @@ function VideoSegment({
 	monitorWidth,
 	monitorHeight,
 }: {
-	segment: SpeechSegment;
+	segment: Segment;
 	camX: number;
 	camY: number;
 	camWidth: number;
@@ -82,6 +134,10 @@ function VideoSegment({
 	monitorWidth: number;
 	monitorHeight: number;
 }) {
+	if (segment.broll) {
+		return <BrollPlaceholder />;
+	}
+
 	const trimBefore = Math.floor((segment.startMs / 1000) * VIDEO_FPS);
 	const trimAfter = Math.floor((segment.endMs / 1000) * VIDEO_FPS);
 
@@ -120,7 +176,7 @@ function VideoSegment({
 
 export function TwoEight({ speechSegments }: TwoEightProps) {
 	const frame = useCurrentFrame();
-	const transitionStartFrame = FULL_CAM_DURATION_SECONDS * VIDEO_FPS;
+	const transitionStartFrame = FULL_CAM_DURATION_FRAMES;
 
 	const fullCamConfig = getLayoutConfig("full-cam");
 	const splitConfig = getLayoutConfig("cam-bottom-right");
@@ -166,7 +222,7 @@ export function TwoEight({ speechSegments }: TwoEightProps) {
 
 	return (
 		<AbsoluteFill style={{ backgroundColor: "#000" }}>
-			{(speechSegments as SpeechSegment[]).map((segment, index) => {
+			{(speechSegments as Segment[]).map((segment, index) => {
 				const segmentDuration = Math.ceil(
 					((segment.endMs - segment.startMs) / 1000) * VIDEO_FPS,
 				);
