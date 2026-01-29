@@ -17,3 +17,5 @@ dist
 
 next-env.d.ts
 .env*.local
+
+apps/video-studio/build
