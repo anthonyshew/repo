@@ -26,7 +26,7 @@ const CORNER_REGIONS: Record<
 	{ xMin: number; xMax: number; yMin: number; yMax: number }
 > = {
 	"top-right": {
-		xMin: VIDEO_WIDTH * 0.65,
+		xMin: VIDEO_WIDTH * 0.6,
 		xMax: VIDEO_WIDTH - 100,
 		yMin: 100,
 		yMax: VIDEO_HEIGHT * 0.45,
@@ -34,12 +34,12 @@ const CORNER_REGIONS: Record<
 	"bottom-left": {
 		xMin: 100,
 		xMax: VIDEO_WIDTH * 0.45,
-		yMin: VIDEO_HEIGHT * 0.55,
+		yMin: VIDEO_HEIGHT * 0.65,
 		yMax: VIDEO_HEIGHT - 100,
 	},
 	"top-left": {
 		xMin: 100,
-		xMax: VIDEO_WIDTH * 0.3,
+		xMax: VIDEO_WIDTH * 0.2,
 		yMin: VIDEO_HEIGHT * 0,
 		yMax: VIDEO_HEIGHT * 0.55,
 	},
@@ -65,16 +65,16 @@ function generateCollagePositions(
 
 		if (i < 3) {
 			phase = 1;
-			corner = "top-right";
+			corner = "top-left";
 		} else if (i < 6) {
 			phase = 2;
-			corner = "bottom-left";
+			corner = "bottom-right";
 		} else if (i < 9) {
 			phase = 3;
-			corner = "top-left";
+			corner = "top-right";
 		} else {
 			phase = 4;
-			corner = "bottom-right";
+			corner = "bottom-left";
 		}
 
 		const region = CORNER_REGIONS[corner];

@@ -212,6 +212,7 @@ function VideoSegment({
 					height: camHeight,
 					objectFit: "cover",
 					borderRadius: 28,
+					transform: "scaleX(-1)",
 				}}
 			/>
 		</>
