@@ -183,7 +183,7 @@ function VideoSegment({
 	}
 
 	const trimBefore = Math.floor((segment.startMs / 1000) * VIDEO_FPS);
-	const trimAfter = Math.floor((segment.endMs / 1000) * VIDEO_FPS);
+	const trimAfter = Math.ceil((segment.endMs / 1000) * VIDEO_FPS);
 
 	return (
 		<>
