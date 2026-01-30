@@ -12,7 +12,7 @@ await ensureWhisper({
 	signal: new AbortController().signal,
 });
 
-const camFile = "cam-2.mov";
+const camFile = "cam.mp4";
 const fileToTranscribe = path.join(twoEightFolder, camFile);
 const outPath = path.join(twoEightFolder, "captions.json");
 

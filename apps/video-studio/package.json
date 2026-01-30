@@ -63,6 +63,7 @@
 		"lint": "eslint src && tsc",
 		"dev": "bun studio.ts",
 		"upgrade": "remotion upgrade",
-		"test": "bun test tests"
+		"test": "bun test tests",
+		"process:2-8": "bun scripts/process-2-8.ts"
 	}
 }

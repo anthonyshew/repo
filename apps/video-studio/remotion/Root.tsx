@@ -68,6 +68,7 @@ export const RemotionRoot = () => {
 				defaultProps={{
 					title: "2-8",
 					speechSegments: [],
+					tweets: [],
 				}}
 				calculateMetadata={calculateTwoEightMetadata}
 			/>
