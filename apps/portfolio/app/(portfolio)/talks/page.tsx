@@ -2,7 +2,11 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { buildMeta } from "#/app/metadata";
 
-const talks: { confName: string; title: string; link: string }[] = [
+const talks: { confName: string; title: string; link?: string }[] = [
+	{
+		confName: "Denver Dev Day 2026",
+		title: "All About Monorepos",
+	},
 	{
 		confName: "Insecure Agents Podcast, Ep. 31",
 		link: "https://open.spotify.com/episode/0aVIkgDykMUJmmFjLyu7OU",
@@ -32,23 +36,40 @@ export default function Home() {
 				recordings here.
 			</p>
 			<div className="flex flex-col gap-4 mt-8">
-				{talks.map((conference) => (
-					<a
-						className="flex flex-row justify-between p-4 text-white transition-all rounded-lg bg-neutral-800 dark:hover:bg-neutral-900"
-						href={conference.link}
-						key={conference.confName}
-						rel="nooopener noreferrer"
-						target="_blank"
-					>
-						<span className="flex flex-col gap-4">
-							<span className="font-bold">{conference.title}</span>
-							<span>{conference.confName}</span>
-						</span>
-						<span className="flex flex-col items-center justify-center">
-							<ArrowRight />
-						</span>
-					</a>
-				))}
+				{talks.map((conference) => {
+					const content = (
+						<>
+							<span className="flex flex-col gap-4">
+								<span className="font-bold">{conference.title}</span>
+								<span>{conference.confName}</span>
+							</span>
+							{conference.link ? (
+								<span className="flex flex-col items-center justify-center">
+									<ArrowRight />
+								</span>
+							) : null}
+						</>
+					);
+
+					const className =
+						"flex flex-row justify-between p-4 text-white transition-all rounded-lg bg-neutral-800";
+
+					return conference.link ? (
+						<a
+							className={`${className} dark:hover:bg-neutral-900`}
+							href={conference.link}
+							key={conference.confName}
+							rel="nooopener noreferrer"
+							target="_blank"
+						>
+							{content}
+						</a>
+					) : (
+						<div className={className} key={conference.confName}>
+							{content}
+						</div>
+					);
+				})}
 			</div>
 		</div>
 	);
