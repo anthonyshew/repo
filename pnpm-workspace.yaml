@@ -3,3 +3,9 @@ packages:
   - "!apps/cli-app"
   - packages/*
   - tooling/*
+allowBuilds:
+  '@parcel/watcher': true
+  '@tailwindcss/oxide': true
+  esbuild: true
+  oxc-resolver: true
+  sharp: true
