@@ -14,4 +14,4 @@ if (
   );
 }
 
-startStudioAndServer();
+void startStudioAndServer();

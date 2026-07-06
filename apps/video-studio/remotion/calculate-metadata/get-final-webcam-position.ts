@@ -1,5 +1,5 @@
-import { CanvasLayout } from "../../config/layout";
-import {
+import type { CanvasLayout } from "../../config/layout";
+import type {
   Cameras,
   SelectableScene,
   SelectableVideoScene,

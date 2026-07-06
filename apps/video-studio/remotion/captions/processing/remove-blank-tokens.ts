@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 
 export const removeBlankTokens = (tokens: Caption[]): Caption[] => {
   return tokens

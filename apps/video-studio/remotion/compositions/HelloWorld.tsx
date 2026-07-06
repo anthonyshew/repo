@@ -59,7 +59,7 @@ export function HelloWorld(_props: z.infer<typeof helloWorldSchema>) {
 				frameInLayout,
 				[framesPerLayout - TRANSITION_FRAMES, framesPerLayout],
 				[0, 1],
-				{ easing: Easing.inOut(Easing.cubic) },
+				{ easing: Easing.inOut((t) => Easing.cubic(t)) },
 			)
 		: 0;
 

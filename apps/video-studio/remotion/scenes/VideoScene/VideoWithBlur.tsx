@@ -3,7 +3,8 @@ import { AbsoluteFill } from "remotion";
 import type { Dimensions } from "../../../config/layout";
 import { getBlurLayout } from "../../layout/blur";
 import type { Layout } from "../../layout/layout-types";
-import { Video, VideoProps } from "@remotion/media";
+import type { VideoProps } from "@remotion/media";
+import { Video } from "@remotion/media";
 
 // An image that if it cannot fill out the canvas, will have a background-blurred replica
 export const VideoWithBlur: React.FC<

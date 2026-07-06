@@ -8,7 +8,7 @@ import type { Theme } from "../../../../config/themes";
 import { COLORS } from "../../../../config/themes";
 import { shouldInlineTransitionSubtitles } from "../../../animations/caption-transitions/should-transition-subtitle";
 import { getSubtitleTransform } from "../../../animations/caption-transitions/subtitle-transitions";
-import { Layout } from "../../../layout/layout-types";
+import type { Layout } from "../../../layout/layout-types";
 import { useCaptions } from "../../editor/captions-provider";
 import { layoutCaptions } from "../../processing/layout-captions";
 import { postprocessCaptions } from "../../processing/postprocess-subs";

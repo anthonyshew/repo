@@ -3,11 +3,12 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { FPS } from "../config/fps";
 import { truthy } from "../remotion/helpers/truthy";
 import { RecordCircle } from "./BlinkingCircle";
-import { ProcessStatus } from "./components/ProcessingStatus";
+import type { ProcessStatus } from "./components/ProcessingStatus";
 import { Button } from "./components/ui/button";
-import { Prefix } from "./helpers/prefixes";
+import type { Prefix } from "./helpers/prefixes";
+import type {
+  FinishedRecording} from "./helpers/start-media-recorder";
 import {
-  FinishedRecording,
   startMediaRecorder,
 } from "./helpers/start-media-recorder";
 import { useKeyPress } from "./helpers/use-key-press";
@@ -157,15 +158,15 @@ export const RecordButton: React.FC<{
     }
 
     if (recordingStatus.type === "recording") {
-      onStop();
+      void onStop();
     } else if (recordingStatus.type === "idle") {
-      start();
+      void start();
     }
   }, [onStop, disabled, recordingStatus.type, start]);
 
   const onDiscardAndRetake = useCallback(async () => {
     await discardVideos();
-    start();
+    void start();
   }, [discardVideos, start]);
 
   useKeyPress({ keys: ["r"], callback: onPressR, metaKey: false });
@@ -207,7 +208,7 @@ export const RecordButton: React.FC<{
         }
       >
         <RecordCircle />
-        <div className="w-2"></div>
+        <div className="w-2" />
         <div>
           {disabled
             ? "Select audio+video to record"
@@ -215,7 +216,7 @@ export const RecordButton: React.FC<{
               ? "Discard and retake"
               : "Start recording"}
         </div>
-        <div className="w-3"></div>
+        <div className="w-3" />
         {videoDeviceCount > 0 && !disabled && (
           <div className="flex flex-row items-center gap-1 border-l-[1px] h-full px-2">
             <CameraIcon className="w-5" />

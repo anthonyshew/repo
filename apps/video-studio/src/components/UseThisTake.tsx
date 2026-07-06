@@ -1,14 +1,14 @@
 import React, { useCallback } from "react";
 import { WEBCAM_PREFIX } from "../../config/cameras";
-import { RecordingStatus } from "../RecordButton";
+import type { RecordingStatus } from "../RecordButton";
 import { cancelTranscribeOnServer } from "../helpers/cancel-transcribe";
 import { convertInBrowser } from "../helpers/convert-in-browser";
 import { downloadVideo } from "../helpers/download-video";
 import { getExtension } from "../helpers/find-good-supported-codec";
-import { Prefix } from "../helpers/prefixes";
+import type { Prefix } from "../helpers/prefixes";
 import { transcribeVideoOnServer } from "../helpers/transcribe-video";
 import { uploadFileToServer } from "../helpers/upload-file";
-import { ProcessStatus } from "./ProcessingStatus";
+import type { ProcessStatus } from "./ProcessingStatus";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -100,7 +100,7 @@ export const UseThisTake: React.FC<{
             a.href = url;
             a.download = `${blob.prefix}${blob.endDate}.${extension}`;
             a.click();
-            blob.releaseData();
+            void blob.releaseData();
           }
         });
     }
@@ -244,7 +244,7 @@ export const UseThisTake: React.FC<{
                 <DropdownMenuItem
                   key={blob.prefix}
                   onClick={() => {
-                    previewWebcam(blob.prefix as Prefix);
+                    void previewWebcam(blob.prefix as Prefix);
                   }}
                 >
                   Preview {blob.prefix}

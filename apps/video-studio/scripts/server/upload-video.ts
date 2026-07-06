@@ -1,5 +1,5 @@
 import fs, { createWriteStream } from "fs";
-import { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 import path from "path";
 import { ensureWhisper } from "../captions/install-whisper";
 import { makeStreamPayload } from "./streaming";

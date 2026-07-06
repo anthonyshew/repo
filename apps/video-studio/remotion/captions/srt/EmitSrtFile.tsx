@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Artifact, useCurrentFrame } from "remotion";
 import { FPS } from "../../../config/fps";
-import { SceneAndMetadata } from "../../../config/scenes";
+import type { SceneAndMetadata } from "../../../config/scenes";
 import { combineSrt } from "./helpers/combine-srt";
 import { serializeSrt } from "./helpers/serialize-srt";
 

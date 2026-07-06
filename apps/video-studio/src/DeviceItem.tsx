@@ -86,13 +86,13 @@ export const DeviceItem: React.FC<{
           alignItems: "center",
         }}
       >
-        {selected && <CheckIcon></CheckIcon>}
+        {selected && <CheckIcon />}
       </div>
-      {type === "camera" ? <CameraIcon></CameraIcon> : null}
-      {type === "microphone" ? <MicIcon></MicIcon> : null}
-      {type === "screen" ? <DisplayIcon></DisplayIcon> : null}
-      <div style={spacer}></div> <span style={label}>{deviceLabel}</span>
-      <div style={{ flex: 1 }}></div>
+      {type === "camera" ? <CameraIcon /> : null}
+      {type === "microphone" ? <MicIcon /> : null}
+      {type === "screen" ? <DisplayIcon /> : null}
+      <div style={spacer} /> <span style={label}>{deviceLabel}</span>
+      <div style={{ flex: 1 }} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Prefix } from "./helpers/prefixes";
+import type { Prefix } from "./helpers/prefixes";
 
 const getPreferredDeviceForPrefix = (
   prefix: Prefix,

@@ -1,9 +1,9 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import { fillTextBox } from "@remotion/layout-utils";
 import { MONOSPACE_FONT, REGULAR_FONT } from "../../../config/fonts";
 import { getSafeSpace } from "../../../config/layout";
 import { getBorderWidthForSubtitles } from "../boxed/components/CaptionSentence";
-import { CaptionPage, LayoutedCaptions } from "../types";
+import type { CaptionPage, LayoutedCaptions } from "../types";
 import { hasMonoSpaceInCaption } from "./has-monospace-in-caption";
 import {
   isCaptionMonospace,

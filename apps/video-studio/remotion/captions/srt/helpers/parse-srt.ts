@@ -28,10 +28,10 @@ function toSeconds(time: string) {
   }
 
   return (
-    parseInt(first, 10) * 3600 +
-    parseInt(second, 10) * 60 +
-    parseInt(seconds, 10) +
-    parseInt(millis, 10) / 1000
+    Number.parseInt(first, 10) * 3600 +
+    Number.parseInt(second, 10) * 60 +
+    Number.parseInt(seconds, 10) +
+    Number.parseInt(millis, 10) / 1000
   );
 }
 

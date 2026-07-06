@@ -236,7 +236,7 @@ export function TwoEight({ speechSegments, tweets }: TwoEightProps) {
 		{
 			extrapolateLeft: "clamp",
 			extrapolateRight: "clamp",
-			easing: Easing.out(Easing.quad),
+			easing: Easing.out((t) => Easing.quad(t)),
 		},
 	);
 

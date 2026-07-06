@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import { autocorrectWords } from "../../../config/autocorrect";
 import { fixBackticks } from "./fix-backticks";
 import { removeBlankTokens } from "./remove-blank-tokens";

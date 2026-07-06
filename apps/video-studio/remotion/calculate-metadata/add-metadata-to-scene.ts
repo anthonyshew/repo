@@ -1,6 +1,6 @@
 import { parseMedia } from "@remotion/media-parser";
-import { CanvasLayout } from "../../config/layout";
-import {
+import type { CanvasLayout } from "../../config/layout";
+import type {
   Cameras,
   SceneAndMetadata,
   SceneVideos,

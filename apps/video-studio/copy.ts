@@ -11,7 +11,7 @@ const filesFromDownloads = fs.readdirSync(downloadsDir);
 const webcam = filesFromDownloads.filter((file) =>
   file.startsWith(WEBCAM_PREFIX),
 );
-const sorted = webcam.sort((a, b) => {
+const sorted = webcam.toSorted((a, b) => {
   const timestampA = Number(a.match(/([0-9]+)/)![1]);
   const timestampB = Number(b.match(/([0-9]+)/)![1]);
 

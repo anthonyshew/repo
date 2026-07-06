@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react-swc";
 import connect from "connect";
-import { IncomingMessage, ServerResponse } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createServer } from "vite";
@@ -52,7 +52,7 @@ export const startServer = async () => {
   });
 
   app.use(CREATE_FOLDER, (req: IncomingMessage, res: ServerResponse) => {
-    createProject(req, res, rootDir);
+    void createProject(req, res, rootDir);
   });
 
   app.use(UPLOAD_VIDEO, handleVideoUpload);

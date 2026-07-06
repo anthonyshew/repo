@@ -1,7 +1,8 @@
 import React, { useMemo } from "react";
 import { TITLE_FONT } from "../../../config/fonts";
-import { COLORS, Theme } from "../../../config/themes";
-import { ChapterType } from "../make-chapters";
+import type { Theme } from "../../../config/themes";
+import { COLORS } from "../../../config/themes";
+import type { ChapterType } from "../make-chapters";
 
 export const ChapterTitle: React.FC<{
   rightAligned: boolean;

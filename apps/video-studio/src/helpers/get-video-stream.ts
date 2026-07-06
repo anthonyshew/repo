@@ -1,5 +1,5 @@
 import { DEFAULT_MINIMUM_FPS } from "../preferred-resolution";
-import { SelectedSource } from "./get-selected-video-source";
+import type { SelectedSource } from "./get-selected-video-source";
 
 const getDisplayStream = async (selectedVideoSource: SelectedSource) => {
   if (

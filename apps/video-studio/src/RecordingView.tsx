@@ -2,10 +2,11 @@ import { useCallback, useMemo, useState } from "react";
 import { WEBCAM_PREFIX } from "../config/cameras";
 import { CropIndicator } from "./CropIndicator";
 import { PrefixLabel } from "./PrefixAndResolution";
-import { RecordingStatus } from "./RecordButton";
+import type { RecordingStatus } from "./RecordButton";
 import { ResolutionLimiter } from "./ResolutionLimiter";
 import { ToggleRotate } from "./Rotate";
-import { ResolutionAndFps, Stream } from "./Stream";
+import type { ResolutionAndFps} from "./Stream";
+import { Stream } from "./Stream";
 import { ToggleCrop } from "./ToggleCrop";
 import { ToggleMirror } from "./ToggleMirror";
 import { useDevices } from "./WaitingForDevices";
@@ -16,15 +17,17 @@ import { Divider } from "./components/Divider";
 import { StreamPicker, getDeviceLabel } from "./components/StreamPicker";
 import { VolumeMeter } from "./components/VolumeMeter";
 import { canRotateCamera } from "./helpers/can-rotate-camera";
+import type {
+  MaxResolution} from "./helpers/get-max-resolution-of-device";
 import {
-  MaxResolution,
   getMaxResolutionOfDevice,
 } from "./helpers/get-max-resolution-of-device";
+import type {
+  SizeConstraint} from "./helpers/get-selected-video-source";
 import {
-  SizeConstraint,
   getSelectedVideoSource,
 } from "./helpers/get-selected-video-source";
-import { Prefix } from "./helpers/prefixes";
+import type { Prefix } from "./helpers/prefixes";
 import { setPreferredDeviceForPrefix } from "./preferred-device-localstorage";
 import { getPreferredResolutionForDevice } from "./preferred-resolution";
 import { useMediaSources } from "./state/media-sources";
@@ -266,10 +269,10 @@ const InnerRecordingView: React.FC<{
       className="outline-red-600 outline-0 data-[recording=true]:outline-2 outline"
     >
       <div style={topBar}>
-        <div style={{ width: 10 }}></div>
+        <div style={{ width: 10 }} />
         <PrefixLabel prefix={prefix} />
-        <div style={{ width: 15 }}></div>
-        <Divider></Divider>
+        <div style={{ width: 15 }} />
+        <Divider />
         <CurrentVideo
           resolution={resolution}
           label={videoDeviceLabel ?? "No video selected"}
@@ -281,13 +284,13 @@ const InnerRecordingView: React.FC<{
           setResolutionLimiterOpen={setResolutionLimiterOpen}
           canShowResolutionLimiter={canShowResolutionLimiter}
           disabled={recordingStatus.type === "recording"}
-        ></CurrentVideo>
+         />
         {selectedVideoSource && recordingStatus.type !== "recording" ? (
           <ClearCurrentVideo onClick={clear} />
         ) : null}
         {prefix === WEBCAM_PREFIX ? (
           <>
-            <Divider></Divider>
+            <Divider />
             <CurrentAudio
               disabled={recordingStatus.type === "recording"}
               onClick={togglePicker}

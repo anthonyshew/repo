@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 
 const autocorrectWord = (caption: Caption): Caption => {
   // Replace a single word with another one

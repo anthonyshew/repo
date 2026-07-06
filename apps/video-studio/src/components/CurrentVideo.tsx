@@ -2,7 +2,7 @@ import { CameraIcon } from "lucide-react";
 import React, { useCallback, useMemo } from "react";
 import { DisplayIcon } from "../DeviceItem";
 import { Resolution } from "../PrefixAndResolution";
-import { ResolutionAndFps } from "../Stream";
+import type { ResolutionAndFps } from "../Stream";
 
 const spacer: React.CSSProperties = {
   width: 12,
@@ -62,8 +62,8 @@ export const CurrentVideo: React.FC<{
       className="hover:bg-slate-950 data-[disabled=true]:opacity-50 data-[disabled=true]:pointer-events-none"
       onClick={onClick}
     >
-      {isScreenshare ? <DisplayIcon></DisplayIcon> : <CameraIcon></CameraIcon>}
-      <div style={spacer}></div>
+      {isScreenshare ? <DisplayIcon /> : <CameraIcon />}
+      <div style={spacer} />
       <div>
         <div>{label}</div>
         <span
@@ -78,7 +78,7 @@ export const CurrentVideo: React.FC<{
               <Resolution resolution={resolution} />
               {canShowResolutionLimiter ? (
                 <>
-                  <div style={{ width: 4 }}></div>
+                  <div style={{ width: 4 }} />
                   <button onClick={onOpen} style={buttonStyle}>
                     Settings
                   </button>
@@ -88,7 +88,7 @@ export const CurrentVideo: React.FC<{
           ) : null}
         </span>
       </div>
-      <div style={spacer}></div>
+      <div style={spacer} />
     </div>
   );
 };

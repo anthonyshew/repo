@@ -133,7 +133,7 @@ export function Turbo210({
 		{
 			extrapolateLeft: "clamp",
 			extrapolateRight: "clamp",
-			easing: Easing.out(Easing.quad),
+			easing: Easing.out((t) => Easing.quad(t)),
 		},
 	);
 	const camStyle = {

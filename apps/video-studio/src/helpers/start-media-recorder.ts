@@ -1,10 +1,10 @@
-import { CurrentRecorder } from "../RecordButton";
-import { StreamState } from "../state/media-sources";
+import type { CurrentRecorder } from "../RecordButton";
+import type { StreamState } from "../state/media-sources";
 import {
   findGoodSupportedCodec,
   getExtension,
 } from "./find-good-supported-codec";
-import { Prefix } from "./prefixes";
+import type { Prefix } from "./prefixes";
 import { createFileStorage } from "./store-file";
 
 const mediaRecorderOptions: MediaRecorderOptions = {
@@ -58,7 +58,7 @@ export const startMediaRecorder = async ({
   recorder.addEventListener(
     "dataavailable",
     ({ data }) => {
-      writer.write(data).then(() => {
+      void writer.write(data).then(() => {
         console.log("Data written", filename, writer.getBytesWritten());
       });
     },
@@ -112,7 +112,7 @@ export const startMediaRecorder = async ({
       },
     );
 
-    promise.finally(() => controller.abort());
+    void promise.finally(() => controller.abort());
 
     return promise;
   };

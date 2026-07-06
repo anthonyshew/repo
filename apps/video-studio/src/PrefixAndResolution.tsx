@@ -1,5 +1,5 @@
 import React from "react";
-import { ResolutionAndFps } from "./Stream";
+import type { ResolutionAndFps } from "./Stream";
 
 export const PrefixLabel: React.FC<{
   prefix: string;

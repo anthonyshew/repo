@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import React, { useContext, useMemo } from "react";
 
 type CaptionOverlayContext = {

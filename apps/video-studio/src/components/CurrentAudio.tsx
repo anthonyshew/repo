@@ -31,8 +31,8 @@ export const CurrentAudio: React.FC<{
       style={container}
       onClick={onClick}
     >
-      <MicIcon></MicIcon>
-      <div style={spacer}></div>
+      <MicIcon />
+      <div style={spacer} />
       <div>{label ?? "No audio selected"}</div>
     </div>
   );

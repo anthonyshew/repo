@@ -6,7 +6,7 @@ import {
   getCameraStreamConstraints,
   getVideoStream,
 } from "./helpers/get-video-stream";
-import { Prefix } from "./helpers/prefixes";
+import type { Prefix } from "./helpers/prefixes";
 import { useMediaSources } from "./state/media-sources";
 
 const container: React.CSSProperties = {
@@ -133,7 +133,7 @@ export const Stream: React.FC<{
 
         if (current) {
           current.srcObject = stream;
-          current.play();
+          void current.play();
         }
 
         cleanup.push(() => {

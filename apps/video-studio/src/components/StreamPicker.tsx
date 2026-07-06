@@ -2,7 +2,8 @@ import React, { useMemo } from "react";
 import { AbsoluteFill } from "remotion";
 import { DeviceItem } from "../DeviceItem";
 import { useDevices } from "../WaitingForDevices";
-import { Label, formatDeviceLabel } from "../helpers/format-device-label";
+import type { Label} from "../helpers/format-device-label";
+import { formatDeviceLabel } from "../helpers/format-device-label";
 import { RescanDevices } from "./RescanDevices";
 
 const title: React.CSSProperties = {

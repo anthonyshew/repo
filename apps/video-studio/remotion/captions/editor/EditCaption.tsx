@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import type { Theme } from "../../../config/themes";
@@ -18,10 +18,7 @@ const Indent: React.FC<{ value: number; digits: number }> = ({
 
   return (
     <span style={{ opacity: 0 }}>
-      {new Array(indentTo)
-        .fill(0)
-        .map(() => "0")
-        .join("")}
+      {"0".repeat(Math.max(0, indentTo))}
     </span>
   );
 };

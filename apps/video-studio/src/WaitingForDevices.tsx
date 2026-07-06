@@ -33,7 +33,7 @@ export const WaitingForDevices: React.FC<{
   }, []);
 
   useEffect(() => {
-    checkDeviceLabels();
+    void checkDeviceLabels();
   }, [checkDeviceLabels]);
 
   const value: DevicesContext = useMemo(

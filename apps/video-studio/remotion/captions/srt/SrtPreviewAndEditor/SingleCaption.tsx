@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import React, { useCallback, useMemo, useState } from "react";
 import { useCaptionOverlay } from "../../editor/use-caption-overlay";
 

@@ -1,9 +1,9 @@
 import React from "react";
-import {
+import type {
   SceneAndMetadata,
   VideoSceneAndMetadata,
 } from "../../../config/scenes";
-import { Theme } from "../../../config/themes";
+import type { Theme } from "../../../config/themes";
 import { WaitForFonts } from "../../helpers/WaitForFonts";
 import { CaptionOverlay } from "../editor/CaptionOverlay";
 import { AnimatedCaptions } from "./components/AnimatedCaptions";

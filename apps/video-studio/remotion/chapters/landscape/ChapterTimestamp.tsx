@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { TITLE_FONT } from "../../../config/fonts";
 import { FPS } from "../../../config/fps";
 import { formatMilliseconds } from "../../../src/helpers/format-time";
-import { ChapterType } from "../make-chapters";
+import type { ChapterType } from "../make-chapters";
 
 const chapterFontSize = 32;
 

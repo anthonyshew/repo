@@ -1,5 +1,6 @@
 import { enumerateDevicesOrTimeOut } from "./enumerate-devices-or-time-out";
-import { Label, formatDeviceLabel } from "./format-device-label";
+import type { Label} from "./format-device-label";
+import { formatDeviceLabel } from "./format-device-label";
 
 export const storeLabelsToLS = (devices: MediaDeviceInfo[]) => {
   const labels: Label[] = JSON.parse(localStorage.getItem("labels") ?? "[]");

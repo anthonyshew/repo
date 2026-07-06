@@ -1,4 +1,4 @@
-import { ProcessStatus } from "../components/ProcessingStatus";
+import type { ProcessStatus } from "../components/ProcessingStatus";
 import { convertInBrowser } from "./convert-in-browser";
 import { getExtension } from "./find-good-supported-codec";
 

@@ -107,7 +107,7 @@ export const getShouldTransitionOut = ({
 };
 
 export const getShouldTransitionIn = ({
-  sceneAndMetadata: sceneAndMetadata,
+  sceneAndMetadata,
   previousSceneAndMetadata,
   canvasLayout,
 }: {

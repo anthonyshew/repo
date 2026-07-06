@@ -52,5 +52,5 @@ export const FadeBRoll: React.FC<{
     );
   }
 
-  throw new Error(`Invalid b-roll type ${bRoll.type satisfies never}`);
+  throw new Error(`Invalid b-roll type ${String(bRoll.type satisfies never)}`);
 };

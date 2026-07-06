@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useDevices } from "../WaitingForDevices";
-import { Prefix } from "../helpers/prefixes";
+import type { Prefix } from "../helpers/prefixes";
 import { getPreferredDeviceIfExists } from "../preferred-device-localstorage";
 
 export type StreamState =

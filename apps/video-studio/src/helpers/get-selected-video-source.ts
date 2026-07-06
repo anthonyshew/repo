@@ -1,6 +1,6 @@
-import { Dimensions } from "../../config/layout";
+import type { Dimensions } from "../../config/layout";
 import { DEFAULT_MINIMUM_FPS } from "../preferred-resolution";
-import { MaxResolution } from "./get-max-resolution-of-device";
+import type { MaxResolution } from "./get-max-resolution-of-device";
 
 export type SelectedSource =
   | {

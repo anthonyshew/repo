@@ -37,7 +37,7 @@ const getWebCamStartOrEndLayout = ({
     });
   }
 
-  throw new Error(`Unknown canvas layout: ${canvasLayout satisfies never}`);
+  throw new Error(`Unknown canvas layout: ${String(canvasLayout satisfies never)}`);
 };
 
 export const getWebcamLayout = ({

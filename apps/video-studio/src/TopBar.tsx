@@ -6,7 +6,8 @@ import { RecordButton } from "./RecordButton";
 import { Timer } from "./Timer";
 import { fetchProjectFolders } from "./actions/fetch-project-folders";
 import { NewFolderDialog } from "./components/NewFolderDialog";
-import { ProcessStatus, ProcessingStatus } from "./components/ProcessingStatus";
+import type { ProcessStatus} from "./components/ProcessingStatus";
+import { ProcessingStatus } from "./components/ProcessingStatus";
 import { SelectedFolder } from "./components/SelectedFolder";
 import { UseThisTake } from "./components/UseThisTake";
 import { Button } from "./components/ui/button";
@@ -64,7 +65,7 @@ export const TopBar: React.FC<{
       return;
     }
 
-    refreshFoldersList();
+    void refreshFoldersList();
   }, [refreshFoldersList]);
 
   useEffect(() => {
@@ -77,7 +78,7 @@ export const TopBar: React.FC<{
 
   return (
     <div style={topBarContainer}>
-      <Logo></Logo>
+      <Logo />
       <div style={recordWrapper}>
         <RecordButton
           recordingStatus={recordingStatus}
@@ -100,7 +101,7 @@ export const TopBar: React.FC<{
           />
         ) : null}
         {processingStatus && (
-          <ProcessingStatus status={processingStatus}></ProcessingStatus>
+          <ProcessingStatus status={processingStatus} />
         )}
       </div>
 

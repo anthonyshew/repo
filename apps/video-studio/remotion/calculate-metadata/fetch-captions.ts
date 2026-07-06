@@ -1,5 +1,5 @@
-import { Caption } from "@remotion/captions";
-import { StaticFile } from "@remotion/studio";
+import type { Caption } from "@remotion/captions";
+import type { StaticFile } from "@remotion/studio";
 
 export const fetchCaptions = async (
   file: StaticFile | null,

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { StreamState } from "../state/media-sources";
+import type { StreamState } from "../state/media-sources";
 
 const GREEN = "#0b800b";
 const YELLOW = "#bda615";

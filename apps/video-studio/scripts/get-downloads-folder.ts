@@ -10,7 +10,7 @@ function unix() {
   let dir;
   try {
     dir = execSync("xdg-user-dir DOWNLOAD", { encoding: "utf8" }).trim();
-  } catch (_) {
+  } catch  {
     /* empty */
   }
 
@@ -20,7 +20,7 @@ function unix() {
   const homeDownloads = `${process.env.HOME}/Downloads`;
   try {
     stat = statSync(homeDownloads);
-  } catch (_) {
+  } catch  {
     /* empty */
   }
 

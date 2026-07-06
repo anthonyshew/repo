@@ -1,4 +1,4 @@
-import { SceneAndMetadata } from "../../config/scenes";
+import type { SceneAndMetadata } from "../../config/scenes";
 
 export const addChaptersToScenesAndMetadata = (
   scenesAndMetadata: SceneAndMetadata[],

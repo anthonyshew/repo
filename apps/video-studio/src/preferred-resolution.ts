@@ -1,4 +1,4 @@
-import { SizeConstraint } from "./helpers/get-selected-video-source";
+import type { SizeConstraint } from "./helpers/get-selected-video-source";
 
 export const setPreferredResolutionForDevice = (
   deviceId: string,

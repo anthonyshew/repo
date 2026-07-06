@@ -107,7 +107,7 @@ const getCameras = (compositionId: string) => {
 		.map((f) => mapFile({ file: f, files, compositionId }))
 		.filter(Boolean) as Cameras[];
 
-	return mappedCameras.sort((a, b) => a.timestamp - b.timestamp);
+	return mappedCameras.toSorted((a, b) => a.timestamp - b.timestamp);
 };
 
 export const getAllCameras = ({

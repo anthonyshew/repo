@@ -1,5 +1,4 @@
 import { spawn } from "child_process";
-import { startServer } from "./express-server";
 
 export const startStudioAndServer = async () => {
 	// await startServer();

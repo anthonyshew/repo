@@ -40,7 +40,7 @@ const CORNER_REGIONS: Record<
 	"top-left": {
 		xMin: 100,
 		xMax: VIDEO_WIDTH * 0.2,
-		yMin: VIDEO_HEIGHT * 0,
+		yMin: 0,
 		yMax: VIDEO_HEIGHT * 0.55,
 	},
 	"bottom-right": {
@@ -148,7 +148,7 @@ export function TweetWall({ tweets }: TweetWallProps) {
 
 	const sortedByZIndex = positions
 		.map((pos, index) => ({ ...pos, index }))
-		.sort((a, b) => {
+		.toSorted((a, b) => {
 			if (a.phase !== b.phase) return a.phase - b.phase;
 			return a.index - b.index;
 		});

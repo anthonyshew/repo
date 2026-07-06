@@ -1,7 +1,7 @@
-import { StaticFile } from "@remotion/studio";
+import type { StaticFile } from "@remotion/studio";
 import React from "react";
 import { useRemotionEnvironment } from "remotion";
-import { Theme } from "../../../../config/themes";
+import type { Theme } from "../../../../config/themes";
 import { CaptionOverlay } from "../../editor/CaptionOverlay";
 import { SrtPreview } from "./SrtPreview";
 
@@ -18,7 +18,7 @@ export const SrtPreviewAndEditor: React.FC<{
 
   return (
     <CaptionOverlay file={captions} theme={theme} trimStart={startFrame}>
-      <SrtPreview startFrame={startFrame}></SrtPreview>
+      <SrtPreview startFrame={startFrame} />
     </CaptionOverlay>
   );
 };

@@ -1,7 +1,7 @@
 import { updateDefaultProps, writeStaticFile } from "@remotion/studio";
 import React from "react";
 import { staticFile } from "remotion";
-import {
+import type {
   BRoll,
   SelectableScene,
   SelectableVideoScene,

@@ -72,7 +72,7 @@ export const VideoScene: React.FC<{
 
   const onDrop = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
-      onBRollDropHandler({
+      void onBRollDropHandler({
         e,
         composition: id,
         sceneIndex,
@@ -139,7 +139,7 @@ export const VideoScene: React.FC<{
           captions={sceneAndMetadata.cameras.captions}
           startFrame={startFrame}
           theme={theme}
-        ></SrtPreviewAndEditor>
+         />
       ) : null}
       {env.isStudio ? (
         <Actions

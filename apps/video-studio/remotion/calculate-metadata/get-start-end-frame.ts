@@ -1,6 +1,6 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import { FPS } from "../../config/fps";
-import { SelectableVideoScene } from "../../config/scenes";
+import type { SelectableVideoScene } from "../../config/scenes";
 import { postprocessCaptions } from "../captions/processing/postprocess-subs";
 
 const START_FRAME_PADDING = Math.ceil(FPS / 4);

@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync } from "fs";
-import { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 import path from "path";
 
 export const createProject = async (
@@ -54,7 +54,7 @@ export const createProject = async (
       }),
     );
     return res.end();
-  } catch (e) {
+  } catch  {
     res.statusCode = 500;
     res.write(
       JSON.stringify({

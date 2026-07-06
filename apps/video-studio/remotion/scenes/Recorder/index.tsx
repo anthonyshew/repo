@@ -35,7 +35,7 @@ const TriangleToSquare: React.FC<{
   const triangleEdgeRoundness = interpolate(
     progress,
     [0, 0.5],
-    [0.707, Math.sqrt(2) - 1],
+    [Math.SQRT1_2, Math.sqrt(2) - 1],
   );
   const rectEdgeRoundness = interpolate(
     progress,
@@ -433,7 +433,7 @@ const Logo: React.FC<{
   });
 
   const progressWithEaseOut = interpolate(progress, [0, 1], [0, 1], {
-    easing: Easing.inOut(Easing.ease),
+    easing: Easing.inOut((t) => Easing.ease(t)),
   });
 
   const rotation = interpolate(
@@ -441,12 +441,12 @@ const Logo: React.FC<{
     [0, 1],
     [0, -Math.PI * 2.5],
     {
-      easing: Easing.out(Easing.ease),
+      easing: Easing.out((t) => Easing.ease(t)),
     },
   );
 
   const translation = interpolate(progressWithEaseOut, [0, 1], [0, 540], {
-    easing: Easing.out(Easing.ease),
+    easing: Easing.out((t) => Easing.ease(t)),
   });
 
   const posX = Math.sin(rotation) * translation;

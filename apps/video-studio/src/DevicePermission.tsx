@@ -193,7 +193,7 @@ const Permission: React.FC<{
   }, [deviceState, handleError, setDeviceState, type]);
 
   useEffect(() => {
-    run();
+    void run();
   }, [run]);
 
   const accessInformation = useMemo(() => {

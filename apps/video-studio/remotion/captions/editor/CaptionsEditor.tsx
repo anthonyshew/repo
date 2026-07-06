@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import { writeStaticFile } from "@remotion/studio";
 import React, { useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
@@ -40,7 +40,7 @@ export const CaptionsEditor: React.FC<{
         const newOutput = updater(old);
         const contents = JSON.stringify(newOutput, null, 2);
 
-        writeStaticFile({
+        void writeStaticFile({
           filePath,
           contents,
         });

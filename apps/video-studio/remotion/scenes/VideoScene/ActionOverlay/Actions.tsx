@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useVideoConfig } from "remotion";
-import { Cameras } from "../../../../config/scenes";
+import type { Cameras } from "../../../../config/scenes";
 import { DeleteRecordingAction } from "./DeleteRecordingAction";
 
 const gradientSteps = [

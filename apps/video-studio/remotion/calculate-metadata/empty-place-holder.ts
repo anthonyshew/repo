@@ -1,4 +1,4 @@
-import { SceneAndMetadata } from "../../config/scenes";
+import type { SceneAndMetadata } from "../../config/scenes";
 
 export const PLACEHOLDER_DURATION_IN_FRAMES = 60;
 

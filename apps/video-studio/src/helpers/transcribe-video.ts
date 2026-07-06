@@ -1,12 +1,13 @@
 import { makeStreamer } from "@remotion/streaming";
 import { TRANSCRIBE_VIDEO } from "../../scripts/server/constants";
-import {
+import type {
   MessageTypeId,
-  StreamingMessage,
+  StreamingMessage} from "../../scripts/server/streaming";
+import {
   formatMap,
   messageTypeIdToMessageType,
 } from "../../scripts/server/streaming";
-import { ProcessStatus } from "../components/ProcessingStatus";
+import type { ProcessStatus } from "../components/ProcessingStatus";
 import { cancelTranscribeOnServer } from "./cancel-transcribe";
 import { parseJsonOrThrowSource } from "./upload-file";
 

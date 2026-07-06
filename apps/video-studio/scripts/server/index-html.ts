@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { IncomingMessage, ServerResponse } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 import path from "path";
 import type { ViteDevServer } from "vite";
 

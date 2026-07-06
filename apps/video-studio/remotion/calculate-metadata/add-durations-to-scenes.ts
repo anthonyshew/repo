@@ -1,5 +1,5 @@
-import { CanvasLayout } from "../../config/layout";
-import { SceneAndMetadata } from "../../config/scenes";
+import type { CanvasLayout } from "../../config/layout";
+import type { SceneAndMetadata } from "../../config/scenes";
 import { SCENE_TRANSITION_DURATION } from "../../config/transitions";
 import {
   getShouldTransitionIn,

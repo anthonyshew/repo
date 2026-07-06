@@ -220,7 +220,7 @@ const getDisplayAndWebcamLayout = ({
       };
     }
 
-    throw new Error(`Unknown canvas layout: ${canvasLayout satisfies never}`);
+    throw new Error(`Unknown canvas layout: ${String(canvasLayout satisfies never)}`);
   }
 
   const displaySize = getDisplaySize({
@@ -272,13 +272,13 @@ const getDisplayAndWebcamLayout = ({
     });
   }
 
-  throw new Error(`Unknown canvas layout: ${canvasLayout satisfies never}`);
+  throw new Error(`Unknown canvas layout: ${String(canvasLayout satisfies never)}`);
 };
 
 export const getVideoSceneLayout = ({
   canvasLayout,
   videos,
-  webcamPosition: webcamPosition,
+  webcamPosition,
 }: {
   videos: SceneVideos;
   canvasLayout: CanvasLayout;

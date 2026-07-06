@@ -1,5 +1,5 @@
 import { readdirSync } from "fs";
-import { IncomingMessage, ServerResponse } from "http";
+import type { IncomingMessage, ServerResponse } from "http";
 import path from "path";
 
 export type FolderResBody = {

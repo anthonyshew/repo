@@ -15,12 +15,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/ui/select";
-import { MaxResolution } from "./helpers/get-max-resolution-of-device";
+import type { MaxResolution } from "./helpers/get-max-resolution-of-device";
+import type {
+  SizeConstraint,
+  VideoSize} from "./helpers/get-selected-video-source";
 import {
   FPS_AVAILABLE,
-  SizeConstraint,
-  VIDEO_SIZES,
-  VideoSize,
+  VIDEO_SIZES
 } from "./helpers/get-selected-video-source";
 import { setPreferredResolutionForDevice } from "./preferred-resolution";
 
@@ -59,7 +60,7 @@ export const ResolutionLimiter: React.FC<{
         return true;
       }
       return fps <= maxResolution.frameRate;
-    }).reverse();
+    }).toReversed();
   }, [maxResolution]);
 
   const onResolutionChange = useCallback(
@@ -90,7 +91,7 @@ export const ResolutionLimiter: React.FC<{
   );
 
   const onFpsChange = useCallback(
-    (value: string | "any") => {
+    (value: string) => {
       if (value === "any") {
         setActiveVideoSize((v) => {
           const newState: SizeConstraint = {

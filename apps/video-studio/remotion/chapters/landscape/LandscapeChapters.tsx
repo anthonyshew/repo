@@ -9,7 +9,7 @@ import {
 import type { VideoSceneAndMetadata } from "../../../config/scenes";
 import { isWebCamRight } from "../../animations/webcam-transitions/helpers";
 
-import { Theme } from "../../../config/themes";
+import type { Theme } from "../../../config/themes";
 import { SCENE_TRANSITION_DURATION } from "../../../config/transitions";
 import type { ChapterType } from "../make-chapters";
 import {

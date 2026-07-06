@@ -1,5 +1,5 @@
 import React from "react";
-import { UnserializedSrt } from "../helpers/serialize-srt";
+import type { UnserializedSrt } from "../helpers/serialize-srt";
 import { SrtSingleCaption } from "./SingleCaption";
 
 const container: React.CSSProperties = {
@@ -35,7 +35,7 @@ export const SrtPreviewLine: React.FC<{
             <SrtSingleCaption
               caption={caption}
               key={caption.startMs}
-            ></SrtSingleCaption>
+             />
           );
         })}
       </div>

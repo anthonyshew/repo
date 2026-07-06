@@ -63,7 +63,7 @@ export const NewFolderDialog: React.FC<{
 
       setSelectedFolder(newProject);
       setNewProject("");
-      refreshFoldersList();
+      void refreshFoldersList();
       setOpen(false);
     } catch (e) {
       alert((e as Error).stack);
@@ -80,7 +80,7 @@ export const NewFolderDialog: React.FC<{
 
   const handlePressEnter = useCallback(() => {
     if (!disabled) {
-      handleSubmit();
+      void handleSubmit();
     }
   }, [disabled, handleSubmit]);
 

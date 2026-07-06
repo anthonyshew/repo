@@ -8,6 +8,6 @@ export const Divider: React.FC = () => {
         height: 36,
         backgroundColor: "#444",
       }}
-    ></div>
+     />
   );
 };

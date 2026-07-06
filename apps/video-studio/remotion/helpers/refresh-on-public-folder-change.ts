@@ -4,7 +4,8 @@ import {
   watchPublicFolder,
 } from "@remotion/studio";
 import { useEffect, useState } from "react";
-import { StaticFile, useRemotionEnvironment } from "remotion";
+import type { StaticFile} from "remotion";
+import { useRemotionEnvironment } from "remotion";
 import {
   ALTERNATIVE1_PREFIX,
   ALTERNATIVE2_PREFIX,

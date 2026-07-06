@@ -49,7 +49,7 @@ export const applyBRollRules = ({
   willTransitionToNextScene: boolean;
 }): BRollWithDimensions[] => {
   // The algorithm assumes the b-rolls are sorted by their start time
-  const sortedBRolls = bRolls.sort((a, b) => a.from - b.from);
+  const sortedBRolls = bRolls.toSorted((a, b) => a.from - b.from);
 
   // First rule: A b-roll must finish before the scene ends
   // and must allow for enough times to transition to the next scene

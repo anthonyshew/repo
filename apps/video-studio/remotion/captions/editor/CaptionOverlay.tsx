@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import React, { useEffect, useMemo, useState } from "react";
 import type { StaticFile } from "remotion";
 import { useDelayRender, useRemotionEnvironment } from "remotion";
@@ -56,7 +56,7 @@ export const CaptionOverlay: React.FC<{
 
   useEffect(() => {
     if (changeStatus === "initial" || changeStatus === "changed") {
-      fetch(file.src)
+      void fetch(file.src)
         .then((res) => res.json())
         .then((d) => {
           continueRender(handle);

@@ -45,7 +45,7 @@ export const ScaleDownBRoll: React.FC<{
       return canvasHeight;
     }
 
-    throw new Error(`Invalid direction ${bRollEnterDirection}`);
+    throw new Error(`Invalid direction ${String(bRollEnterDirection)}`);
   }, [bRollEnterDirection, bRollLayout.height, canvasHeight]);
 
   const topOffset = interpolate(

@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 import { expect, test } from "bun:test";
 import { fixBackticks } from "../remotion/captions/processing/fix-backticks";
 

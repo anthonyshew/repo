@@ -1,4 +1,4 @@
-import { Caption } from "@remotion/captions";
+import type { Caption } from "@remotion/captions";
 
 export const splitCaptionIntoMonospaceSegments = (
   caption: Caption,
