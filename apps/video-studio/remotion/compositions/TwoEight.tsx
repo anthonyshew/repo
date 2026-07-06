@@ -10,6 +10,7 @@ import {
 } from "remotion";
 import { z } from "zod";
 
+import { TrimShortcutsOverlay } from "../components/TrimShortcutsOverlay";
 import { VIDEO_FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "../constants";
 import { useTrimKeyboard } from "../helpers/use-trim-keyboard";
 import { getLayoutConfig } from "../layouts";
@@ -153,6 +154,7 @@ function Broll({ src }: { src: string }) {
 					objectFit: "cover",
 				}}
 			/>
+			<TrimShortcutsOverlay />
 		</AbsoluteFill>
 	);
 }
@@ -222,7 +224,7 @@ function VideoSegment({
 export function TwoEight({ speechSegments, tweets }: TwoEightProps) {
 	const frame = useCurrentFrame();
 	const transitionStartFrame = FULL_CAM_DURATION_FRAMES;
-	useTrimKeyboard(speechSegments as Segment[]);
+	useTrimKeyboard(speechSegments as Segment[], "2-8/good-takes.json");
 
 	const fullCamConfig = getLayoutConfig("full-cam");
 	const splitConfig = getLayoutConfig("cam-bottom-right");

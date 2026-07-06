@@ -64,6 +64,14 @@
 		"dev": "bun studio.ts",
 		"upgrade": "remotion upgrade",
 		"test": "bun test tests",
-		"process:2-8": "bun scripts/process-2-8.ts"
+		"process:2-8": "bun scripts/process-2-8.ts",
+		"process:remotion-on-vercel": "bun scripts/process-remotion-on-vercel.ts",
+		"process:remotion-on-vercel-2": "bun scripts/process-remotion-on-vercel-2.ts",
+		"process:watch-future-flag": "bun scripts/process-watch-future-flag.ts",
+		"process:turbo-ignore-ded": "bun scripts/process-turbo-ignore-ded.ts",
+		"process:turbo-2-9": "bun scripts/process-turbo-2-9.ts",
+		"process:audio-variants": "bun scripts/process-audio-variants.ts",
+		"process:2-10-audio": "bun scripts/process-2-10-audio.ts",
+		"process:2-10": "bun scripts/process-2-10.ts"
 	}
 }

@@ -1,4 +1,4 @@
-import { reevaluateComposition, writeStaticFile } from "@remotion/studio";
+import { reevaluateComposition, seek, writeStaticFile } from "@remotion/studio";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import type { CurrentSegmentInfo } from "./find-current-segment";
@@ -22,17 +22,48 @@ type UseTrimKeyboardResult = {
 	showSaved: boolean;
 };
 
-async function loadGoodTakesJson(): Promise<GoodTakeJson[]> {
-	const response = await fetch(staticFile("2-8/good-takes.json"));
+async function loadGoodTakesJson(
+	goodTakesPath: string,
+): Promise<GoodTakeJson[]> {
+	const response = await fetch(staticFile(goodTakesPath));
 	return response.json();
 }
 
-async function saveGoodTakesJson(takes: GoodTakeJson[]): Promise<void> {
+async function saveAndSeek(
+	goodTakesPath: string,
+	takes: GoodTakeJson[],
+	sourceTimeSec: number,
+	fps: number,
+): Promise<void> {
+	const newFrame = sourceTimeToFrame(takes, sourceTimeSec, fps);
+
 	await writeStaticFile({
-		filePath: "2-8/good-takes.json",
+		filePath: goodTakesPath,
 		contents: JSON.stringify(takes, null, "\t"),
 	});
 	reevaluateComposition();
+	seek(newFrame);
+}
+
+function sourceTimeToFrame(
+	takes: GoodTakeJson[],
+	sourceTimeSec: number,
+	fps: number,
+): number {
+	let accumulatedFrames = 0;
+
+	for (const take of takes) {
+		const segDurationFrames = Math.ceil((take.endSec - take.startSec) * fps);
+
+		if (sourceTimeSec >= take.startSec && sourceTimeSec <= take.endSec) {
+			const secondsIntoSegment = sourceTimeSec - take.startSec;
+			return accumulatedFrames + Math.round(secondsIntoSegment * fps);
+		}
+
+		accumulatedFrames += segDurationFrames;
+	}
+
+	return Math.max(0, accumulatedFrames - 1);
 }
 
 function isInputFocused(): boolean {
@@ -52,15 +83,23 @@ function isInputFocused(): boolean {
 
 export function useTrimKeyboard(
 	speechSegments: Segment[],
+	goodTakesPath: string,
 ): UseTrimKeyboardResult {
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 
 	const [showSaved, setShowSaved] = useState(false);
 	const previousStateRef = useRef<GoodTakeJson[] | null>(null);
+	const sourceTimeRef = useRef<number | null>(null);
 	const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const currentSegmentInfo = findCurrentSegment(frame, speechSegments, fps);
+
+	const flashSaved = useCallback(() => {
+		setShowSaved(true);
+		if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+		saveTimeoutRef.current = setTimeout(() => setShowSaved(false), 1500);
+	}, []);
 
 	const handleTrimStart = useCallback(async () => {
 		if (!currentSegmentInfo) return;
@@ -74,8 +113,9 @@ export function useTrimKeyboard(
 			return;
 		}
 
-		const takes = await loadGoodTakesJson();
+		const takes = await loadGoodTakesJson(goodTakesPath);
 		previousStateRef.current = takes;
+		sourceTimeRef.current = sourceTimeSec;
 
 		const updatedTakes = takes.map((take, i) => {
 			if (i === index) {
@@ -84,12 +124,9 @@ export function useTrimKeyboard(
 			return take;
 		});
 
-		await saveGoodTakesJson(updatedTakes);
-
-		setShowSaved(true);
-		if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
-		saveTimeoutRef.current = setTimeout(() => setShowSaved(false), 1500);
-	}, [currentSegmentInfo]);
+		await saveAndSeek(goodTakesPath, updatedTakes, sourceTimeSec, fps);
+		flashSaved();
+	}, [currentSegmentInfo, goodTakesPath, fps, flashSaved]);
 
 	const handleTrimEnd = useCallback(async () => {
 		if (!currentSegmentInfo) return;
@@ -103,8 +140,9 @@ export function useTrimKeyboard(
 			return;
 		}
 
-		const takes = await loadGoodTakesJson();
+		const takes = await loadGoodTakesJson(goodTakesPath);
 		previousStateRef.current = takes;
+		sourceTimeRef.current = sourceTimeSec;
 
 		const updatedTakes = takes.map((take, i) => {
 			if (i === index) {
@@ -113,12 +151,9 @@ export function useTrimKeyboard(
 			return take;
 		});
 
-		await saveGoodTakesJson(updatedTakes);
-
-		setShowSaved(true);
-		if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
-		saveTimeoutRef.current = setTimeout(() => setShowSaved(false), 1500);
-	}, [currentSegmentInfo]);
+		await saveAndSeek(goodTakesPath, updatedTakes, sourceTimeSec, fps);
+		flashSaved();
+	}, [currentSegmentInfo, goodTakesPath, fps, flashSaved]);
 
 	const handleSplit = useCallback(async () => {
 		if (!currentSegmentInfo) return;
@@ -128,14 +163,14 @@ export function useTrimKeyboard(
 		const currentStartSec = segment.startMs / 1000;
 		const currentEndSec = segment.endMs / 1000;
 
-		// Don't split if we're at the very start or end
 		if (splitPoint <= currentStartSec || splitPoint >= currentEndSec) {
 			console.warn("Cannot split at segment boundary");
 			return;
 		}
 
-		const takes = await loadGoodTakesJson();
+		const takes = await loadGoodTakesJson(goodTakesPath);
 		previousStateRef.current = takes;
+		sourceTimeRef.current = sourceTimeSec;
 
 		const originalTake = takes[index]!;
 		const firstHalf: GoodTakeJson = {
@@ -145,7 +180,7 @@ export function useTrimKeyboard(
 		const secondHalf: GoodTakeJson = {
 			...originalTake,
 			startSec: splitPoint,
-			text: "", // Clear text for the new segment
+			text: "",
 		};
 
 		const updatedTakes = [
@@ -155,12 +190,34 @@ export function useTrimKeyboard(
 			...takes.slice(index + 1),
 		];
 
-		await saveGoodTakesJson(updatedTakes);
+		await saveAndSeek(goodTakesPath, updatedTakes, sourceTimeSec, fps);
+		flashSaved();
+	}, [currentSegmentInfo, goodTakesPath, fps, flashSaved]);
 
-		setShowSaved(true);
-		if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
-		saveTimeoutRef.current = setTimeout(() => setShowSaved(false), 1500);
-	}, [currentSegmentInfo]);
+	const handleDelete = useCallback(async () => {
+		if (!currentSegmentInfo) return;
+
+		const { index, sourceTimeSec } = currentSegmentInfo;
+
+		const takes = await loadGoodTakesJson(goodTakesPath);
+		if (takes.length <= 1) {
+			console.warn("Cannot delete the last segment");
+			return;
+		}
+
+		previousStateRef.current = takes;
+		sourceTimeRef.current = sourceTimeSec;
+
+		const updatedTakes = [...takes.slice(0, index), ...takes.slice(index + 1)];
+
+		const seekTo =
+			index < updatedTakes.length
+				? updatedTakes[index]!.startSec
+				: updatedTakes[updatedTakes.length - 1]!.startSec;
+
+		await saveAndSeek(goodTakesPath, updatedTakes, seekTo, fps);
+		flashSaved();
+	}, [currentSegmentInfo, goodTakesPath, fps, flashSaved]);
 
 	const handleUndo = useCallback(async () => {
 		if (!previousStateRef.current) {
@@ -168,13 +225,14 @@ export function useTrimKeyboard(
 			return;
 		}
 
-		await saveGoodTakesJson(previousStateRef.current);
+		const restoreSourceTime = sourceTimeRef.current ?? 0;
+		const restoredTakes = previousStateRef.current;
 		previousStateRef.current = null;
+		sourceTimeRef.current = null;
 
-		setShowSaved(true);
-		if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
-		saveTimeoutRef.current = setTimeout(() => setShowSaved(false), 1500);
-	}, []);
+		await saveAndSeek(goodTakesPath, restoredTakes, restoreSourceTime, fps);
+		flashSaved();
+	}, [goodTakesPath, fps, flashSaved]);
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -189,6 +247,9 @@ export function useTrimKeyboard(
 			} else if (event.key === "s" && !event.metaKey && !event.shiftKey) {
 				event.preventDefault();
 				void handleSplit();
+			} else if (event.key === "d" && !event.metaKey && !event.shiftKey) {
+				event.preventDefault();
+				void handleDelete();
 			} else if (event.key === "z" && event.metaKey && !event.shiftKey) {
 				event.preventDefault();
 				void handleUndo();
@@ -197,7 +258,7 @@ export function useTrimKeyboard(
 
 		document.addEventListener("keydown", handleKeyDown);
 		return () => document.removeEventListener("keydown", handleKeyDown);
-	}, [handleTrimStart, handleTrimEnd, handleSplit, handleUndo]);
+	}, [handleTrimStart, handleTrimEnd, handleSplit, handleDelete, handleUndo]);
 
 	useEffect(() => {
 		return () => {
