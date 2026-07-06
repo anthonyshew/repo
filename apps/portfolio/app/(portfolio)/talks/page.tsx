@@ -4,6 +4,12 @@ import { buildMeta } from "#/app/metadata";
 
 const talks: { confName: string; title: string; link: string }[] = [
 	{
+		confName: "Insecure Agents Podcast, Ep. 31",
+		link: "https://open.spotify.com/episode/0aVIkgDykMUJmmFjLyu7OU",
+		title:
+			"Sandboxes, the Infrastructure Underneath, and What that Means for Your Security Posture",
+	},
+	{
 		confName: "React Miami 2023",
 		link: "https://www.youtube.com/watch?v=S_CHo6A0bAs",
 		title: "On-demand Flow State: A Framework for Mental Performance",
