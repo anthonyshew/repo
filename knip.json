@@ -1,0 +1,12 @@
+{
+	"$schema": "https://unpkg.com/knip@6/schema.json",
+	"workspaces": {
+		"apps/portfolio": {
+			"entry": ["source.config.ts"]
+		},
+		"packages/ui": {
+			"ignore": ["src/styles.css"],
+			"ignoreDependencies": ["tailwindcss"]
+		}
+	}
+}

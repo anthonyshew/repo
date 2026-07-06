@@ -2,7 +2,7 @@ import { compareDesc } from "date-fns";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { blogs as allBlogs } from "#/.source";
+import { blogs as allBlogs } from "#/.source/server";
 import { metadataBaseURI } from "#/app/metadata";
 import { mdxComponents } from "#/components/mdxComponents";
 import { getPost, getSlug } from "./getPost";

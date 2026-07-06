@@ -1,8 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui/Avatar";
 import { Discord } from "@repo/ui/Discord";
-import { ThreadsApp } from "@repo/ui/Icons";
+import { GitHub, ThreadsApp, YouTube } from "@repo/ui/Icons";
 import { Xitter } from "@repo/ui/Xitter";
-import { Github, Youtube } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { tagline } from "#/app/constants";
@@ -67,7 +66,7 @@ export default function Home() {
 						rel="noopener noreferrer"
 						target="_blank"
 					>
-						<Youtube className="relative top-0.5" /> YouTube
+						<YouTube className="relative top-0.5 w-6 h-6" /> YouTube
 					</a>
 					<a
 						className="flex flex-row gap-2 my-4 hover:underline"
@@ -91,7 +90,7 @@ export default function Home() {
 						rel="noopener noreferrer"
 						target="_blank"
 					>
-						<Github className="relative top-0.5" /> Bugs
+						<GitHub className="relative top-0.5 w-6 h-6" /> Bugs
 					</a>
 				</div>
 				<hr className="mt-4 mb-8" />
