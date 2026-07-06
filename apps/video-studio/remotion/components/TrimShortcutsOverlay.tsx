@@ -1,6 +1,6 @@
 import { getRemotionEnvironment } from "remotion";
 
-export type ShortcutEntry = {
+type ShortcutEntry = {
 	key: string;
 	label: string;
 };

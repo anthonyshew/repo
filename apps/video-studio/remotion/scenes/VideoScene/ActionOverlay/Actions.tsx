@@ -15,7 +15,7 @@ const gradientOpacities = [
 
 const globalGradientOpacity = 1;
 
-export const container: React.CSSProperties = {
+const container: React.CSSProperties = {
   height: 100,
   backgroundImage: `linear-gradient(to top,${gradientSteps
     .map((g, i) => {

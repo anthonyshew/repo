@@ -26,10 +26,6 @@ const getEndOfSegment = (segment: CaptionPage) => {
   return (segment.captions[segment.captions.length - 1] as Caption).endMs;
 };
 
-export const getSubtitlesFontSize = () => {
-  return 56;
-};
-
 export const getSubtitlesLines = ({
   boxHeight,
   fontSize,

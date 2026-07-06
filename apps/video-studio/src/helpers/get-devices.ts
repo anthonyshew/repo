@@ -2,7 +2,7 @@ import { enumerateDevicesOrTimeOut } from "./enumerate-devices-or-time-out";
 import type { Label} from "./format-device-label";
 import { formatDeviceLabel } from "./format-device-label";
 
-export const storeLabelsToLS = (devices: MediaDeviceInfo[]) => {
+const storeLabelsToLS = (devices: MediaDeviceInfo[]) => {
   const labels: Label[] = JSON.parse(localStorage.getItem("labels") ?? "[]");
   devices.forEach((device) => {
     const id = device.deviceId;
@@ -16,7 +16,7 @@ export const storeLabelsToLS = (devices: MediaDeviceInfo[]) => {
   localStorage.setItem("labels", JSON.stringify(labels));
 };
 
-export const hasNewDevices = (devices: MediaDeviceInfo[]): boolean => {
+const hasNewDevices = (devices: MediaDeviceInfo[]): boolean => {
   const labels: Label[] = JSON.parse(localStorage.getItem("labels") || "[]");
 
   const hasNew = !devices.every((device) => {

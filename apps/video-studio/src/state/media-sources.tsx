@@ -15,11 +15,11 @@ type PrefixState = {
   audioDevice: string | null;
 };
 
-export type MediaSources = {
+type MediaSources = {
   [key in Prefix]: PrefixState;
 };
 
-export type MediaSourcesContextType = {
+type MediaSourcesContextType = {
   mediaSources: MediaSources;
   setMediaStream: (prefix: Prefix, source: StreamState) => void;
   setAudioDevice: (prefix: Prefix, deviceId: string | null) => void;
