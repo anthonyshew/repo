@@ -4,6 +4,27 @@
 		"apps/portfolio": {
 			"entry": ["source.config.ts"]
 		},
+		"apps/video-studio": {
+			"entry": [
+				"remotion/index.ts",
+				"remotion.config.ts",
+				"sub.ts",
+				"copy.ts",
+				"update.ts",
+				"transcribe-two-eight.ts",
+				"scripts/**/*.ts",
+				"tests/**/*.test.ts"
+			],
+			"ignore": ["src/components/ui/**"],
+			"ignoreBinaries": ["ffmpeg", "xdg-user-dir"],
+			"ignoreDependencies": [
+				"@types/dom-mediacapture-record",
+				"@types/web",
+				"@types/webrtc",
+				"prettier",
+				"prettier-plugin-organize-imports"
+			]
+		},
 		"packages/ui": {
 			"ignore": ["src/styles.css"],
 			"ignoreDependencies": ["tailwindcss"]
