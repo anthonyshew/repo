@@ -16,10 +16,10 @@ export function generateMetadata(): Metadata {
 function PostCard(post: Blog) {
 	return (
 		<Link href={`/blog/${post.info.path.replace(".mdx", "")}`}>
-			<div className="p-4 mb-4 transition-all rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 md:p-6">
+			<div className="p-4 mb-4 transition-all rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-900 md:p-6">
 				<h2 className="text-xl font-bold">{post.title}</h2>
 				<time
-					className="block mb-2 text-xs text-gray-600 dark:text-gray-500"
+					className="block mb-2 text-xs text-neutral-600 dark:text-neutral-500"
 					dateTime={post.date}
 				>
 					{format(new Date(post.date), "LLLL d, yyyy")}

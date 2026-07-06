@@ -28,7 +28,7 @@ export default function Home() {
 			<div className="flex flex-col gap-4 mt-8">
 				{talks.map((conference) => (
 					<a
-						className="flex flex-row justify-between p-4 text-white transition-all rounded-lg bg-slate-800 dark:hover:bg-slate-900"
+						className="flex flex-row justify-between p-4 text-white transition-all rounded-lg bg-neutral-800 dark:hover:bg-neutral-900"
 						href={conference.link}
 						key={conference.confName}
 						rel="nooopener noreferrer"
