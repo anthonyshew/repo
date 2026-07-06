@@ -7,6 +7,5 @@
 		"nextjs.json",
 		"react-library.json",
 		"vite.json"
-	],
-	"main": "index.js"
+	]
 }

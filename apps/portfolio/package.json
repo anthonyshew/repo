@@ -9,28 +9,26 @@
 	},
 	"dependencies": {
 		"@repo/ui": "workspace:*",
-		"@tailwindcss/postcss": "^4.1.11",
-		"@vercel/analytics": "^1.5.0",
-		"date-fns": "^4.1.0",
-		"fumadocs-core": "^15.6.1",
-		"fumadocs-mdx": "^11.6.10",
-		"geist": "^1.4.2",
-		"lucide-react": "^0.525.0",
-		"next": "^15.5.7",
+		"@tailwindcss/postcss": "^4.3.2",
+		"@vercel/analytics": "^2.0.1",
+		"date-fns": "^4.4.0",
+		"fumadocs-core": "^16.10.7",
+		"fumadocs-mdx": "^15.0.13",
+		"lucide-react": "^1.23.0",
+		"next": "^16.2.10",
 		"next-themes": "^0.4.6",
 		"react": "latest",
 		"react-dom": "latest",
-		"zod": "^4.0.10"
+		"zod": "^4.4.3"
 	},
 	"devDependencies": {
 		"@repo/next-config": "workspace:*",
 		"@repo/tailwind-config": "workspace:*",
 		"@repo/tsconfig": "workspace:*",
-		"@tailwindcss/typography": "^0.5.16",
-		"@types/node": "^22",
-		"@types/react": "^19.1.8",
-		"autoprefixer": "^10.4.21",
-		"tailwindcss": "^4.1.11",
-		"typescript": "^5.8.3"
+		"@tailwindcss/typography": "^0.5.20",
+		"@types/node": "^26.1.0",
+		"@types/react": "^19.2.17",
+		"tailwindcss": "^4.3.2",
+		"typescript": "^6.0.3"
 	}
 }

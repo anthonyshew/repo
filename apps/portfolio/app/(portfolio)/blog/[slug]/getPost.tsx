@@ -1,13 +1,13 @@
-import { blogs as allBlogs } from "#/.source";
+import { blogs as allBlogs } from "#/.source/server";
 
 export const getPost = (slug?: string) => {
 	const post = allBlogs.find((blogPost) => {
-		return blogPost._file.path.replace(".mdx", "") === slug;
+		return blogPost.info.path.replace(".mdx", "") === slug;
 	});
 
 	return post;
 };
 
 export const getSlug = (blogPost: (typeof allBlogs)[number]) => {
-	return blogPost._file.path.replace(".mdx", "");
+	return blogPost.info.path.replace(".mdx", "");
 };

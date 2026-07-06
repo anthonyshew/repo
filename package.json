@@ -14,12 +14,12 @@
 		"knip": "knip"
 	},
 	"devDependencies": {
-		"knip": "^5.61.3",
+		"knip": "^6.24.0",
 		"oxfmt": "^0.57.0",
 		"oxlint": "^1.72.0",
 		"oxlint-tsgolint": "^0.24.0",
-		"turbo": "^2.5.4",
-		"typescript": "^5.8.3"
+		"turbo": "^2.10.3",
+		"typescript": "^6.0.3"
 	},
 	"engines": {
 		"node": ">=22"
