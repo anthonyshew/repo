@@ -2,7 +2,7 @@
 	"name": "@repo/next-config",
 	"exports": {
 		".": {
-			"types": "./dist/next.config.d.ts",
+			"types": "./next.config.ts",
 			"default": "./next.config.ts"
 		}
 	},
