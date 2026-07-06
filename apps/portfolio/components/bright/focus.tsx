@@ -52,6 +52,7 @@ export const focus = {
 							toLineNumber: r.toLineNumber,
 						},
 					];
+				return [];
 			});
 		}
 

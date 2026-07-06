@@ -94,7 +94,9 @@ function SidebarProvider({
 
 	// Helper to toggle the sidebar.
 	const toggleSidebar = React.useCallback(() => {
-		return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
+		return isMobile
+			? setOpenMobile((current) => !current)
+			: setOpen((current) => !current);
 	}, [isMobile, setOpen]);
 
 	// Adds a keyboard shortcut to toggle the sidebar.
@@ -542,11 +544,8 @@ function SidebarMenuButton({
 		return button;
 	}
 
-	if (typeof tooltip === "string") {
-		tooltip = {
-			children: tooltip,
-		};
-	}
+	const tooltipProps =
+		typeof tooltip === "string" ? { children: tooltip } : tooltip;
 
 	return (
 		<Tooltip>
@@ -555,7 +554,7 @@ function SidebarMenuButton({
 				side="right"
 				align="center"
 				hidden={state !== "collapsed" || isMobile}
-				{...tooltip}
+				{...tooltipProps}
 			/>
 		</Tooltip>
 	);

@@ -1,7 +1,6 @@
 {
 	"extends": "@repo/tsconfig/nextjs.json",
 	"compilerOptions": {
-		"baseUrl": ".",
 		"paths": {
 			"#/*": ["./*"]
 		},

@@ -69,7 +69,7 @@ function ChartContainer({
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 	const colorConfig = Object.entries(config).filter(
-		([, config]) => config.theme || config.color,
+		([, itemConfig]) => itemConfig.theme || itemConfig.color,
 	);
 
 	if (!colorConfig.length) {
@@ -78,7 +78,6 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 
 	return (
 		<style
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: In shadcn we trust.
 			dangerouslySetInnerHTML={{
 				__html: Object.entries(THEMES)
 					.map(
@@ -137,7 +136,7 @@ function ChartTooltipContent({
 		const itemConfig = getPayloadConfigFromPayload(config, item, key);
 		const value =
 			!labelKey && typeof label === "string"
-				? config[label as keyof typeof config]?.label || label
+				? config[label]?.label || label
 				: itemConfig?.label;
 
 		if (labelFormatter) {
@@ -275,7 +274,12 @@ function ChartLegendContent({
 			)}
 		>
 			{payload.map((item) => {
-				const key = `${nameKey || item.dataKey || "value"}`;
+				// item.dataKey may be a function, which is useless as a config key.
+				const dataKey =
+					typeof item.dataKey === "string" || typeof item.dataKey === "number"
+						? String(item.dataKey)
+						: undefined;
+				const key = nameKey || dataKey || "value";
 				const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
 				return (
@@ -326,20 +330,16 @@ function getPayloadConfigFromPayload(
 		key in payload &&
 		typeof payload[key as keyof typeof payload] === "string"
 	) {
-		configLabelKey = payload[key as keyof typeof payload] as string;
+		configLabelKey = payload[key as keyof typeof payload];
 	} else if (
 		payloadPayload &&
 		key in payloadPayload &&
 		typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
 	) {
-		configLabelKey = payloadPayload[
-			key as keyof typeof payloadPayload
-		] as string;
+		configLabelKey = payloadPayload[key as keyof typeof payloadPayload];
 	}
 
-	return configLabelKey in config
-		? config[configLabelKey]
-		: config[key as keyof typeof config];
+	return configLabelKey in config ? config[configLabelKey] : config[key];
 }
 
 export {
