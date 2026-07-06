@@ -1,0 +1,41 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "react", "unicorn", "oxc"],
+	"ignorePatterns": [
+		"**/.next/**",
+		"**/.contentlayer/**",
+		"**/node_modules/**",
+		"**/dist/**",
+		"**/build/**",
+		"**/.turbo/**",
+		"**/.claude/**",
+		"**/coverage/**",
+		"**/.source/**",
+		"apps/cli-app/target/**"
+	],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn"
+	},
+	"rules": {
+		"typescript/no-floating-promises": "error",
+		"eslint/no-unused-vars": "error",
+		"react/exhaustive-deps": "warn",
+		"react/rules-of-hooks": "error",
+		"typescript/no-non-null-assertion": "warn",
+		"typescript/consistent-type-imports": "error",
+		"eslint/no-param-reassign": "error",
+		"typescript/prefer-as-const": "error",
+		"eslint/default-param-last": "error",
+		"typescript/prefer-enum-initializers": "error",
+		"react/self-closing-comp": "error",
+		"unicorn/prefer-number-properties": "error",
+		"typescript/no-inferrable-types": "error",
+		"eslint/no-else-return": "error",
+		"typescript/no-explicit-any": "warn",
+		"react/no-array-index-key": "warn",
+		"react/react-in-jsx-scope": "off",
+		"typescript/no-unsafe-type-assertion": "off",
+		"eslint/no-underscore-dangle": "off"
+	}
+}

@@ -13,6 +13,58 @@ import {
 import { cn } from "../lib/utils";
 import { Button, buttonVariants } from "./Button";
 
+type DayPickerComponents = NonNullable<
+	React.ComponentProps<typeof DayPicker>["components"]
+>;
+
+const CalendarRoot: NonNullable<DayPickerComponents["Root"]> = ({
+	className,
+	rootRef,
+	...props
+}) => {
+	return (
+		<div
+			data-slot="calendar"
+			ref={rootRef}
+			className={cn(className)}
+			{...props}
+		/>
+	);
+};
+
+const CalendarChevron: NonNullable<DayPickerComponents["Chevron"]> = ({
+	className,
+	orientation,
+	...props
+}) => {
+	if (orientation === "left") {
+		return (
+			<ChevronLeftIcon className={cn("ui:size-4", className)} {...props} />
+		);
+	}
+
+	if (orientation === "right") {
+		return (
+			<ChevronRightIcon className={cn("ui:size-4", className)} {...props} />
+		);
+	}
+
+	return <ChevronDownIcon className={cn("ui:size-4", className)} {...props} />;
+};
+
+const CalendarWeekNumber: NonNullable<DayPickerComponents["WeekNumber"]> = ({
+	children,
+	...props
+}) => {
+	return (
+		<td {...props}>
+			<div className="ui:flex ui:size-(--cell-size) ui:items-center ui:justify-center ui:text-center">
+				{children}
+			</div>
+		</td>
+	);
+};
+
 function Calendar({
 	className,
 	classNames,
@@ -133,52 +185,10 @@ function Calendar({
 				...classNames,
 			}}
 			components={{
-				Root: ({ className, rootRef, ...props }) => {
-					return (
-						<div
-							data-slot="calendar"
-							ref={rootRef}
-							className={cn(className)}
-							{...props}
-						/>
-					);
-				},
-				Chevron: ({ className, orientation, ...props }) => {
-					if (orientation === "left") {
-						return (
-							<ChevronLeftIcon
-								className={cn("ui:size-4", className)}
-								{...props}
-							/>
-						);
-					}
-
-					if (orientation === "right") {
-						return (
-							<ChevronRightIcon
-								className={cn("ui:size-4", className)}
-								{...props}
-							/>
-						);
-					}
-
-					return (
-						<ChevronDownIcon
-							className={cn("ui:size-4", className)}
-							{...props}
-						/>
-					);
-				},
+				Root: CalendarRoot,
+				Chevron: CalendarChevron,
 				DayButton: CalendarDayButton,
-				WeekNumber: ({ children, ...props }) => {
-					return (
-						<td {...props}>
-							<div className="ui:flex ui:size-(--cell-size) ui:items-center ui:justify-center ui:text-center">
-								{children}
-							</div>
-						</td>
-					);
-				},
+				WeekNumber: CalendarWeekNumber,
 				...components,
 			}}
 			{...props}

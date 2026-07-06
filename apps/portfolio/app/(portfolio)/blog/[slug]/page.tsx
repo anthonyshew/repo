@@ -15,11 +15,11 @@ export const generateStaticParams = () =>
 export async function generateMetadata({
 	params,
 }: {
-	params: { slug: string };
+	params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
 	const post = getPost((await params).slug);
 	if (!post) {
-		return;
+		return undefined;
 	}
 
 	const { title, date: publishedTime, summary } = post;
@@ -56,7 +56,7 @@ async function PostLayout(props: { params: Promise<{ slug: string }> }) {
 	const params = await props.params;
 	const getAdjacentPosts = () => {
 		const foundIndex = allBlogs
-			.sort((a, b) => {
+			.toSorted((a, b) => {
 				return compareDesc(new Date(a.date), new Date(b.date));
 			})
 			.findIndex((post) => getSlug(post) === params.slug);

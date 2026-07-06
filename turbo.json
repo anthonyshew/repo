@@ -20,6 +20,10 @@
 		"//#lint:fix": {
 			"cache": false
 		},
+		"//#format": {},
+		"//#format:fix": {
+			"cache": false
+		},
 		"check-types": {
 			"dependsOn": ["^check-types"],
 			"outputs": ["dist"]

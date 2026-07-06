@@ -9,6 +9,17 @@ interface LinkHeadingProps {
 	children: ReactNode;
 }
 
+// The MDX can come back with an object for certain strings. (e.g. "`apps`")
+// This ensures we handle those correctly.
+const getChildren = (nodeChildren: ReactNode): ReactNode => {
+	// @ts-expect-error Don't care at the moment!
+	if (nodeChildren.props) {
+		// @ts-expect-error Don't care at the moment!
+		return nodeChildren.props.children;
+	}
+	return nodeChildren;
+};
+
 export function LinkHeading({
 	component,
 	children,
@@ -16,24 +27,9 @@ export function LinkHeading({
 }: LinkHeadingProps) {
 	const Comp = component;
 
-	// The MDX can come back with an object for certain strings. (e.g. "`apps`")
-	// This ensures we handle those correctly.
-	const getChildren = (nodeChildren: ReactNode): ReactNode => {
-		// @ts-expect-error Don't care at the moment!
-		if (nodeChildren.props) {
-			// @ts-expect-error Don't care at the moment!
-			return nodeChildren.props.children;
-		}
-		return nodeChildren;
-	};
-
 	const handledChildren = getChildren(children);
 	const childrenString =
-		typeof handledChildren === "string"
-			? handledChildren
-			: typeof handledChildren === "object" && handledChildren !== null
-				? String(handledChildren)
-				: "";
+		typeof handledChildren === "string" ? handledChildren : "";
 
 	return (
 		<Comp

@@ -1,8 +1,8 @@
 {
 	"name": "@repo/tailwind-config",
 	"version": "0.0.1",
-	"type": "module",
 	"private": true,
+	"type": "module",
 	"exports": {
 		"./postcss": {
 			"types": "./dist/postcss.config.d.ts",

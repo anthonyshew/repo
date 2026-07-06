@@ -31,7 +31,7 @@ function PostCard(post: Blog) {
 }
 
 export default function Home() {
-	const posts: Blog[] = allBlogs.sort((a, b) => {
+	const posts: Blog[] = allBlogs.toSorted((a, b) => {
 		return compareDesc(new Date(a.date), new Date(b.date));
 	});
 
