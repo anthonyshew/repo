@@ -5,6 +5,7 @@ packages:
   - tooling/*
 allowBuilds:
   "@parcel/watcher": true
+  "@swc/core": true
   "@tailwindcss/oxide": true
   esbuild: true
   oxc-resolver: true
