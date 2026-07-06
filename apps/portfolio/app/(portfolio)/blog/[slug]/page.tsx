@@ -85,12 +85,12 @@ async function PostLayout(props: { params: Promise<{ slug: string }> }) {
 					<h1 className="mb-4 text-pretty">{post.title}</h1>
 					<div className="flex flex-row gap-4 align-center">
 						<time
-							className="text-xs text-gray-600 dark:text-gray-400"
+							className="text-xs text-neutral-600 dark:text-neutral-400"
 							dateTime={post.date}
 						>
 							{post.date}
 						</time>
-						<hr className="grow border my-auto! text-slate-900" />
+						<hr className="grow border my-auto! text-neutral-900" />
 					</div>
 				</div>
 			</header>
@@ -99,7 +99,7 @@ async function PostLayout(props: { params: Promise<{ slug: string }> }) {
 				<Mdx components={mdxComponents} />
 			</article>
 
-			<footer className="pt-4 mt-4 border-t-2 border-t-slate-600">
+			<footer className="pt-4 mt-4 border-t-2 border-t-neutral-600">
 				<p className="text-xl font-medium">More Reading</p>
 
 				<div className="flex flex-col justify-center gap-4 sm:flex-row sm:justify-between">

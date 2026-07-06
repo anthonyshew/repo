@@ -31,7 +31,7 @@ export function Navbar({
 						key={link.label}
 					>
 						{link.label}
-						<span className="ui:block ui:max-w-0 group-hover:ui:max-w-full ui:transition-all ui:duration-300 ui:h-px ui:bg-slate-800 dark:ui:bg-white" />
+						<span className="ui:block ui:max-w-0 group-hover:ui:max-w-full ui:transition-all ui:duration-300 ui:h-px ui:bg-neutral-800 dark:ui:bg-white" />
 					</Link>
 				);
 			})}
